@@ -1,203 +1,350 @@
 @page "/admin/analytics"
 @layout AdminLayout
 
-<h2 class="h2">Reports and Analytics</h2>
-
-<div class="actions-bar">
-
-    <button class="btn-export">
-        ⬇ Export Excel
-    </button>
-
-    <button class="btn-export">
-        ⬇ Export PDF
-    </button>
-
-</div>
 <div class="analytics-container">
 
-    <!-- 🔹 TABS -->
-    <div class="tabs-header">
-        <div class="@Tab("revenue")" @onclick='() => ActiveTab="revenue"'>Revenue Analytics</div>
-        <div class="@Tab("providers")" @onclick='() => ActiveTab="providers"'>Providers Performance </div>
-        <div class="@Tab("patients")" @onclick='() => ActiveTab="patients"'>Patients Engagement</div>
-        <div class="@Tab("claims")" @onclick='() => ActiveTab="claims"'>Claims Analytics</div>
-        <div class="@Tab("forecast")" @onclick='() => ActiveTab="forecast"'>Financial Forecast</div>
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h2>Reports & Analytics</h2>
+        </div>
+
+        <div class="header-actions">
+
+            <button class="btn-secondary">
+                Export Excel
+            </button>
+
+            <button class="btn-primary">
+                Export PDF
+            </button>
+
+        </div>
+
     </div>
 
-    <!-- 🔹 REVENUE -->
+    <!-- KPI CARDS -->
+
+    <div class="summary-panel">
+
+        <div class="summary-card">
+            <div class="summary-label">Total Revenue</div>
+            <div class="summary-value">$1,245,000</div>
+            <div class="summary-sub">+14.2% this month</div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Total Patients</div>
+            <div class="summary-value">2,410</div>
+            <div class="summary-sub">186 active today</div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Claims Submitted</div>
+            <div class="summary-value">860</div>
+            <div class="summary-sub">92% approval rate</div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">Providers</div>
+            <div class="summary-value">42</div>
+            <div class="summary-sub">39 active</div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-label">RPM Devices</div>
+            <div class="summary-value">1,180</div>
+            <div class="summary-sub">96% connected</div>
+        </div>
+
+    </div>
+
+    <!-- FILTERS -->
+
+    <div class="filter-card">
+
+        <input class="search-box"
+               placeholder="Search report, provider, CPT..."
+               @bind="SearchText" />
+
+        <select @bind="SelectedPeriod">
+            <option>Last 7 Days</option>
+            <option>Last 30 Days</option>
+            <option>Last 90 Days</option>
+            <option>Last 12 Months</option>
+        </select>
+
+        <select @bind="SelectedProgram">
+            <option>All Programs</option>
+            <option>CCM</option>
+            <option>RPM</option>
+            <option>PCM</option>
+            <option>BHI</option>
+            <option>TCM</option>
+        </select>
+
+    </div>
+
+    <!-- TABS -->
+
+    <div class="tabs-wrapper">
+
+        <div class="@Tab("revenue")"
+             @onclick='() => ActiveTab="revenue"'>
+            Revenue Analytics
+        </div>
+
+        <div class="@Tab("providers")"
+             @onclick='() => ActiveTab="providers"'>
+            Provider Performance
+        </div>
+
+        <div class="@Tab("patients")"
+             @onclick='() => ActiveTab="patients"'>
+            Patient Engagement
+        </div>
+
+        <div class="@Tab("claims")"
+             @onclick='() => ActiveTab="claims"'>
+            Claims Analytics
+        </div>
+
+        <div class="@Tab("forecast")"
+             @onclick='() => ActiveTab="forecast"'>
+            Financial Forecast
+        </div>
+
+    </div>
+
+    <!-- REVENUE TAB -->
+
     @if (ActiveTab == "revenue")
     {
         <div class="table-card">
+
             <table>
+
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Total</th>
+                        <th>Total Revenue</th>
                         <th>Insurance</th>
                         <th>Self Pay</th>
                         <th>Claims Paid</th>
                         <th>Avg Claim</th>
-                        <th>Outstanding</th>
+                        <th>Outstanding AR</th>
                         <th>AR Days</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     @foreach (var r in RevenueData)
                     {
                         <tr>
                             <td>@r.Date</td>
-                            <td>$@r.Total</td>
-                            <td>$@r.Insurance</td>
-                            <td>$@r.SelfPay</td>
+                            <td>$@r.Total.ToString("N0")</td>
+                            <td>$@r.Insurance.ToString("N0")</td>
+                            <td>$@r.SelfPay.ToString("N0")</td>
                             <td>@r.PaidClaims</td>
                             <td>$@r.AvgClaim</td>
-                            <td>$@r.Outstanding</td>
+                            <td>$@r.Outstanding.ToString("N0")</td>
                             <td>@r.ARDays</td>
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
     }
 
-    <!-- 🔹 PROVIDERS -->
+    <!-- PROVIDERS TAB -->
+
     @if (ActiveTab == "providers")
     {
         <div class="table-card">
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Provider</th>
                         <th>Specialty</th>
                         <th>Visits</th>
                         <th>Patients</th>
                         <th>Revenue</th>
-                        <th>Utilization %</th>
+                        <th>Utilization</th>
                         <th>Rating</th>
                         <th>Status</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     @foreach (var p in Providers)
                     {
                         <tr>
+
                             <td>@p.Name</td>
                             <td>@p.Specialty</td>
                             <td>@p.Visits</td>
                             <td>@p.Patients</td>
-                            <td>$@p.Revenue</td>
-                            <td>@p.Utilization</td>
+                            <td>$@p.Revenue.ToString("N0")</td>
+                            <td>@p.Utilization%</td>
                             <td>@p.Rating</td>
-                            <td>@p.Status</td>
+
+                            <td>
+                                <span class="status active">
+                                    @p.Status
+                                </span>
+                            </td>
+
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
     }
+        <!-- PATIENTS TAB -->
 
-    <!-- 🔹 PATIENTS -->
     @if (ActiveTab == "patients")
     {
         <div class="table-card">
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>Segment</th>
-                        <th>Total</th>
-                        <th>Visits</th>
+                        <th>Program Segment</th>
+                        <th>Total Patients</th>
+                        <th>Avg Visits</th>
                         <th>Chronic %</th>
                         <th>Retention %</th>
-                        <th>No-show %</th>
-                        <th>Revenue/Patient</th>
+                        <th>No Show %</th>
+                        <th>Revenue / Patient</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     @foreach (var p in PatientStats)
                     {
                         <tr>
                             <td>@p.Segment</td>
                             <td>@p.Total</td>
                             <td>@p.Visits</td>
-                            <td>@p.Chronic</td>
-                            <td>@p.Retention</td>
-                            <td>@p.NoShow</td>
+                            <td>@p.Chronic%</td>
+                            <td>@p.Retention%</td>
+                            <td>@p.NoShow%</td>
                             <td>$@p.RevenuePerPatient</td>
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
     }
 
-    <!-- 🔹 CLAIMS -->
+    <!-- CLAIMS TAB -->
+
     @if (ActiveTab == "claims")
     {
         <div class="table-card">
+
             <table>
+
                 <thead>
                     <tr>
-                        <th>CPT</th>
+                        <th>CPT Code</th>
                         <th>Description</th>
                         <th>Submitted</th>
                         <th>Paid</th>
                         <th>Rejected</th>
                         <th>Denial %</th>
-                        <th>Days</th>
-                        <th>Amount</th>
+                        <th>Avg Days</th>
+                        <th>Revenue</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     @foreach (var c in Claims)
                     {
                         <tr>
+
                             <td>@c.CPT</td>
                             <td>@c.Description</td>
                             <td>@c.Submitted</td>
                             <td>@c.Paid</td>
                             <td>@c.Rejected</td>
-                            <td>@c.Denial</td>
+                            <td>@c.Denial%</td>
                             <td>@c.Days</td>
-                            <td>$@c.Amount</td>
+                            <td>$@c.Amount.ToString("N0")</td>
+
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
     }
 
-    <!-- 🔹 FORECAST -->
+    <!-- FORECAST TAB -->
+
     @if (ActiveTab == "forecast")
     {
         <div class="table-card">
+
             <table>
+
                 <thead>
                     <tr>
                         <th>Month</th>
-                        <th>Revenue</th>
+                        <th>Projected Revenue</th>
                         <th>Visits</th>
                         <th>Growth %</th>
                         <th>Cost</th>
                         <th>Margin %</th>
-                        <th>Risk</th>
+                        <th>Risk Level</th>
                     </tr>
                 </thead>
+
                 <tbody>
+
                     @foreach (var f in Forecast)
                     {
                         <tr>
+
                             <td>@f.Month</td>
-                            <td>$@f.Revenue</td>
+                            <td>$@f.Revenue.ToString("N0")</td>
                             <td>@f.Visits</td>
-                            <td>@f.Growth</td>
-                            <td>$@f.Cost</td>
-                            <td>@f.Margin</td>
-                            <td>@f.Risk</td>
+                            <td>@f.Growth%</td>
+                            <td>$@f.Cost.ToString("N0")</td>
+                            <td>@f.Margin%</td>
+
+                            <td>
+                                <span class="risk @(f.Risk.ToLower())">
+                                    @f.Risk
+                                </span>
+                            </td>
+
                         </tr>
                     }
+
                 </tbody>
+
             </table>
+
         </div>
     }
 
@@ -206,22 +353,86 @@
 @code {
 
     string ActiveTab = "revenue";
-    string Tab(string t) => ActiveTab == t ? "tab active" : "tab";
+    string SearchText = "";
+    string SelectedPeriod = "Last 30 Days";
+    string SelectedProgram = "All Programs";
 
-    // MODELS
-    class Revenue { public string Date {get;set;} public int Total {get;set;} public int Insurance {get;set;} public int SelfPay {get;set;} public int PaidClaims {get;set;} public int AvgClaim {get;set;} public int Outstanding {get;set;} public int ARDays {get;set;} }
-    class Provider { public string Name {get;set;} public string Specialty {get;set;} public int Visits {get;set;} public int Patients {get;set;} public int Revenue {get;set;} public int Utilization {get;set;} public double Rating {get;set;} public string Status {get;set;} }
-    class PatientSeg { public string Segment {get;set;} public int Total {get;set;} public int Visits {get;set;} public int Chronic {get;set;} public int Retention {get;set;} public int NoShow {get;set;} public int RevenuePerPatient {get;set;} }
-    class Claim { public string CPT {get;set;} public string Description {get;set;} public int Submitted {get;set;} public int Paid {get;set;} public int Rejected {get;set;} public int Denial {get;set;} public int Days {get;set;} public int Amount {get;set;} }
-    class ForecastM { public string Month {get;set;} public int Revenue {get;set;} public int Visits {get;set;} public int Growth {get;set;} public int Cost {get;set;} public int Margin {get;set;} public string Risk {get;set;} }
+    string Tab(string t)
+        => ActiveTab == t ? "tab active" : "tab";
 
-    // SAMPLE DATA (10 rows each)
-    List<Revenue> RevenueData = Enumerable.Range(1,10).Select(i => new Revenue{
-        Date=$"{i} Apr", Total=10000+i*500, Insurance=8000+i*400, SelfPay=2000+i*100,
-        PaidClaims=80+i, AvgClaim=120+i, Outstanding=3000+i*200, ARDays=25+i
-    }).ToList();
+    public class Revenue
+    {
+        public string Date { get; set; } = "";
+        public int Total { get; set; }
+        public int Insurance { get; set; }
+        public int SelfPay { get; set; }
+        public int PaidClaims { get; set; }
+        public int AvgClaim { get; set; }
+        public int Outstanding { get; set; }
+        public int ARDays { get; set; }
+    }
 
-   List<Provider> Providers = new()
+    public class Provider
+    {
+        public string Name { get; set; } = "";
+        public string Specialty { get; set; } = "";
+        public int Visits { get; set; }
+        public int Patients { get; set; }
+        public int Revenue { get; set; }
+        public int Utilization { get; set; }
+        public double Rating { get; set; }
+        public string Status { get; set; } = "";
+    }
+
+    public class PatientSeg
+    {
+        public string Segment { get; set; } = "";
+        public int Total { get; set; }
+        public int Visits { get; set; }
+        public int Chronic { get; set; }
+        public int Retention { get; set; }
+        public int NoShow { get; set; }
+        public int RevenuePerPatient { get; set; }
+    }
+
+    public class Claim
+    {
+        public string CPT { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int Submitted { get; set; }
+        public int Paid { get; set; }
+        public int Rejected { get; set; }
+        public int Denial { get; set; }
+        public int Days { get; set; }
+        public int Amount { get; set; }
+    }
+
+    public class ForecastM
+    {
+        public string Month { get; set; } = "";
+        public int Revenue { get; set; }
+        public int Visits { get; set; }
+        public int Growth { get; set; }
+        public int Cost { get; set; }
+        public int Margin { get; set; }
+        public string Risk { get; set; } = "";
+    }
+
+    List<Revenue> RevenueData = Enumerable.Range(1, 12)
+        .Select(i => new Revenue
+        {
+            Date = $"{i} Apr",
+            Total = 10000 + i * 1500,
+            Insurance = 8000 + i * 1000,
+            SelfPay = 2000 + i * 500,
+            PaidClaims = 80 + i,
+            AvgClaim = 125 + i,
+            Outstanding = 3000 + i * 200,
+            ARDays = 20 + i
+        }).ToList();
+
+    // Paste your existing Providers list here
+List<Provider> Providers = new()
 {
     new(){Name="Dr. John Smith", Specialty="Cardiology", Visits=52, Patients=45, Revenue=7800, Utilization=88, Rating=4.7, Status="Active"},
     new(){Name="Dr. Sarah Lee", Specialty="Dermatology", Visits=40, Patients=36, Revenue=5200, Utilization=76, Rating=4.5, Status="Active"},
@@ -234,8 +445,9 @@
     new(){Name="Dr. Daniel Thomas", Specialty="Pulmonology", Visits=41, Patients=37, Revenue=6500, Utilization=75, Rating=4.4, Status="Active"},
     new(){Name="Dr. Ava Jackson", Specialty="Family Medicine", Visits=55, Patients=48, Revenue=8000, Utilization=90, Rating=4.7, Status="Active"}
 };
+    // Paste your existing PatientStats list here
 
-   List<PatientSeg> PatientStats = new()
+List<PatientSeg> PatientStats = new()
 {
     new(){Segment="Chronic Care Management (CCM)", Total=320, Visits=4, Chronic=85, Retention=92, NoShow=6, RevenuePerPatient=220},
     new(){Segment="Remote Patient Monitoring (RPM)", Total=280, Visits=5, Chronic=75, Retention=88, NoShow=8, RevenuePerPatient=260},
@@ -247,12 +459,12 @@
     new(){Segment="Chronic Cardiac Care", Total=130, Visits=4, Chronic=90, Retention=91, NoShow=5, RevenuePerPatient=300},
     new(){Segment="Diabetes Management", Total=210, Visits=3, Chronic=95, Retention=89, NoShow=7, RevenuePerPatient=250},
     new(){Segment="Hypertension Program", Total=260, Visits=3, Chronic=88, Retention=87, NoShow=9, RevenuePerPatient=230}
-};
+};    
 
-   List<Claim> Claims = new()
+List<Claim> Claims = new()
 {
     new(){CPT="99213", Description="Office Visit (Established Patient)", Submitted=120, Paid=100, Rejected=20, Denial=16, Days=5, Amount=12000},
-    new(){CPT="99457", Description="Remote Monitoring Mgmt", Submitted=90, Paid=80, Rejected=10, Denial=11, Days=6, Amount=9000},
+    new(){CPT="99457", Description="Remote Monitoring Management", Submitted=90, Paid=80, Rejected=10, Denial=11, Days=6, Amount=9000},
     new(){CPT="99490", Description="Chronic Care Management", Submitted=110, Paid=95, Rejected=15, Denial=13, Days=7, Amount=15000},
     new(){CPT="93000", Description="Electrocardiogram", Submitted=80, Paid=70, Rejected=10, Denial=12, Days=4, Amount=8000},
     new(){CPT="80050", Description="General Health Panel", Submitted=75, Paid=60, Rejected=15, Denial=20, Days=6, Amount=7000},
@@ -260,10 +472,10 @@
     new(){CPT="85025", Description="CBC Blood Test", Submitted=95, Paid=85, Rejected=10, Denial=10, Days=3, Amount=6000},
     new(){CPT="99214", Description="Detailed Office Visit", Submitted=105, Paid=90, Rejected=15, Denial=14, Days=5, Amount=13000},
     new(){CPT="36415", Description="Venipuncture", Submitted=70, Paid=65, Rejected=5, Denial=7, Days=2, Amount=3000},
-    new(){CPT="99495", Description="Transitional Care Mgmt", Submitted=55, Paid=45, Rejected=10, Denial=18, Days=8, Amount=8500}
-};
+    new(){CPT="99495", Description="Transitional Care Management", Submitted=55, Paid=45, Rejected=10, Denial=18, Days=8, Amount=8500}
+};    
 
-    List<ForecastM> Forecast = new()
+List<ForecastM> Forecast = new()
 {
     new(){Month="May 2026", Revenue=45000, Visits=1200, Growth=12, Cost=25000, Margin=44, Risk="Low"},
     new(){Month="Jun 2026", Revenue=52000, Visits=1350, Growth=15, Cost=27000, Margin=48, Risk="Medium"},

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TeleHealthApp\\TeleHealthApp.csproj": {}
+    "D:\\TeleHealth-Dev\\TeleHealthApp.csproj": {}
   },
   "projects": {
-    "D:\\TeleHealthApp\\TeleHealthApp.csproj": {
+    "D:\\TeleHealth-Dev\\TeleHealthApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TeleHealthApp\\TeleHealthApp.csproj",
+        "projectUniqueName": "D:\\TeleHealth-Dev\\TeleHealthApp.csproj",
         "projectName": "TeleHealthApp",
-        "projectPath": "D:\\TeleHealthApp\\TeleHealthApp.csproj",
+        "projectPath": "D:\\TeleHealth-Dev\\TeleHealthApp.csproj",
         "packagesPath": "C:\\Users\\MRP\\.nuget\\packages\\",
-        "outputPath": "D:\\TeleHealthApp\\obj\\",
+        "outputPath": "D:\\TeleHealth-Dev\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MRP\\AppData\\Roaming\\NuGet\\NuGet.Config"

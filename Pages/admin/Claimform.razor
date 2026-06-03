@@ -1,27 +1,44 @@
 @page "/admin/claimform"
 @layout AdminLayout
+@inject NavigationManager Nav
 
-<h2 class="h2">Claim Form</h2>
 <div class="claim-container">
 
-    
+    <div class="page-header">
 
-    <!-- 🔹 PATIENT INFO -->
+        <div>
+            <h2>Create Claim</h2>
+            <p>Create and submit insurance claims for reimbursement.</p>
+        </div>
+
+        <button class="btn-secondary"
+                @onclick="BackToBilling">
+            Back to Billing
+        </button>
+
+    </div>
+
+    <!-- PATIENT INFORMATION -->
+
     <div class="card">
-        <h4>Patient Information</h4>
 
-        <div class="grid">
-            <div>
+        <div class="card-title">
+            Patient Information
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
                 <label>Patient Name</label>
                 <input @bind="Form.PatientName" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Date of Birth</label>
                 <input type="date" @bind="Form.DOB" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Gender</label>
                 <select @bind="Form.Gender">
                     <option>Male</option>
@@ -29,100 +46,173 @@
                 </select>
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Phone</label>
                 <input @bind="Form.Phone" />
             </div>
 
-            <div class="full">
+            <div class="form-group full-width">
                 <label>Address</label>
                 <input @bind="Form.Address" />
             </div>
+
         </div>
+
     </div>
 
-    <!-- 🔹 INSURANCE -->
-    <div class="card">
-        <h4>Insurance Details</h4>
+    <!-- INSURANCE -->
 
-        <div class="grid">
-            <div>
+    <div class="card">
+
+        <div class="card-title">
+            Insurance Information
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
                 <label>Insurance Plan</label>
                 <input @bind="Form.InsurancePlan" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Policy Number</label>
                 <input @bind="Form.PolicyNumber" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Insured Name</label>
                 <input @bind="Form.InsuredName" />
             </div>
+
         </div>
+
     </div>
 
-    <!-- 🔹 CLAIM DETAILS -->
-    <div class="card">
-        <h4>Claim Details</h4>
+    <!-- CLAIM DETAILS -->
 
-        <div class="grid">
-            <div>
+    <div class="card">
+
+        <div class="card-title">
+            Claim Details
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
                 <label>Date of Illness</label>
                 <input type="date" @bind="Form.IllnessDate" />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label>Referring Provider</label>
                 <input @bind="Form.RefProvider" />
             </div>
 
-            <div>
-                <label>Diagnosis Code</label>
+            <div class="form-group">
+                <label>Diagnosis Code (ICD-10)</label>
                 <input @bind="Form.Diagnosis" />
             </div>
+
         </div>
+
     </div>
 
-    <!-- 🔹 SERVICE TABLE -->
+    <!-- SERVICES -->
+
     <div class="card">
-        <h4>Services</h4>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>CPT Code</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
+        <div class="services-header">
 
-            <tbody>
-                @foreach (var s in Services)
-                {
+            <div class="card-title">
+                Service Lines
+            </div>
+
+            <button class="btn-secondary"
+                    @onclick="AddRow">
+                + Add Service
+            </button>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
                     <tr>
-                        <td><input type="date" @bind="s.Date" /></td>
-                        <td><input @bind="s.CPT" /></td>
-                        <td><input @bind="s.Description" /></td>
-                        <td><input type="number" @bind="s.Amount" /></td>
+                        <th>Date</th>
+                        <th>CPT Code</th>
+                        <th>Description</th>
+                        <th>Amount</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
 
-        <button class="btn-secondary" @onclick="AddRow">+ Add Row</button>
+                <tbody>
+
+                    @foreach (var s in Services)
+                    {
+                        <tr>
+
+                            <td>
+                                <input type="date"
+                                       @bind="s.Date" />
+                            </td>
+
+                            <td>
+                                <input @bind="s.CPT" />
+                            </td>
+
+                            <td>
+                                <input @bind="s.Description" />
+                            </td>
+
+                            <td>
+                                <input type="number"
+                                       @bind="s.Amount" />
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
     </div>
 
-    <!-- 🔹 TOTAL -->
-    <div class="card total">
-        <h4>Total: $@TotalAmount</h4>
+    <!-- TOTAL -->
+
+    <div class="card total-card">
+
+        <div class="total-row">
+
+            <span>Total Claim Amount</span>
+
+            <strong>
+                $@TotalAmount.ToString("N2")
+            </strong>
+
+        </div>
+
     </div>
 
-    <!-- 🔹 ACTION -->
+    <!-- ACTIONS -->
+
     <div class="actions">
-        <button class="btn-primary" @onclick="Submit">Submit Claim</button>
+
+        <button class="btn-secondary"
+                @onclick="BackToBilling">
+            Cancel
+        </button>
+
+        <button class="btn-primary"
+                @onclick="Submit">
+            Submit Claim
+        </button>
+
     </div>
 
 </div>
@@ -131,26 +221,26 @@
 
     class ClaimForm
     {
-        public string PatientName { get; set; }
+        public string PatientName { get; set; } = "";
         public DateTime DOB { get; set; } = DateTime.Now;
         public string Gender { get; set; } = "Male";
-        public string Phone { get; set; }
-        public string Address { get; set; }
+        public string Phone { get; set; } = "";
+        public string Address { get; set; } = "";
 
-        public string InsurancePlan { get; set; }
-        public string PolicyNumber { get; set; }
-        public string InsuredName { get; set; }
+        public string InsurancePlan { get; set; } = "";
+        public string PolicyNumber { get; set; } = "";
+        public string InsuredName { get; set; } = "";
 
         public DateTime IllnessDate { get; set; } = DateTime.Now;
-        public string RefProvider { get; set; }
-        public string Diagnosis { get; set; }
+        public string RefProvider { get; set; } = "";
+        public string Diagnosis { get; set; } = "";
     }
 
     class ServiceLine
     {
         public DateTime Date { get; set; } = DateTime.Now;
-        public string CPT { get; set; }
-        public string Description { get; set; }
+        public string CPT { get; set; } = "";
+        public string Description { get; set; } = "";
         public decimal Amount { get; set; }
     }
 
@@ -158,10 +248,16 @@
 
     List<ServiceLine> Services = new()
     {
-        new ServiceLine()
+        new()
+        {
+            CPT="99213",
+            Description="Office Visit",
+            Amount=120
+        }
     };
 
-    decimal TotalAmount => Services.Sum(s => s.Amount);
+    decimal TotalAmount =>
+        Services.Sum(x => x.Amount);
 
     void AddRow()
     {
@@ -170,6 +266,11 @@
 
     void Submit()
     {
-        Console.WriteLine("Claim Submitted");
+        Nav.NavigateTo("/admin/billing");
+    }
+
+    void BackToBilling()
+    {
+        Nav.NavigateTo("/admin/billing");
     }
 }
