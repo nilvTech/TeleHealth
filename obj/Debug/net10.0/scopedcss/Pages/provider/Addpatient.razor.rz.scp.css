@@ -1,0 +1,242 @@
+.page-wrapper[b-aqd9rek6xv] {
+    padding: 24px;
+    background: #f5f9f9;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.page-header[b-aqd9rek6xv] {
+    background: white;
+    border-radius: 18px;
+    padding: 22px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    border: 1px solid #dbeeee;
+}
+
+.page-header h2[b-aqd9rek6xv] {
+    color: teal;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.page-header p[b-aqd9rek6xv] {
+    color: #6c8b8b;
+    font-size: 14px;
+}
+
+.header-actions[b-aqd9rek6xv] {
+    display: flex;
+    gap: 12px;
+}
+
+/* BUTTONS */
+.btn-primary[b-aqd9rek6xv],
+.btn-secondary[b-aqd9rek6xv],
+.upload-btn[b-aqd9rek6xv] {
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-primary[b-aqd9rek6xv] {
+    background: teal;
+    color: white;
+    padding: 12px 20px;
+}
+
+.btn-primary:hover[b-aqd9rek6xv] {
+    background: #0d8c8c;
+}
+
+.btn-secondary[b-aqd9rek6xv] {
+    background: #edf8f8;
+    color: teal;
+    padding: 12px 20px;
+}
+
+.upload-btn[b-aqd9rek6xv] {
+    background: #edf8f8;
+    color: teal;
+    padding: 10px 16px;
+}
+/* FORM CONTAINER */
+.form-container[b-aqd9rek6xv] {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 22px;
+}
+
+.right-column[b-aqd9rek6xv] {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* CARD */
+.card[b-aqd9rek6xv] {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid #dbeeee;
+    padding: 24px;
+}
+
+/* SECTION */
+.section-header[b-aqd9rek6xv] {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #edf7f7;
+    padding-bottom: 14px;
+}
+
+.section-header h3[b-aqd9rek6xv] {
+    color: teal;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* PROFILE */
+.profile-upload[b-aqd9rek6xv] {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.avatar[b-aqd9rek6xv] {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: teal;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* GRID */
+.form-grid[b-aqd9rek6xv] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.full-width[b-aqd9rek6xv] {
+    grid-column: span 2;
+}
+
+/* FORM */
+.form-group[b-aqd9rek6xv] {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label[b-aqd9rek6xv] {
+    margin-bottom: 8px;
+    color: teal;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* INPUTS */
+input[b-aqd9rek6xv],
+select[b-aqd9rek6xv],
+textarea[b-aqd9rek6xv] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #cfe5e5;
+    background: white;
+    color: #355858;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+input:focus[b-aqd9rek6xv],
+select:focus[b-aqd9rek6xv],
+textarea:focus[b-aqd9rek6xv] {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.1);
+}
+
+textarea[b-aqd9rek6xv] {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* CHECKBOX */
+.checkbox-section[b-aqd9rek6xv] {
+    margin-top: 26px;
+}
+
+.checkbox-section h4[b-aqd9rek6xv] {
+    color: teal;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.checkbox-group[b-aqd9rek6xv] {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 14px;
+}
+
+.checkbox-group label[b-aqd9rek6xv] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #557575;
+    font-size: 14px;
+}
+
+.checkbox-group input[type="checkbox"][b-aqd9rek6xv] {
+    width: 16px;
+    height: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+
+    .form-container[b-aqd9rek6xv] {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-row[b-aqd9rek6xv] {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .page-header[b-aqd9rek6xv] {
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+    }
+
+    .stats-row[b-aqd9rek6xv] {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid[b-aqd9rek6xv] {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width[b-aqd9rek6xv] {
+        grid-column: span 1;
+    }
+
+    .checkbox-group[b-aqd9rek6xv] {
+        grid-template-columns: 1fr;
+    }
+}

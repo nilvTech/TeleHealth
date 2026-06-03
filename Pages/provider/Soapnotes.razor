@@ -1,0 +1,77 @@
+@page "/provider/soapnotes"
+
+<div class="soap-container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2>SOAP Notes</h2>
+
+        <div class="actions">
+            <button class="btn-ai" @onclick="GenerateAI">AI Generate</button>
+            <button class="btn-save" @onclick="SaveNotes">Save Note</button>
+        </div>
+    </div>
+
+    <!-- SOAP GRID -->
+    <div class="soap-grid">
+
+        <!-- SUBJECTIVE -->
+        <div class="soap-card">
+            <h3>S - Subjective</h3>
+            <textarea @bind="soap.Subjective" placeholder="Patient symptoms, complaints..."></textarea>
+        </div>
+
+        <!-- OBJECTIVE -->
+        <div class="soap-card">
+            <h3>O - Objective</h3>
+            <textarea @bind="soap.Objective" placeholder="Vitals, observations, exam findings..."></textarea>
+        </div>
+
+        <!-- ASSESSMENT -->
+        <div class="soap-card">
+            <h3>A - Assessment</h3>
+            <textarea @bind="soap.Assessment" placeholder="Diagnosis, clinical judgment..."></textarea>
+        </div>
+
+        <!-- PLAN -->
+        <div class="soap-card">
+            <h3>P - Plan</h3>
+            <textarea @bind="soap.Plan" placeholder="Treatment plan, medications, follow-ups..."></textarea>
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+    // SOAP Model
+    private SoapModel soap = new();
+
+    // Save Action
+    private void SaveNotes()
+    {
+        Console.WriteLine("SOAP Note Saved:");
+        Console.WriteLine($"S: {soap.Subjective}");
+        Console.WriteLine($"O: {soap.Objective}");
+        Console.WriteLine($"A: {soap.Assessment}");
+        Console.WriteLine($"P: {soap.Plan}");
+    }
+
+    // AI Generate (Dummy logic for now)
+    private void GenerateAI()
+    {
+        soap.Subjective = "Patient complains of headache and fatigue for 2 days.";
+        soap.Objective = "BP 140/90, HR 80 bpm. Mild fever observed.";
+        soap.Assessment = "Possible viral infection with hypertension.";
+        soap.Plan = "Prescribe paracetamol, hydration, follow-up in 3 days.";
+    }
+
+    // Model
+    public class SoapModel
+    {
+        public string Subjective { get; set; } = "";
+        public string Objective { get; set; } = "";
+        public string Assessment { get; set; } = "";
+        public string Plan { get; set; } = "";
+    }
+}

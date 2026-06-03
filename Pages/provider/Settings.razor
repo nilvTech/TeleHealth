@@ -1,0 +1,515 @@
+@page "/provider/settings"
+
+<div class="settings-container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h2>Settings</h2>
+            <p class="sub-text">
+                Manage provider profile and account settings
+            </p>
+        </div>
+
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+
+        <button class="tab @(activeTab == "password" ? "active" : "")"
+                @onclick="@(() => SetTab("password"))">
+            Password
+        </button>
+
+        <button class="tab @(activeTab == "profile" ? "active" : "")"
+                @onclick="@(() => SetTab("profile"))">
+            Profile
+        </button>
+
+    </div>
+
+    <!-- PASSWORD -->
+    @if (activeTab == "password")
+    {
+        <div class="card">
+
+            <div class="card-header">
+                <h3>Change Password</h3>
+            </div>
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Current Password *</label>
+
+                    <input type="password"
+                           @bind="currentPassword"
+                           placeholder="Current Password" />
+                </div>
+
+                <div>
+                    <label>New Password *</label>
+
+                    <input type="password"
+                           @bind="newPassword"
+                           placeholder="New Password" />
+                </div>
+
+                <div>
+                    <label>Confirm Password *</label>
+
+                    <input type="password"
+                           @bind="confirmPassword"
+                           placeholder="Confirm Password" />
+                </div>
+
+            </div>
+
+            <div class="requirements">
+
+                <h5>Password Requirements</h5>
+
+                <ul>
+                    <li>Minimum 8 characters</li>
+                    <li>1 Uppercase Letter</li>
+                    <li>1 Lowercase Letter</li>
+                    <li>1 Number</li>
+                    <li>1 Special Character</li>
+                </ul>
+
+            </div>
+
+            <div class="actions">
+
+                <button class="btn-primary"
+                        @onclick="ChangePassword">
+                    Change Password
+                </button>
+
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(passwordMessage))
+            {
+                <div class="message-box">
+                    @passwordMessage
+                </div>
+            }
+
+        </div>
+    }
+
+    <!-- PROFILE -->
+    @if (activeTab == "profile")
+    {
+        <div class="card">
+
+            <div class="profile-header">
+
+                <div>
+                    <h3>Provider Profile</h3>
+
+                    <p class="sub-text">
+                        Personal and professional details
+                    </p>
+                </div>
+
+                @if (!isEditing)
+                {
+                    <button class="btn-primary small"
+                            @onclick="EnableEdit">
+                        Edit Profile
+                    </button>
+                }
+
+            </div>
+
+            <div class="profile-layout">
+
+                <!-- LEFT -->
+                <div class="profile-left">
+
+                    <div class="avatar">
+                        MB
+                    </div>
+
+                    <h4>@FullName</h4>
+
+                    <p>@Speciality</p>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="details-grid">
+
+                    @if (!isEditing)
+                    {
+                        <!-- VIEW MODE -->
+
+                        <div class="detail-item">
+                            <span>Provider Type</span>
+                            <b>@ProviderType</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Experience</span>
+                            <b>@Experience</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Display Name</span>
+                            <b>@DisplayName</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Gender</span>
+                            <b>@Gender</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Full Name</span>
+                            <b>@FullName</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Date Of Birth</span>
+                            <b>@DOB</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Email</span>
+                            <b>@Email</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Phone</span>
+                            <b>@Phone</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>NPI Number</span>
+                            <b>@NPI</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>License Number</span>
+                            <b>@LicenseNo</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>DEA Number</span>
+                            <b>@DEANumber</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>State Licensed</span>
+                            <b>@StateLicensed</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Speciality</span>
+                            <b>@Speciality</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Department</span>
+                            <b>@Department</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Clinic</span>
+                            <b>@Clinic</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Provider Role</span>
+                            <b>@Role</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Secondary Role</span>
+                            <b>@SecondaryRole</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Address</span>
+                            <b>@Address</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>City</span>
+                            <b>@City</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>State</span>
+                            <b>@State</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Zip Code</span>
+                            <b>@ZipCode</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Language</span>
+                            <b>@Language</b>
+                        </div>
+
+                        <div class="detail-item">
+                            <span>Timezone</span>
+                            <b>@Timezone</b>
+                        </div>
+
+                        <div class="detail-item full">
+                            <span>Bio</span>
+
+                            <b>@Bio</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <!-- EDIT MODE -->
+
+                        <div>
+                            <label>Provider Type</label>
+                            <input @bind="ProviderType" />
+                        </div>
+
+                        <div>
+                            <label>Experience</label>
+                            <input @bind="Experience" />
+                        </div>
+
+                        <div>
+                            <label>Display Name</label>
+                            <input @bind="DisplayName" />
+                        </div>
+
+                        <div>
+                            <label>Gender</label>
+                            <input @bind="Gender" />
+                        </div>
+
+                        <div>
+                            <label>Full Name</label>
+                            <input @bind="FullName" />
+                        </div>
+
+                        <div>
+                            <label>Date Of Birth</label>
+                            <input @bind="DOB" />
+                        </div>
+
+                        <div>
+                            <label>Email</label>
+                            <input @bind="Email" />
+                        </div>
+
+                        <div>
+                            <label>Phone</label>
+                            <input @bind="Phone" />
+                        </div>
+
+                        <div>
+                            <label>NPI Number</label>
+                            <input @bind="NPI" />
+                        </div>
+
+                        <div>
+                            <label>License Number</label>
+                            <input @bind="LicenseNo" />
+                        </div>
+
+                        <div>
+                            <label>DEA Number</label>
+                            <input @bind="DEANumber" />
+                        </div>
+
+                        <div>
+                            <label>State Licensed</label>
+                            <input @bind="StateLicensed" />
+                        </div>
+
+                        <div>
+                            <label>Speciality</label>
+                            <input @bind="Speciality" />
+                        </div>
+
+                        <div>
+                            <label>Department</label>
+                            <input @bind="Department" />
+                        </div>
+
+                        <div>
+                            <label>Clinic</label>
+                            <input @bind="Clinic" />
+                        </div>
+
+                        <div>
+                            <label>Provider Role</label>
+                            <input @bind="Role" />
+                        </div>
+
+                        <div>
+                            <label>Secondary Role</label>
+                            <input @bind="SecondaryRole" />
+                        </div>
+
+                        <div>
+                            <label>Address</label>
+                            <input @bind="Address" />
+                        </div>
+
+                        <div>
+                            <label>City</label>
+                            <input @bind="City" />
+                        </div>
+
+                        <div>
+                            <label>State</label>
+                            <input @bind="State" />
+                        </div>
+
+                        <div>
+                            <label>Zip Code</label>
+                            <input @bind="ZipCode" />
+                        </div>
+
+                        <div>
+                            <label>Language</label>
+                            <input @bind="Language" />
+                        </div>
+
+                        <div>
+                            <label>Timezone</label>
+                            <input @bind="Timezone" />
+                        </div>
+
+                        <div class="full-width">
+                            <label>Bio</label>
+                            <textarea @bind="Bio"></textarea>
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+            @if (isEditing)
+            {
+                <div class="actions">
+
+                    <button class="btn-primary"
+                            @onclick="SaveProfile">
+                        Save Profile
+                    </button>
+
+                    <button class="btn-secondary"
+                            @onclick="CancelEdit">
+                        Cancel
+                    </button>
+
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(profileMessage))
+            {
+                <div class="message-box">
+                    @profileMessage
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
+
+@code {
+
+    private string activeTab = "password";
+
+    // PASSWORD
+    private string currentPassword = "";
+    private string newPassword = "";
+    private string confirmPassword = "";
+    private string passwordMessage = "";
+
+    // PROFILE
+    private bool isEditing = false;
+    private string profileMessage = "";
+
+    private string ProviderType = "MD";
+    private string Experience = "10 Years";
+    private string DisplayName = "Dr. Brown";
+    private string Gender = "Male";
+    private string FullName = "Dr. Michael Brown";
+    private string DOB = "12/10/1985";
+    private string Email = "mic.brown@email.com";
+    private string Phone = "(657) 606-8688";
+    private string NPI = "9876543210";
+    private string LicenseNo = "45607867";
+    private string DEANumber = "DEA908776";
+    private string StateLicensed = "California";
+    private string Speciality = "Internal Medicine";
+    private string Department = "Primary Care";
+    private string Clinic = "TeleHealth Medical Center";
+    private string Role = "Admin";
+    private string SecondaryRole = "Provider";
+    private string Address = "102 Main Street";
+    private string City = "Los Angeles";
+    private string State = "CA";
+    private string ZipCode = "90001";
+    private string Language = "English";
+    private string Timezone = "PST";
+
+    private string Bio =
+        "Experienced provider specialized in CCM, RPM, PCM and telehealth care management programs.";
+
+    private void SetTab(string tab)
+    {
+        activeTab = tab;
+    }
+
+    private void ChangePassword()
+    {
+        if (string.IsNullOrWhiteSpace(currentPassword) ||
+            string.IsNullOrWhiteSpace(newPassword) ||
+            string.IsNullOrWhiteSpace(confirmPassword))
+        {
+            passwordMessage = "All fields are required.";
+            return;
+        }
+
+        if (newPassword != confirmPassword)
+        {
+            passwordMessage = "Passwords do not match.";
+            return;
+        }
+
+        if (newPassword.Length < 8)
+        {
+            passwordMessage = "Password must be at least 8 characters.";
+            return;
+        }
+
+        passwordMessage = "Password changed successfully.";
+    }
+
+    private void EnableEdit()
+    {
+        isEditing = true;
+    }
+
+    private void SaveProfile()
+    {
+        profileMessage = "Profile updated successfully.";
+        isEditing = false;
+    }
+
+    private void CancelEdit()
+    {
+        isEditing = false;
+    }
+}

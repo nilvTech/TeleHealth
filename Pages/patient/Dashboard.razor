@@ -1,0 +1,145 @@
+@page "/patient/dashboard"
+@layout PatientLayout
+
+<div class="patient-dashboard">
+
+    <!-- 🔹 HEADER -->
+    <div class="dashboard-header">
+        <h2>Welcome, Sarah Johnson 👋</h2>
+    </div>
+
+    <!-- 🔹 MAIN GRID -->
+    <div class="dashboard-grid">
+
+        <!-- LEFT SIDE -->
+        <div class="left-panel">
+
+            <!-- 🔹 UPCOMING APPOINTMENT -->
+            <div class="card highlight">
+                <h4>Upcoming Appointment</h4>
+
+                <p><b>Doctor:</b> Dr. Michael Smith (Cardiology)</p>
+                <p><b>Date:</b> 10 May 2026</p>
+                <p><b>Time:</b> 10:30 AM</p>
+                <p><b>Type:</b> Teleconsultation</p>
+                <p><b>Status:</b> Confirmed</p>
+
+                <button class="btn-primary">Join Call</button>
+            </div>
+
+            <!-- 🔹 HEALTH SUMMARY -->
+            <div class="card">
+                <h4>Health Summary</h4>
+
+                <div class="health-grid">
+                    <div>
+                        <span>Blood Pressure</span>
+                        <strong>130/85</strong>
+                    </div>
+                    <div>
+                        <span>Heart Rate</span>
+                        <strong>78 bpm</strong>
+                    </div>
+                    <div>
+                        <span>Blood Sugar</span>
+                        <strong>140 mg/dL</strong>
+                    </div>
+                    <div>
+                        <span>BMI</span>
+                        <strong>24.5</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🔹 RECENT VISITS -->
+            <div class="card">
+                <h4>Recent Visits</h4>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var v in Visits)
+                        {
+                            <tr>
+                                <td>@v.Date</td>
+                                <td>@v.Doctor</td>
+                                <td>@v.Type</td>
+                                <td>@v.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-panel">
+
+            <!-- 🔹 QUICK LINKS (UPDATED) -->
+            <div class="card">
+                <h4>Quick Actions</h4>
+
+                <div class="quick-links">
+                    <a href="patient/appointment">+ Book Appointment</a>
+                    <a href="patient/orders?tab=prescriptions">📄 View Medical Records</a>
+                    <a href="patient/orders?tab=prescriptions">💊 Order Medication</a>
+                    <a href="patient/billing">💳 View Billing</a>
+                    <a href="patient/appointment">📅 Appointment History</a>
+                </div>
+            </div>
+
+            <!-- 🔹 NOTIFICATIONS -->
+            <div class="card">
+                <h4>Notifications</h4>
+
+                <ul class="notification-list">
+                    <li>🔔 Appointment confirmed for 10 May</li>
+                    <li>💊 Prescription ready for pickup</li>
+                    <li>📄 Lab report uploaded</li>
+                </ul>
+            </div>
+
+            <!-- 🔹 BILLING SUMMARY -->
+            <div class="card">
+                <h4>Billing Summary</h4>
+
+                <p><b>Total Due:</b> $120</p>
+                <p><b>Last Payment:</b> $80 (Paid)</p>
+                <p><b>Insurance:</b> Aetna</p>
+
+                <a href="#" class="link">View Details →</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    class Visit
+    {
+        public string Date { get; set; }
+        public string Doctor { get; set; }
+        public string Type { get; set; }
+        public string Status { get; set; }
+    }
+
+    List<Visit> Visits = new()
+    {
+        new Visit { Date="05 May", Doctor="Dr. Lee", Type="Tele", Status="Completed" },
+        new Visit { Date="28 Apr", Doctor="Dr. Brown", Type="In-person", Status="Completed" },
+        new Visit { Date="20 Apr", Doctor="Dr. Smith", Type="Tele", Status="Completed" }
+    };
+    
+}

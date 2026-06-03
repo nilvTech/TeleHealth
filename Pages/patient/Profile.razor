@@ -1,0 +1,485 @@
+@page "/patient/profile"
+@layout PatientLayout
+
+<h2 class="page-title">Profile & Insurance</h2>
+
+<div class="profile-container">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header-card">
+
+        <div class="profile-left">
+
+            <div class="profile-avatar">
+                SJ
+            </div>
+
+            <div>
+                <h3>Sarah Johnson</h3>
+                <p>Patient ID: PT-100245</p>
+                <p>Email: sarah.johnson@email.com</p>
+                <p>Phone: +1 (555) 210-4587</p>
+            </div>
+
+        </div>
+
+        <div class="profile-status">
+            <span class="active-badge">Active Patient</span>
+        </div>
+
+    </div>
+
+    <!-- UPDATE BUTTON -->
+    
+
+    <!-- MAIN GRID -->
+    <div class="profile-grid">
+
+        <!-- LEFT -->
+        <div class="left-panel">
+
+            <!-- PERSONAL INFO -->
+            <div class="card">
+
+                <div class="card-header">
+                    <h3>Personal Information</h3>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>First Name</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.FirstName" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.FirstName</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.LastName" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.LastName</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input type="date"
+                                   class="input"
+                                   @bind="Profile1.DOB" />
+                        }
+                        else
+                        {
+                            <div class="static-field">
+                                @Profile1.DOB.ToShortDateString()
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+
+                        @if (IsEditMode)
+                        {
+                            <select class="input"
+                                    @bind="Profile1.Gender">
+                                <option>Female</option>
+                                <option>Male</option>
+                                <option>Other</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.Gender</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.Phone" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.Phone</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.Email" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.Email</div>
+                        }
+                    </div>
+
+                    <div class="form-group full">
+                        <label>Address</label>
+
+                        @if (IsEditMode)
+                        {
+                            <textarea class="input textarea"
+                                      @bind="Profile1.Address"></textarea>
+                        }
+                        else
+                        {
+                            <div class="static-field big">
+                                @Profile1.Address
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>City</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.City" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.City</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.State" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.State</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>ZIP Code</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.Zip" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.Zip</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Pharmacy</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Profile1.Pharmacy" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Profile1.Pharmacy</div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EMERGENCY -->
+            <div class="card">
+
+                <div class="card-header">
+                    <h3>Emergency Contact</h3>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Contact Name</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Emergency.Name" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Emergency.Name</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Relationship</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Emergency.Relationship" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Emergency.Relationship</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Emergency.Phone" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Emergency.Phone</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Emergency.Email" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Emergency.Email</div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="top-action-bar">
+
+                @if (!IsEditMode)
+                {
+                    <button class="btn-save"
+                            @onclick="EnableEdit">
+                        Update Profile
+                    </button>
+                }
+
+                else
+                {
+                    <button class="btn-save"
+                            @onclick="SaveProfile">
+                        Save Changes
+                    </button>
+                }
+
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right-panel">
+
+            <!-- INSURANCE -->
+            <div class="card">
+
+                <div class="card-header">
+                    <h3>Insurance Information</h3>
+                </div>
+
+                <div class="insurance-box">
+
+                    <div class="insurance-item">
+                        <label>Insurance Provider</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Insurance.Provider" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Insurance.Provider</div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Policy Number</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Insurance.PolicyNumber" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Insurance.PolicyNumber</div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Member ID</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Insurance.MemberId" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Insurance.MemberId</div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Group Number</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input class="input"
+                                   @bind="Insurance.GroupNumber" />
+                        }
+                        else
+                        {
+                            <div class="static-field">@Insurance.GroupNumber</div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Coverage Type</label>
+
+                        @if (IsEditMode)
+                        {
+                            <select class="input"
+                                    @bind="Insurance.CoverageType">
+                                <option>PPO</option>
+                                <option>HMO</option>
+                                <option>EPO</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <div class="static-field">@Insurance.CoverageType</div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Effective Date</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input type="date"
+                                   class="input"
+                                   @bind="Insurance.EffectiveDate" />
+                        }
+                        else
+                        {
+                            <div class="static-field">
+                                @Insurance.EffectiveDate.ToShortDateString()
+                            </div>
+                        }
+                    </div>
+
+                    <div class="insurance-item">
+                        <label>Insurance Card</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input type="file"
+                                   class="file-upload" />
+                        }
+                        else
+                        {
+                            <div class="insurance-card-preview">
+                                Insurance_Card_2026.pdf
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    bool IsEditMode = false;
+
+    class ProfileModel
+    {
+        public string FirstName { get; set; } = "Sarah";
+        public string LastName { get; set; } = "Johnson";
+        public DateTime DOB { get; set; } = new DateTime(1992, 5, 12);
+        public string Gender { get; set; } = "Female";
+        public string Phone { get; set; } = "+1 (555) 210-4587";
+        public string Email { get; set; } = "sarah.johnson@email.com";
+        public string Address { get; set; } = "245 Green Valley Road, Dallas, Texas";
+        public string City { get; set; } = "Dallas";
+        public string State { get; set; } = "Texas";
+        public string Zip { get; set; } = "75001";
+        public string Pharmacy { get; set; } = "Walgreens Pharmacy";
+    }
+
+    class EmergencyModel
+    {
+        public string Name { get; set; } = "Michael Johnson";
+        public string Relationship { get; set; } = "Spouse";
+        public string Phone { get; set; } = "+1 (555) 998-1456";
+        public string Email { get; set; } = "michael@email.com";
+    }
+
+    class InsuranceModel
+    {
+        public string Provider { get; set; } = "Blue Cross Blue Shield";
+        public string PolicyNumber { get; set; } = "POL-458712";
+        public string MemberId { get; set; } = "MBR-874512";
+        public string GroupNumber { get; set; } = "GRP-2210";
+        public string CoverageType { get; set; } = "PPO";
+        public DateTime EffectiveDate { get; set; } = DateTime.Today.AddMonths(-6);
+    }
+
+    ProfileModel Profile1 = new();
+    EmergencyModel Emergency = new();
+    InsuranceModel Insurance = new();
+
+    void EnableEdit()
+    {
+        IsEditMode = true;
+    }
+
+    void SaveProfile()
+    {
+        IsEditMode = false;
+    }
+}

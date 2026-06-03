@@ -1,0 +1,154 @@
+.billing-container {
+    color: teal;
+}
+
+/* HEADER */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* SUMMARY */
+.summary-panel {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: teal;
+    border: 1px solid teal;
+    padding: 15px;
+    border-radius: 10px;
+    width: 160px;
+    color: white;
+}
+
+.summary-card h6 {
+    font-size: 12px;
+    color: white;
+}
+
+.summary-card h4 {
+    margin-top: 5px;
+}
+
+/* STATUS COLORS */
+.submitted { border-left: 4px solid #2196f3; }
+.paid { border-left: 4px solid #4caf50; }
+.rejected { border-left: 4px solid #f44336; }
+.amount { border-left: 4px solid #ffc107; }
+
+/* FILTER */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    padding: 8px;
+    border: 1px solid teal;
+    border-radius: 6px;
+    width: 250px;
+}
+
+/* CHARTS */
+.charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.chart-card {
+    background: white;
+    border: 1px solid teal;
+    border-radius: 12px;
+    padding: 20px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-placeholder {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-size: 16px;
+}
+
+/* TABLE */
+.table-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #e0f2f1; /* 🔥 softer line */
+    white-space: nowrap;
+}
+
+tr:hover {
+    background: #f5fdfc;
+}
+
+/* STATUS TEXT */
+.status.submitted { color: #2196f3; }
+.status.paid { color: #4caf50; }
+.status.rejected { color: #f44336; }
+
+/* 🔥 ACTION BUTTON FIX */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* BUTTONS */
+.btn-primary {
+    background: teal;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* ❌ removed margin-left:auto */
+
+.btn-primary:hover {
+    background: #146C63;
+}
+
+.btn-secondary {
+    background: teal;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #0f7f7a;
+}
+
+/* TITLE */
+.h2 {
+    color: teal;
+}

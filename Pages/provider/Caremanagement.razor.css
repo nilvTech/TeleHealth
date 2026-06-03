@@ -1,0 +1,464 @@
+/* MAIN CONTAINER */
+.care-container {
+    padding: 20px;
+    background: #f8fafc;
+    min-height: 100vh;
+    color: teal;
+    font-size: 14px;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: teal;
+}
+
+/* HEADER ACTIONS */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* DROPDOWN */
+.patient-select {
+    min-width: 260px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    color: teal;
+    font-size: 14px;
+}
+
+/* BUTTONS */
+.btn-add,
+.btn-secondary,
+.btn-edit,
+.btn-save {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-add {
+    background: teal;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #0d9488;
+}
+
+.btn-secondary {
+    background: #64748b;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #475569;
+}
+
+/* 🔥 EDIT BUTTON FIX */
+.btn-edit {
+    background:teal;
+    color: white;
+    min-width: 90px;
+}
+
+.btn-edit:hover {
+    background:teal;
+}
+
+/* SAVE BUTTON */
+.btn-save {
+    background:teal;
+    color: white;
+    min-width: 90px;
+}
+
+.btn-save:hover {
+    background: teal;
+}
+
+/* GRID */
+.care-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* PANELS */
+.left-panel,
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* CARD HEADER */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 10px;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: teal;
+    font-size: 16px;
+}
+
+/* PROFILE GRID */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* PROFILE ITEM */
+.profile-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-item label {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.profile-item span {
+    font-size: 14px;
+    color: teal;
+}
+
+/* EDIT FORM */
+.edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.edit-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-group.full-width {
+    grid-column: span 2;
+}
+
+.edit-group label {
+    font-size: 13px;
+    color: teal;
+}
+
+/* INPUTS */
+.edit-group input,
+.edit-group select,
+.edit-group textarea,
+textarea,
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: teal;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.edit-group textarea,
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* FOCUS */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+/* RISK */
+.risk {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12px;
+}
+
+/* DEVICE GRID */
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+/* DEVICE CARD */
+.device-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.device-name {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.device-value {
+    font-size: 18px;
+    color: teal;
+    margin-bottom: 5px;
+}
+
+.trend {
+    font-size: 13px;
+}
+
+.trend.normal {
+    color: #16a34a;
+}
+
+.trend.critical {
+    color: #dc2626;
+}
+
+/* ALERTS */
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.alert.warning {
+    background: #fef2f2;
+    color: #dc2626;
+    border-left: 4px solid #dc2626;
+}
+
+.alert.info {
+    background: #ecfeff;
+    color: teal;
+    border-left: 4px solid teal;
+}
+
+/* CARE PLAN */
+.care-section {
+    margin-bottom: 20px;
+}
+
+.care-section-title {
+    font-size: 14px;
+    color: teal;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.care-list {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.care-list li {
+    margin-bottom: 8px;
+    color: teal;
+    line-height: 1.5;
+}
+
+/* VITALS */
+.vitals-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.vital-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.vital-label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.vital-value {
+    font-size: 18px;
+    color: teal;
+}
+
+/* GOALS */
+.goal-card {
+    margin-bottom: 14px;
+}
+
+.goal-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.goal-title {
+    color: teal;
+    font-size: 14px;
+}
+
+.goal-status {
+    font-size: 12px;
+    color: #16a34a;
+}
+
+/* PROGRESS */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: teal;
+}
+
+/* TABLE */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background: #f1f5f9;
+    color: teal;
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+}
+
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: teal;
+    font-size: 13px;
+}
+
+/* PROVIDER REVIEW */
+.provider-review {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.review-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.review-label {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.review-value {
+    color: teal;
+    font-size: 13px;
+}
+
+/* EMPTY MESSAGE */
+.empty-state {
+    padding: 40px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    color: #64748b;
+    border: 1px dashed #cbd5e1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+
+    .care-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-grid,
+    .edit-grid,
+    .device-grid,
+    .vitals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-group.full-width {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .patient-select {
+        width: 100%;
+    }
+
+    .btn-add,
+    .btn-edit,
+    .btn-save,
+    .btn-secondary {
+        width: 100%;
+    }
+}

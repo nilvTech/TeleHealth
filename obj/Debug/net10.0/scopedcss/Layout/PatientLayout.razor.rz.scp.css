@@ -1,0 +1,166 @@
+.layout[b-hf5ahct7ug] {
+    display: flex;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* SIDEBAR */
+.sidebar[b-hf5ahct7ug] {
+    width: 220px;
+    background:teal;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.logo[b-hf5ahct7ug] {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.menu a[b-hf5ahct7ug] {
+    display: block;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: #cbd5f5;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu a:hover[b-hf5ahct7ug] {
+   background: #7e9de0;
+    color: white;
+}
+
+.menu a.active[b-hf5ahct7ug] {
+    background: #049ca7;
+    color: white;
+}
+
+/* MAIN AREA */
+.main[b-hf5ahct7ug] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f1f5f9;
+}
+
+/* TOPBAR */
+.topbar[b-hf5ahct7ug] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.search[b-hf5ahct7ug] {
+    padding: 8px;
+    width: 250px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.user[b-hf5ahct7ug] {
+    font-weight: 500;
+    color: white;
+}
+
+/* CONTENT */
+.content[b-hf5ahct7ug] {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* SCROLLBAR (optional nice UI) */
+.content[b-hf5ahct7ug]::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content[b-hf5ahct7ug]::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+/* TOP BAR */
+.topbar[b-hf5ahct7ug] {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* RIGHT SECTION */
+.topbar-right[b-hf5ahct7ug] {
+    display: flex;
+    align-items: center;
+}
+
+/* USER INFO */
+.user-info[b-hf5ahct7ug] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* AVATAR */
+.user-avatar[b-hf5ahct7ug] {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #0f766e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* PUSH BOTTOM */
+.sidebar-bottom[b-hf5ahct7ug] {
+    margin-top: auto;
+    padding: 15px;
+}
+
+/* LOGOUT */
+.logout[b-hf5ahct7ug] {
+    display: block;
+    margin-bottom: 15px;
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+.logout:hover[b-hf5ahct7ug] {
+    color: #0f766e;
+}
+
+/* USER */
+.user-info[b-hf5ahct7ug] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-img[b-hf5ahct7ug] {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.user-name[b-hf5ahct7ug] {
+    font-size: 14px;
+    font-weight: 600;
+    color:teal;
+}
+
+.user-role[b-hf5ahct7ug] {
+    font-size: 12px;
+    color: #94a3b8;
+}

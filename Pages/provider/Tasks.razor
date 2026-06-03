@@ -1,0 +1,406 @@
+@page "/provider/tasks"
+
+@inject NavigationManager Nav
+
+<div class="tasks-container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div>
+            <h2>Tasks / Follow-ups</h2>
+        </div>
+
+        <button class="btn-add"
+                @onclick="GoToCreate">
+            + Add Task
+        </button>
+
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-bar">
+
+        <input class="search-box"
+               placeholder="Search task or patient..."
+               @bind="SearchText" />
+
+        <select class="filter-select"
+                @bind="SelectedStatus">
+
+            <option value="">All Status</option>
+            <option>Pending</option>
+            <option>In Progress</option>
+            <option>Completed</option>
+
+        </select>
+
+    </div>
+
+    <!-- TASK TABLE -->
+    <div class="card">
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Patient</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Assigned To</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var task in FilteredTasks)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="task-title">
+                                @task.Name
+                            </div>
+
+                            <div class="task-desc">
+                                @task.Description
+                            </div>
+                        </td>
+
+                        <td>@task.Patient</td>
+
+                        <td>
+                            <span class="tag">
+                                @task.Category
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="priority @GetPriorityClass(task.Priority)">
+                                @task.Priority
+                            </span>
+                        </td>
+
+                        <td>@task.DueDate.ToShortDateString()</td>
+
+                        <td>
+                            <span class="status @GetStatusClass(task.Status)">
+                                @task.Status
+                            </span>
+                        </td>
+
+                        <td>@task.AssignedTo</td>
+
+                        <td class="action-cell">
+
+                            <div class="action-menu"
+                                 @onclick:stopPropagation="true">
+
+                                <button class="menu-btn"
+                                        @onclick="() => ToggleMenu(task)">
+                                    ⋮
+                                </button>
+
+                                @if (task.ShowMenu)
+                                {
+                                    <div class="menu-dropdown">
+
+                                        @if (task.Status != "Pending")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='@(() => HandleAction(() => UpdateStatus(task, "Pending")))'>
+
+                                                <span>🕒</span>
+                                                <span>Pending</span>
+
+                                            </button>
+                                        }
+
+                                        @if (task.Status != "In Progress")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='@(() => HandleAction(() => UpdateStatus(task, "In Progress")))'>
+
+                                                <span>⏳</span>
+                                                <span>In Progress</span>
+
+                                            </button>
+                                        }
+
+                                        @if (task.Status != "Completed")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='@(() => HandleAction(() => UpdateStatus(task, "Completed")))'>
+
+                                                <span>✔</span>
+                                                <span>Completed</span>
+
+                                            </button>
+                                        }
+
+                                        <div class="menu-divider"></div>
+
+                                        <button class="menu-item danger-item"
+                                                @onclick='@(() => HandleAction(() => DeleteTask(task.Id)))'>
+
+                                            <span>🗑</span>
+                                            <span>Delete</span>
+
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string SearchText = "";
+    private string SelectedStatus = "";
+
+    private List<TaskModel> tasks = new()
+    {
+        new TaskModel
+        {
+            Id=1,
+            Name="Follow-up Call",
+            Patient="Sarah Johnson",
+            DueDate=DateTime.Today,
+            Status="Pending",
+            Priority="High",
+            Category="Follow-up",
+            AssignedTo="Nurse Emily",
+            Description="Call patient regarding BP readings."
+        },
+
+        new TaskModel
+        {
+            Id=2,
+            Name="Review Lab Report",
+            Patient="Michael Brown",
+            DueDate=DateTime.Today.AddDays(1),
+            Status="In Progress",
+            Priority="Medium",
+            Category="Lab",
+            AssignedTo="Dr. Michael",
+            Description="Review HbA1c and cholesterol results."
+        },
+
+        new TaskModel
+        {
+            Id=3,
+            Name="Care Plan Update",
+            Patient="Emily Davis",
+            DueDate=DateTime.Today.AddDays(2),
+            Status="Completed",
+            Priority="Low",
+            Category="Care Plan",
+            AssignedTo="Nurse Linda",
+            Description="Update lifestyle management plan."
+        },
+
+        new TaskModel
+        {
+            Id=4,
+            Name="Medication Refill Review",
+            Patient="Robert Wilson",
+            DueDate=DateTime.Today.AddDays(3),
+            Status="Pending",
+            Priority="High",
+            Category="Medication",
+            AssignedTo="Nurse Kelly",
+            Description="Verify refill request and dosage."
+        },
+
+        new TaskModel
+        {
+            Id=5,
+            Name="Remote Monitoring Check",
+            Patient="Olivia White",
+            DueDate=DateTime.Today.AddDays(1),
+            Status="In Progress",
+            Priority="Medium",
+            Category="RPM",
+            AssignedTo="Nurse Sam",
+            Description="Review oxygen saturation readings."
+        },
+
+        new TaskModel
+        {
+            Id=6,
+            Name="Diet Counseling Session",
+            Patient="David Lee",
+            DueDate=DateTime.Today.AddDays(5),
+            Status="Pending",
+            Priority="Low",
+            Category="Nutrition",
+            AssignedTo="Dietician Anna",
+            Description="Schedule diabetic nutrition counseling."
+        },
+
+        new TaskModel
+        {
+            Id=7,
+            Name="Cardiology Follow-up",
+            Patient="Sophia Martinez",
+            DueDate=DateTime.Today.AddDays(4),
+            Status="Completed",
+            Priority="High",
+            Category="Cardiology",
+            AssignedTo="Dr. Harris",
+            Description="Patient follow-up after ECG review."
+        },
+
+        new TaskModel
+        {
+            Id=8,
+            Name="Insurance Verification",
+            Patient="James Taylor",
+            DueDate=DateTime.Today.AddDays(2),
+            Status="Pending",
+            Priority="Medium",
+            Category="Administrative",
+            AssignedTo="Admin Rachel",
+            Description="Verify updated insurance coverage."
+        },
+
+        new TaskModel
+        {
+            Id=9,
+            Name="Asthma Assessment",
+            Patient="Linda Anderson",
+            DueDate=DateTime.Today.AddDays(6),
+            Status="In Progress",
+            Priority="Low",
+            Category="Assessment",
+            AssignedTo="Nurse Kate",
+            Description="Evaluate inhaler usage and symptoms."
+        },
+
+        new TaskModel
+        {
+            Id=10,
+            Name="COPD Monitoring Review",
+            Patient="Daniel Thomas",
+            DueDate=DateTime.Today.AddDays(7),
+            Status="Completed",
+            Priority="High",
+            Category="RPM",
+            AssignedTo="Dr. Steven",
+            Description="Review breathing pattern and RPM alerts."
+        }
+    };
+
+    private IEnumerable<TaskModel> FilteredTasks =>
+        tasks.Where(x =>
+            (string.IsNullOrWhiteSpace(SearchText)
+             || x.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+             || x.Patient.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            &&
+            (string.IsNullOrWhiteSpace(SelectedStatus)
+             || x.Status == SelectedStatus));
+
+    private void GoToCreate()
+    {
+        Nav.NavigateTo("/provider/addtask");
+    }
+
+    private void HandleAction(Action action)
+    {
+        action.Invoke();
+
+        foreach (var t in tasks)
+        {
+            t.ShowMenu = false;
+        }
+    }
+
+    private void UpdateStatus(TaskModel task, string status)
+    {
+        task.Status = status;
+    }
+
+    private void ToggleMenu(TaskModel selectedTask)
+    {
+        foreach (var t in tasks)
+        {
+            if (t != selectedTask)
+            {
+                t.ShowMenu = false;
+            }
+        }
+
+        selectedTask.ShowMenu = !selectedTask.ShowMenu;
+    }
+
+    private void DeleteTask(int id)
+    {
+        var task = tasks.FirstOrDefault(x => x.Id == id);
+
+        if (task != null)
+        {
+            tasks.Remove(task);
+        }
+
+        foreach (var t in tasks)
+        {
+            t.ShowMenu = false;
+        }
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Pending" => "status-pending",
+        "In Progress" => "status-progress",
+        "Completed" => "status-completed",
+        _ => ""
+    };
+
+    private string GetPriorityClass(string priority) => priority switch
+    {
+        "High" => "priority-high",
+        "Medium" => "priority-medium",
+        "Low" => "priority-low",
+        _ => ""
+    };
+
+    public class TaskModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+
+        public DateTime DueDate { get; set; }
+
+        public string Patient { get; set; } = "";
+
+        public string Status { get; set; } = "Pending";
+
+        public string Priority { get; set; } = "";
+
+        public string Category { get; set; } = "";
+
+        public string AssignedTo { get; set; } = "";
+
+        public string Description { get; set; } = "";
+
+        public bool ShowMenu { get; set; }
+    }
+}

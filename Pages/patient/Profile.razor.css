@@ -1,0 +1,287 @@
+.page-title {
+    font-size: 34px;
+    font-weight: 700;
+    color: teal;
+    margin-bottom: 24px;
+}
+
+/* MAIN */
+.profile-container {
+    padding: 24px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+.profile-header-card {
+
+    background: linear-gradient(135deg, teal, #0d9a9a);
+
+    border-radius: 22px;
+
+    padding: 28px;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.profile-left {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.profile-avatar {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: teal;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.active-badge {
+
+    background: rgba(255,255,255,0.2);
+
+    padding: 10px 18px;
+
+    border-radius: 30px;
+
+    font-weight: 600;
+}
+
+/* GRID */
+.profile-grid {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 24px;
+}
+
+/* CARD */
+.card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    border: 1px solid #d8eeee;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    margin-bottom: 22px;
+}
+
+.card-header h3 {
+    color: teal;
+    font-size: 26px;
+}
+
+/* FORM */
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+.form-group label {
+
+    margin-bottom: 10px;
+
+    color: teal;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+/* INPUT */
+.input {
+
+    height: 52px;
+
+    border-radius: 14px;
+
+    border: 1px solid #cfe8e8;
+
+    padding: 0 16px;
+
+    font-size: 15px;
+
+    color: #155959;
+
+    background: #fcffff;
+}
+
+.input:focus {
+    outline: none;
+    border-color: teal;
+}
+
+.textarea {
+    min-height: 110px;
+    padding-top: 14px;
+}
+
+/* INSURANCE */
+.insurance-box {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.insurance-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.insurance-item label {
+
+    margin-bottom: 10px;
+
+    color: teal;
+
+    font-weight: 700;
+}
+
+/* FILE */
+.file-upload {
+
+    padding: 14px;
+
+    border: 2px dashed teal;
+
+    border-radius: 14px;
+
+    background: #f8ffff;
+}
+
+/* MEDICAL */
+.medical-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.medical-item {
+
+    background: #f7ffff;
+
+    border: 1px solid #d7eeee;
+
+    border-radius: 14px;
+
+    padding: 16px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.medical-item span {
+    color: #6d8f8f;
+}
+
+.medical-item strong {
+    color: teal;
+}
+
+/* SAVE */
+.save-bar {
+    margin-top: 20px;
+}
+
+.btn-save {
+
+    width:25%;
+
+    height: 56px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: teal;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    background: #067777;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-group.full{
+        grid-column:span 1;
+    }
+
+    .profile-header-card{
+        flex-direction:column;
+        gap:20px;
+        align-items:flex-start;
+    }
+}

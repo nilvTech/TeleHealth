@@ -1,0 +1,146 @@
+/* 🔹 CONTAINER */
+.settings-container[b-ptul0274q5] {
+    padding: 25px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* 🔹 TABS */
+.tabs-header[b-ptul0274q5] {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab[b-ptul0274q5] {
+    padding: 12px 22px;
+    background: #e0f2f1;
+    border-radius: 10px;
+    cursor: pointer;
+    color: teal;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.tab:hover[b-ptul0274q5] {
+    background: #b2dfdb;
+}
+
+.tab.active[b-ptul0274q5] {
+    background: teal;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* 🔹 CARD */
+.settings-card[b-ptul0274q5] {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 30px;
+    margin-bottom: 25px;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* SECTION TITLE */
+.settings-card h4[b-ptul0274q5] {
+    grid-column: 1 / -1;
+    color: teal;
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e0f2f1;
+    padding-bottom: 8px;
+}
+
+/* 🔹 LABELS (IMPORTANT UPGRADE) */
+.settings-card label[b-ptul0274q5] {
+    font-size: 15px;
+    font-weight: 600;
+    color: teal;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* 🔹 INPUTS */
+.settings-card input[b-ptul0274q5],
+.settings-card select[b-ptul0274q5] {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #b2dfdb;
+    width: 100%;
+    font-size: 14px;
+    background: #fafafa;
+
+    transition: all 0.2s ease;
+}
+
+/* PREFILLED LOOK */
+.settings-card input:focus[b-ptul0274q5],
+.settings-card select:focus[b-ptul0274q5] {
+    border-color: teal;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.15);
+}
+
+/* 🔹 CHECKBOX (MODERN STYLE) */
+.settings-card input[type="checkbox"][b-ptul0274q5] {
+    width: 18px;
+    height: 18px;
+    accent-color: teal;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+/* ALIGN CHECKBOX + LABEL */
+.settings-card input[type="checkbox"] + label[b-ptul0274q5] {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+/* 🔹 SAVE BUTTON */
+.save-section[b-ptul0274q5] {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.btn-primary[b-ptul0274q5] {
+    background: teal;
+    color: white;
+    padding: 12px 26px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-primary:hover[b-ptul0274q5] {
+    background: #146C63;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 🔹 TITLE */
+.h2[b-ptul0274q5] {
+    color: teal;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 RESPONSIVE */
+@media (max-width: 768px) {
+    .settings-card[b-ptul0274q5] {
+        grid-template-columns: 1fr;
+    }
+}
+.checkbox-row[b-ptul0274q5] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

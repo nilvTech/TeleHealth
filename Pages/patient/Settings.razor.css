@@ -1,0 +1,327 @@
+.page-title {
+    font-size: 34px;
+    font-weight: 700;
+    color: teal;
+    margin-bottom: 24px;
+}
+
+/* MAIN */
+.settings-container {
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+.settings-header {
+
+    background: linear-gradient(135deg, teal, #0f9d9d);
+
+    border-radius: 22px;
+
+    padding: 28px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+
+    width: 90px;
+
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: teal;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.header-left h3 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.header-left p {
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* BUTTONS */
+.btn-update,
+.btn-save {
+
+    min-width: 220px;
+
+    height: 54px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: white;
+
+    color: teal;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.btn-update:hover,
+.btn-save:hover {
+    transform: translateY(-2px);
+}
+
+/* GRID */
+.settings-grid {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 24px;
+}
+
+/* CARD */
+.card {
+
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+    border: 1px solid #d7eeee;
+
+    margin-bottom: 24px;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    margin-bottom: 24px;
+}
+
+.card-header h3 {
+    color: teal;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+/* SETTINGS */
+.setting-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.setting-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: #f8ffff;
+
+    border: 1px solid #dceeee;
+}
+
+.setting-item h4 {
+    color: teal;
+    margin-bottom: 6px;
+    font-size: 17px;
+}
+
+.setting-item p {
+    color: #688787;
+    font-size: 14px;
+}
+
+/* FORM */
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2,1fr);
+
+    gap: 20px;
+}
+
+.form-grid.single {
+    grid-template-columns: 1fr;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+.form-group label {
+
+    margin-bottom: 10px;
+
+    color: teal;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+/* INPUT */
+.input {
+
+    height: 52px;
+
+    border-radius: 14px;
+
+    border: 1px solid #d4eaea;
+
+    padding: 0 16px;
+
+    font-size: 15px;
+
+    color: #145f5f;
+
+    background: #fcffff;
+}
+
+.input:focus {
+    outline: none;
+    border-color: teal;
+}
+
+.textarea {
+
+    min-height: 110px;
+
+    padding-top: 14px;
+
+    resize: vertical;
+}
+
+/* DEVICES */
+.device-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.device-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid #d8eeee;
+
+    background: #f9ffff;
+}
+
+.device-item h4 {
+    color: teal;
+    margin-bottom: 6px;
+}
+
+.device-item p {
+    color: #6e8f8f;
+    font-size: 14px;
+}
+
+.device-status {
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    background: #e8fbfb;
+
+    color: teal;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+/* CHECKBOX */
+input[type="checkbox"] {
+
+    width: 22px;
+
+    height: 22px;
+
+    accent-color: teal;
+
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px) {
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: span 1;
+    }
+
+    .settings-header {
+
+        flex-direction: column;
+
+        gap: 20px;
+
+        align-items: flex-start;
+    }
+}

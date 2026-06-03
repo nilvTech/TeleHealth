@@ -1,0 +1,72 @@
+.audit-container {
+    color: teal;
+}
+
+/* 🔹 ACTION BAR */
+.actions-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+/* 🔹 BUTTON */
+.btn-export {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-export:hover {
+    background: #146C63;
+}
+
+/* 🔹 FILTER */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    padding: 8px;
+    border: 1px solid teal;
+    border-radius: 6px;
+    width: 250px;
+}
+
+/* 🔹 TABLE */
+.table-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid teal;
+    white-space: nowrap;
+}
+
+tr:hover {
+    background: #f5fdfc;
+}
+
+/* 🔹 STATUS COLORS */
+.status.success { color: #4caf50; }
+.status.warning { color: #ff9800; }
+.status.error { color: #f44336; }
+.status.info { color: #2196f3; }
+
+/* 🔹 TITLE */
+.h2 {
+    color: teal;
+}

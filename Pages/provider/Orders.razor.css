@@ -1,0 +1,356 @@
+/* PAGE */
+
+.orders-container {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f6fbfb;
+}
+
+/* HEADER */
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: teal;
+    margin: 0;
+}
+
+/* BUTTON */
+
+.btn-create {
+    height: 40px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 10px;
+    background: teal;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-create:hover {
+    background: #0d8d8d;
+}
+
+/* FILTERS */
+
+.filter-card {
+    background: white;
+    border: 1px solid #d8eeee;
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+/* INPUTS */
+
+.search-box,
+.filter-select {
+    height: 40px;
+    border: 1px solid #d6ecec;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #124b4b;
+    background: white;
+}
+
+.search-box {
+    flex: 1;
+}
+
+.search-box:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.08);
+}
+
+/* TABLE CARD */
+
+.table-card {
+    background: white;
+    border: 1px solid #d8eeee;
+    border-radius: 18px;
+    padding: 14px;
+    overflow-x: auto;
+    overflow-y: visible !important;
+    position: relative;
+}
+
+/* TABLE HEADER */
+
+.table-header {
+    margin-bottom: 12px;
+}
+
+.table-header h3 {
+    margin: 0;
+    color: teal;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* TABLE */
+
+.orders-table {
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+/* HEAD */
+
+.orders-table th {
+    padding: 10px 10px;
+    border-bottom: 1px solid #d7eeee;
+    text-align: left;
+    color: teal;
+    font-size: 13px;
+    font-weight: 600;
+    background: #f9ffff;
+}
+
+/* BODY */
+
+.orders-table td {
+    padding: 10px 10px;
+    border-bottom: 1px solid #edf7f7;
+    color: #355b5b;
+    font-size: 13px;
+    vertical-align: middle;
+    overflow: visible !important;
+}
+
+/* ROW */
+
+.orders-table tr {
+    height: 58px !important;
+}
+
+.orders-table tbody tr:hover {
+    background: #f8ffff;
+}
+
+/* PATIENT */
+
+.patient-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.patient-name {
+    font-weight: 600;
+    color: teal;
+    font-size: 13px;
+}
+
+.patient-mrn {
+    font-size: 11px;
+    color: #7a9b9b;
+}
+
+/* PRIORITY */
+
+.priority,
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* PRIORITY COLORS */
+
+.priority-routine {
+    background: #edf4ff;
+    color: #2563eb;
+}
+
+.priority-urgent {
+    background: #fff0f0;
+    color: #dc2626;
+}
+
+.priority-stat {
+    background: #fff7e6;
+    color: #d97706;
+}
+
+/* STATUS COLORS */
+
+.status-pending {
+    background: #fff7e8;
+    color: #d97706;
+}
+
+.status-completed {
+    background: #e9fff1;
+    color: #15803d;
+}
+
+.status-cancelled {
+    background: #ffeaea;
+    color: #dc2626;
+}
+
+.status-active {
+    background: #e7fff2;
+    color: #059669;
+}
+
+.status-rejected {
+    background: #ffe5e5;
+    color: #dc2626;
+}
+
+.status-suspended {
+    background: #eef1f4;
+    color: #4b5563;
+}
+
+/* ACTION */
+
+.action-cell {
+    width: 65px;
+    text-align: center;
+    position: relative;
+    overflow: visible !important;
+}
+
+.action-menu {
+    position: relative;
+    display: inline-block;
+}
+
+/* BUTTON */
+
+.menu-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid #d6ecec;
+    background: #f8ffff;
+    color: teal;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.menu-btn:hover {
+    background: #eefcfc;
+}
+
+/* DROPDOWN */
+
+.menu-dropdown {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    width: 220px;
+    background: white;
+    border: 1px solid #d9eeee;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    z-index: 99999;
+    padding: 6px 0;
+}
+
+/* ITEMS */
+
+.menu-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #124b4b;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-align: left;
+}
+
+.menu-item:hover {
+    background: #f3fdfd;
+}
+
+.menu-item span:first-child {
+    width: 18px;
+    text-align: center;
+}
+
+/* DIVIDER */
+
+.menu-divider {
+    height: 1px;
+    background: #e7f3f3;
+    margin: 6px 0;
+}
+
+/* DELETE */
+
+.danger-item {
+    color: #dc2626;
+}
+
+.danger-item:hover {
+    background: #fff1f1;
+}
+
+/* SCROLLBAR */
+
+.table-card::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-card::-webkit-scrollbar-thumb {
+    background: #bddede;
+    border-radius: 20px;
+}
+
+.table-card::-webkit-scrollbar-track {
+    background: #eef8f8;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 900px) {
+
+    .orders-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .filter-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box,
+    .filter-select {
+        width: 100%;
+    }
+}

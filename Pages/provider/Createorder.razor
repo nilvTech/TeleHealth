@@ -1,0 +1,249 @@
+@page "/provider/createorder"
+@layout ProviderLayout
+@inject NavigationManager Nav
+
+<div class="create-container">
+
+    <!-- HEADER -->
+    <div class="header-section">
+
+        <div>
+            <h2 class="page-title">Create New Order</h2>
+        </div>
+
+    </div>
+
+    <!-- FORM CARD -->
+    <div class="card">
+
+        <div class="form-grid">
+
+            <!-- ORDER ID -->
+            <div>
+                <label>Order ID</label>
+
+                <input placeholder="ORD1001"
+                       @bind="newOrder.OrderId" />
+            </div>
+
+            <!-- PATIENT -->
+            <div>
+                <label>Patient Name</label>
+
+                <select @bind="newOrder.PatientName">
+
+                    <option value="">Select Patient</option>
+
+                    <option>Sarah Johnson</option>
+                    <option>Michael Brown</option>
+                    <option>Emily Davis</option>
+                    <option>Robert Wilson</option>
+                    <option>Olivia White</option>
+                    <option>David Lee</option>
+                    <option>Sophia Martinez</option>
+                    <option>James Taylor</option>
+                    <option>Linda Anderson</option>
+                    <option>Daniel Thomas</option>
+
+                </select>
+            </div>
+
+            <!-- MRN -->
+            <div>
+                <label>MRN</label>
+
+                <input placeholder="PT1001"
+                       @bind="newOrder.MRN" />
+            </div>
+
+            <!-- TYPE -->
+            <div>
+                <label>Order Type</label>
+
+                <select @bind="newOrder.Type">
+
+                    <option value="">Select Type</option>
+
+                    <option>Lab Test</option>
+                    <option>Imaging</option>
+                    <option>Referral</option>
+                    <option>Prescription</option>
+
+                </select>
+            </div>
+
+            <!-- ORDER NAME -->
+            <div>
+                <label>Order Name</label>
+
+                <input placeholder="Enter order name"
+                       @bind="newOrder.Name" />
+            </div>
+
+            <!-- PRIORITY -->
+            <div>
+                <label>Priority</label>
+
+                <select @bind="newOrder.Priority">
+
+                    <option>Routine</option>
+                    <option>Urgent</option>
+                    <option>Stat</option>
+
+                </select>
+            </div>
+
+            <!-- PROVIDER -->
+            <div>
+                <label>Ordering Provider</label>
+
+                <select @bind="newOrder.Provider">
+
+                    <option value="">Select Provider</option>
+
+                    <option>Dr. Emily Brown</option>
+                    <option>Dr. David Wilson</option>
+                    <option>Dr. James Carter</option>
+                    <option>Dr. Anna Lee</option>
+
+                </select>
+            </div>
+
+            <!-- STATUS -->
+            <div>
+                <label>Status</label>
+
+                <select @bind="newOrder.Status">
+
+                    <option>Pending</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+
+                </select>
+            </div>
+
+            <!-- CREATED DATE -->
+            <div>
+                <label>Created Date</label>
+
+                <input type="date"
+                       @bind="newOrder.CreatedDate" />
+            </div>
+
+            <!-- SCHEDULE DATE -->
+            <div>
+                <label>Scheduled Date</label>
+
+                <input type="date"
+                       @bind="newOrder.ScheduleDate" />
+            </div>
+
+            <!-- DIAGNOSIS -->
+            <div>
+                <label>Diagnosis</label>
+
+                <input placeholder="Diagnosis / ICD-10"
+                       @bind="newOrder.Diagnosis" />
+            </div>
+
+            <!-- INSURANCE -->
+            <div>
+                <label>Insurance</label>
+
+                <input placeholder="Insurance Provider"
+                       @bind="newOrder.Insurance" />
+            </div>
+
+            <!-- FACILITY -->
+            <div>
+                <label>Facility</label>
+
+                <input placeholder="Facility Name"
+                       @bind="newOrder.Facility" />
+            </div>
+
+            <!-- NOTES -->
+            <div class="full-width">
+
+                <label>Clinical Notes</label>
+
+                <textarea placeholder="Enter clinical instructions, order notes..."
+                          @bind="newOrder.Notes">
+                </textarea>
+
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button class="btn-cancel"
+                    @onclick="GoBack">
+                Cancel
+            </button>
+
+            <button class="btn-save"
+                    @onclick="CreateOrder">
+                Create Order
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private OrderModel newOrder = new()
+    {
+        Priority = "Routine",
+        Status = "Pending",
+        CreatedDate = DateTime.Today,
+        ScheduleDate = DateTime.Today.AddDays(1)
+    };
+
+    private void CreateOrder()
+    {
+        Console.WriteLine($"Order Created: {newOrder.Name}");
+
+        Nav.NavigateTo("/provider/orders");
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/provider/orders");
+    }
+
+    public class OrderModel
+    {
+        public string OrderId { get; set; } = "";
+
+        public string PatientName { get; set; } = "";
+
+        public string MRN { get; set; } = "";
+
+        public string Type { get; set; } = "";
+
+        public string Name { get; set; } = "";
+
+        public string Priority { get; set; } = "Routine";
+
+        public string Provider { get; set; } = "";
+
+        public string Status { get; set; } = "Pending";
+
+        public DateTime CreatedDate { get; set; } = DateTime.Today;
+
+        public DateTime ScheduleDate { get; set; } = DateTime.Today.AddDays(1);
+
+        public string Diagnosis { get; set; } = "";
+
+        public string Insurance { get; set; } = "";
+
+        public string Facility { get; set; } = "";
+
+        public string Notes { get; set; } = "";
+    }
+}

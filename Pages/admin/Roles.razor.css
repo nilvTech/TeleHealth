@@ -1,0 +1,99 @@
+.role-container {
+    padding: 20px;
+}
+
+/* HEADER */
+.actions-bar {
+    margin-bottom: 15px;
+}
+
+/* TABLE */
+.roles-table, .matrix-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+/* MAIN TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid teal;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid teal;
+    font-size: 14px;
+}
+
+/* HEADER */
+th {
+    background: #e6f7f6;
+    color: teal;
+    font-weight: bold;
+}
+
+/* ROW HOVER */
+tr:hover {
+    background: #f5fdfc;
+}
+
+/* STATUS */
+.status {
+    background: #d1f2ef;
+    color: teal;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* BUTTONS */
+.btn-primary {
+    background: teal;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #146c63;
+}
+
+.btn-secondary {
+    background: teal;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #0f7f7a;
+}
+
+/* MATRIX */
+.matrix-card h4 {
+    margin-bottom: 15px;
+    color: teal;
+}
+
+.matrix-table input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* SAVE BUTTON */
+.save-bar {
+    margin-top: 15px;
+}
+
+/* TITLE */
+.h2 {
+    color: teal;
+}

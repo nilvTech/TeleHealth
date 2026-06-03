@@ -1,0 +1,572 @@
+@page "/admin/rpm"
+@layout AdminLayout
+
+<h2 class="page-title">Remote Patient Monitoring</h2>
+
+<div class="rpm-container">
+
+    <!-- FILTERS -->
+    <div class="filter-bar">
+
+
+<h2 class="page-title">Remote Patient Monitoring - Admin Portal</h2>
+
+<div class="rpm-container">
+
+    <!-- TOP SUMMARY -->
+    <div class="summary-grid">
+
+        <div class="summary-card">
+            <h5>Total RPM Patients</h5>
+            <h2>1,248</h2>
+            <span>+18 this week</span>
+        </div>
+
+        <div class="summary-card">
+            <h5>Connected Devices</h5>
+            <h2>2,964</h2>
+            <span>96% Active</span>
+        </div>
+
+        <div class="summary-card">
+            <h5>Critical Alerts</h5>
+            <h2>34</h2>
+            <span>Needs attention</span>
+        </div>
+
+        <div class="summary-card">
+            <h5>Monthly Revenue</h5>
+            <h2>$82,540</h2>
+            <span>RPM Billing</span>
+        </div>
+
+    </div>
+
+    <!-- DEVICE OVERVIEW -->
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Connected Device Overview</h3>
+            <button class="btn-primary">Add Device</button>
+        </div>
+
+        <table class="styled-table">
+
+            <thead>
+                <tr>
+                    <th>Device ID</th>
+                    <th>Device Type</th>
+                    <th>Assigned Patients</th>
+                    <th>Status</th>
+                    <th>Battery</th>
+                    <th>Last Sync</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var d in Devices)
+                {
+                    <tr>
+
+                        <td>@d.DeviceId</td>
+                        <td>@d.DeviceType</td>
+                        <td>@d.AssignedPatients</td>
+
+                        <td>
+                            <span class="status @d.Status.ToLower()">
+                                @d.Status
+                            </span>
+                        </td>
+
+                        <td>@d.Battery</td>
+
+                        <td>@d.LastSync</td>
+
+                        <td>
+
+                            <div class="action-row">
+
+                                <button class="btn-small">
+                                    View
+                                </button>
+
+                                <button class="btn-small secondary">
+                                    Edit
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- ALERTS -->
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Critical RPM Alerts</h3>
+        </div>
+
+        <div class="alert-list">
+
+            @foreach (var alert in Alerts)
+            {
+                <div class="alert-item">
+
+                    <div>
+                        <h5>@alert.Patient</h5>
+                        <span>@alert.Message</span>
+                    </div>
+
+                    <div class="alert-right">
+
+                        <span class="priority @alert.Priority.ToLower()">
+                            @alert.Priority
+                        </span>
+
+                        <button class="btn-primary">
+                            Review
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- PROVIDER PERFORMANCE -->
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Provider RPM Performance</h3>
+        </div>
+
+        <table class="styled-table">
+
+            <thead>
+                <tr>
+                    <th>Provider</th>
+                    <th>Patients</th>
+                    <th>Monthly Readings</th>
+                    <th>Critical Cases</th>
+                    <th>Response Time</th>
+                    <th>Performance</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var p in Providers)
+                {
+                    <tr>
+
+                        <td>@p.Name</td>
+                        <td>@p.Patients</td>
+                        <td>@p.Readings</td>
+                        <td>@p.CriticalCases</td>
+                        <td>@p.ResponseTime</td>
+
+                        <td>
+                            <span class="performance">
+                                @p.Performance
+                            </span>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    class DeviceModel
+    {
+        public string DeviceId { get; set; }
+        public string DeviceType { get; set; }
+        public int AssignedPatients { get; set; }
+        public string Status { get; set; }
+        public string Battery { get; set; }
+        public string LastSync { get; set; }
+    }
+
+    class AlertModel
+    {
+        public string Patient { get; set; }
+        public string Message { get; set; }
+        public string Priority { get; set; }
+    }
+
+    class ProviderModel
+    {
+        public string Name { get; set; }
+        public int Patients { get; set; }
+        public int Readings { get; set; }
+        public int CriticalCases { get; set; }
+        public string ResponseTime { get; set; }
+        public string Performance { get; set; }
+    }
+
+    List<DeviceModel> Devices = new()
+    {
+        new() {
+            DeviceId = "RPM-1001",
+            DeviceType = "Blood Pressure Monitor",
+            AssignedPatients = 120,
+            Status = "Active",
+            Battery = "82%",
+            LastSync = "5 mins ago"
+        },
+
+        new() {
+            DeviceId = "RPM-1002",
+            DeviceType = "Glucose Monitor",
+            AssignedPatients = 98,
+            Status = "Active",
+            Battery = "74%",
+            LastSync = "2 mins ago"
+        },
+
+        new() {
+            DeviceId = "RPM-1003",
+            DeviceType = "Pulse Oximeter",
+            AssignedPatients = 85,
+            Status = "Inactive",
+            Battery = "12%",
+            LastSync = "1 day ago"
+        },
+
+        new() {
+            DeviceId = "RPM-1004",
+            DeviceType = "Weight Scale",
+            AssignedPatients = 56,
+            Status = "Maintenance",
+            Battery = "44%",
+            LastSync = "20 mins ago"
+        }
+    };
+
+    List<AlertModel> Alerts = new()
+    {
+        new() {
+            Patient = "Sarah Johnson",
+            Message = "Blood pressure reading exceeded threshold.",
+            Priority = "High"
+        },
+
+        new() {
+            Patient = "Michael Brown",
+            Message = "Glucose reading critically low.",
+            Priority = "Critical"
+        },
+
+        new() {
+            Patient = "Emily Davis",
+            Message = "No device sync in last 48 hours.",
+            Priority = "Medium"
+        }
+    };
+
+    List<ProviderModel> Providers = new()
+    {
+        new() {
+            Name = "Dr. John Smith",
+            Patients = 184,
+            Readings = 2840,
+            CriticalCases = 12,
+            ResponseTime = "8 mins",
+            Performance = "Excellent"
+        },
+
+        new() {
+            Name = "Dr. Emily Brown",
+            Patients = 152,
+            Readings = 2430,
+            CriticalCases = 9,
+            ResponseTime = "11 mins",
+            Performance = "Very Good"
+        },
+
+        new() {
+            Name = "Dr. Alex Carter",
+            Patients = 126,
+            Readings = 2110,
+            CriticalCases = 7,
+            ResponseTime = "14 mins",
+            Performance = "Good"
+        }
+    };
+}
+
+        <input class="search-box"
+               placeholder="Search patient..." />
+
+        <select class="filter-select">
+            <option>All Conditions</option>
+            <option>Diabetes</option>
+            <option>Hypertension</option>
+            <option>Asthma</option>
+            <option>Cardiac</option>
+        </select>
+
+        <select class="filter-select">
+            <option>All Risk</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+        </select>
+
+    </div>
+
+    <!-- PATIENT TABLE -->
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h3>RPM Patient Monitoring</h3>
+
+            <button class="btn-primary">
+                Add Device
+            </button>
+
+        </div>
+
+        <table class="styled-table">
+
+            <thead>
+
+                <tr>
+                    <th>MRN</th>
+                    <th>Patient</th>
+                    <th>Condition</th>
+                    <th>Risk</th>
+                    <th>BP</th>
+                    <th>Heart Rate</th>
+                    <th>Glucose</th>
+                    <th>Device</th>
+                    <th>Sync</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var p in Patients)
+                {
+                    <tr>
+
+                        <td>@p.MRN</td>
+
+                        <td>@p.Name</td>
+
+                        <td>@p.Condition</td>
+
+                        <td>
+                            <span class="risk @p.Risk.ToLower()">
+                                @p.Risk
+                            </span>
+                        </td>
+
+                        <td>@p.BP</td>
+
+                        <td>@p.HeartRate</td>
+
+                        <td>@p.Glucose</td>
+
+                        <td>@p.Device</td>
+
+                        <td>@p.LastSync</td>
+
+                        <td>
+                            <span class="status @p.Status.ToLower()">
+                                @p.Status
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn-view">
+                                View
+                            </button>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    public class PatientModel
+    {
+        public string MRN { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string Condition { get; set; } = "";
+        public string Risk { get; set; } = "";
+        public string BP { get; set; } = "";
+        public string HeartRate { get; set; } = "";
+        public string Glucose { get; set; } = "";
+        public string Device { get; set; } = "";
+        public string LastSync { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+
+    List<PatientModel> Patients = new()
+    {
+        new() {
+            MRN="PT1001",
+            Name="Sarah Johnson",
+            Condition="Diabetes",
+            Risk="High",
+            BP="148/92",
+            HeartRate="82 bpm",
+            Glucose="220 mg/dL",
+            Device="Glucose Monitor",
+            LastSync="2 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1002",
+            Name="Michael Lee",
+            Condition="Hypertension",
+            Risk="Medium",
+            BP="138/86",
+            HeartRate="78 bpm",
+            Glucose="110 mg/dL",
+            Device="BP Monitor",
+            LastSync="5 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1003",
+            Name="Emily Davis",
+            Condition="Asthma",
+            Risk="Low",
+            BP="120/78",
+            HeartRate="72 bpm",
+            Glucose="98 mg/dL",
+            Device="Pulse Oximeter",
+            LastSync="12 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1004",
+            Name="Robert Brown",
+            Condition="Cardiac",
+            Risk="High",
+            BP="150/96",
+            HeartRate="88 bpm",
+            Glucose="130 mg/dL",
+            Device="ECG Monitor",
+            LastSync="1 min ago",
+            Status="Critical"
+        },
+
+        new() {
+            MRN="PT1005",
+            Name="Olivia White",
+            Condition="Diabetes",
+            Risk="Medium",
+            BP="132/84",
+            HeartRate="74 bpm",
+            Glucose="180 mg/dL",
+            Device="Glucose Monitor",
+            LastSync="8 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1006",
+            Name="James Carter",
+            Condition="Hypertension",
+            Risk="High",
+            BP="160/100",
+            HeartRate="92 bpm",
+            Glucose="115 mg/dL",
+            Device="BP Monitor",
+            LastSync="3 mins ago",
+            Status="Critical"
+        },
+
+        new() {
+            MRN="PT1007",
+            Name="Sophia Wilson",
+            Condition="Asthma",
+            Risk="Low",
+            BP="118/76",
+            HeartRate="70 bpm",
+            Glucose="96 mg/dL",
+            Device="Pulse Oximeter",
+            LastSync="20 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1008",
+            Name="Daniel Moore",
+            Condition="Cardiac",
+            Risk="High",
+            BP="155/98",
+            HeartRate="90 bpm",
+            Glucose="122 mg/dL",
+            Device="ECG Monitor",
+            LastSync="4 mins ago",
+            Status="Critical"
+        },
+
+        new() {
+            MRN="PT1009",
+            Name="Emma Taylor",
+            Condition="Diabetes",
+            Risk="Medium",
+            BP="136/82",
+            HeartRate="76 bpm",
+            Glucose="170 mg/dL",
+            Device="Glucose Monitor",
+            LastSync="15 mins ago",
+            Status="Active"
+        },
+
+        new() {
+            MRN="PT1010",
+            Name="William Scott",
+            Condition="Hypertension",
+            Risk="Medium",
+            BP="140/88",
+            HeartRate="80 bpm",
+            Glucose="118 mg/dL",
+            Device="BP Monitor",
+            LastSync="6 mins ago",
+            Status="Active"
+        }
+    };
+}

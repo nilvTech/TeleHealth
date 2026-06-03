@@ -1,0 +1,196 @@
+@page "/patient/videoconsultation"
+@layout PatientLayout
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<h2 class="page-title">Video Consultation</h2>
+
+<div class="video-container">
+
+    <!-- 🔹 HEADER -->
+    <div class="video-header">
+        <div class="doctor-info">
+            <h3>Dr. Emily Brown</h3>
+            <span>Dermatology • Skin Care Group</span>
+        </div>
+
+        <div class="call-info">
+            <span class="badge">🔒 HIPAA Secure</span>
+            <span class="badge">@videoQuality</span>
+            <span class="badge success">Excellent Signal</span>
+            <span class="time">🕒 @DateTime.Now.ToShortTimeString()</span>
+        </div>
+
+        <button class="btn-end" @onclick="EndCall">End Call</button>
+    </div>
+
+    <!-- 🔹 MAIN GRID -->
+    <div class="video-grid">
+
+        <!-- 🔹 VIDEO PANEL -->
+        <div class="video-panel">
+
+            <div class="video-wrapper">
+
+                <!-- 🔹 DOCTOR (MAIN VIDEO) -->
+                <video id="remoteVideo" autoplay playsinline class="remote-video"></video>
+                <div class="label doctor-label">Dr. Emily Brown</div>
+
+                <!-- 🔹 PATIENT (SMALL SELF VIEW) -->
+                <div class="local-container">
+                    <video id="localVideo" autoplay muted class="local-video"></video>
+                    <div class="label patient-label">You (Sarah Johnson)</div>
+                </div>
+
+            </div>
+
+            <!-- 🔹 CONTROLS -->
+            <div class="controls">
+
+                <button class="control-btn @(isMuted ? "active" : "")" @onclick="ToggleMute">
+                    🎤 @(isMuted ? "Unmute" : "Mute")
+                </button>
+
+                <button class="control-btn @(isCameraOff ? "active" : "")" @onclick="ToggleCamera">
+                    📷 @(isCameraOff ? "Camera Off" : "Camera")
+                </button>
+
+                <button class="control-btn" @onclick="ShareScreen">
+                    📺 Share
+                </button>
+
+                <button class="control-btn" @onclick="ToggleQuality">
+                    ⚙️ @videoQuality
+                </button>
+
+                <button class="control-btn @(isRecording ? "recording" : "")" @onclick="StartRecording">
+                    ⏺ @(isRecording ? "Recording" : "Record")
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- 🔹 SIDE PANEL -->
+        <div class="side-panel">
+
+            <!-- 🔹 CHAT -->
+            <div class="card chat-card">
+                <h4>Chat</h4>
+
+                <div class="chat-box">
+                    @foreach (var msg in Messages)
+                    {
+                        <div class="chat-msg @(msg.IsMe ? "me" : "other")">
+                            @msg.Text
+                        </div>
+                    }
+                </div>
+
+                <div class="chat-input">
+                    <input placeholder="Type message..." @bind="NewMessage" />
+                    <button class="btn-primary" @onclick="SendMessage">Send</button>
+                </div>
+            </div>
+
+            <!-- 🔹 UPLOAD -->
+            <div class="card upload-card">
+                <h4>Upload Medical Reports</h4>
+
+                <input type="file" multiple @onchange="HandleUpload" />
+
+                <ul>
+                    @foreach (var file in UploadedFiles)
+                    {
+                        <li>@file</li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    bool isMuted = false;
+    bool isCameraOff = false;
+    bool isRecording = false;
+    string videoQuality = "720p HD";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("webrtc.init");
+        }
+    }
+
+    async Task ToggleMute()
+    {
+        isMuted = !isMuted;
+        await JS.InvokeVoidAsync("webrtc.toggleMute", isMuted);
+    }
+
+    async Task ToggleCamera()
+    {
+        isCameraOff = !isCameraOff;
+        await JS.InvokeVoidAsync("webrtc.toggleCamera", isCameraOff);
+    }
+
+    async Task StartRecording()
+    {
+        isRecording = !isRecording;
+        await JS.InvokeVoidAsync("webrtc.record", isRecording);
+    }
+
+    async Task ShareScreen()
+    {
+        await JS.InvokeVoidAsync("webrtc.shareScreen");
+    }
+
+    void ToggleQuality()
+    {
+        videoQuality = videoQuality == "720p HD" ? "480p SD" : "720p HD";
+    }
+
+    async Task EndCall()
+    {
+        await JS.InvokeVoidAsync("webrtc.endCall");
+        Nav.NavigateTo("/patient/dashboard");
+    }
+
+    // 🔹 CHAT
+    class ChatMessage
+    {
+        public string Text { get; set; }
+        public bool IsMe { get; set; }
+    }
+
+    List<ChatMessage> Messages = new()
+    {
+        new() { Text = "Hello Sarah, how are you today?", IsMe = false },
+        new() { Text = "I have skin irritation since 2 days.", IsMe = true }
+    };
+
+    string NewMessage = "";
+
+    void SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(NewMessage))
+        {
+            Messages.Add(new ChatMessage { Text = NewMessage, IsMe = true });
+            NewMessage = "";
+        }
+    }
+
+    // 🔹 FILE UPLOAD
+    List<string> UploadedFiles = new();
+
+    void HandleUpload(ChangeEventArgs e)
+    {
+        UploadedFiles.Add($"Report {UploadedFiles.Count + 1}");
+    }
+}

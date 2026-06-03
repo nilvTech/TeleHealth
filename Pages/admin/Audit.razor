@@ -1,0 +1,124 @@
+@page "/admin/audit"
+@layout AdminLayout
+@inject IJSRuntime JS
+
+<h2 class="h2">Compliance & Audit Logs</h2>
+
+<div class="audit-container">
+
+    <!-- 🔹 ACTION BAR -->
+    <div class="actions-bar">
+        <button class="btn-export" @onclick="ExportLogs">
+            ⬇ Export Logs
+        </button>
+    </div>
+
+    <!-- 🔹 FILTER BAR -->
+    <div class="filter-bar">
+        <input class="search-box" placeholder="Search user / action..." @bind="SearchText" />
+
+        <select @bind="SelectedModule">
+            <option value="">All Modules</option>
+            <option>Billing</option>
+            <option>Patients</option>
+            <option>Providers</option>
+            <option>Appointments</option>
+            <option>Auth</option>
+        </select>
+    </div>
+
+    <!-- 🔹 TABLE -->
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                    <th>Module</th>
+                    <th>Timestamp</th>
+                    <th>IP Address</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var log in FilteredLogs)
+                {
+                    <tr>
+                        <td>@log.User</td>
+                        <td>@log.Role</td>
+                        <td>@log.Action</td>
+                        <td>@log.Module</td>
+                        <td>@log.Timestamp.ToString("dd MMM yyyy HH:mm")</td>
+                        <td>@log.IP</td>
+
+                        <td>
+                            <span class="status @log.Status.ToLower()">
+                                @log.Status
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+
+    string SearchText = "";
+    string SelectedModule = "";
+
+    // 🔹 MODEL
+    class AuditLog
+    {
+        public string User { get; set; }
+        public string Role { get; set; }
+        public string Action { get; set; }
+        public string Module { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string IP { get; set; }
+        public string Status { get; set; }
+    }
+
+    // 🔹 SAMPLE REALISTIC DATA (10 ENTRIES)
+    List<AuditLog> Logs = new()
+    {
+        new() { User="admin@hospital.com", Role="Admin", Action="Login Success", Module="Auth", Timestamp=DateTime.Now.AddMinutes(-10), IP="192.168.1.10", Status="Success" },
+        new() { User="dr.smith@clinic.com", Role="Provider", Action="Updated Availability", Module="Providers", Timestamp=DateTime.Now.AddMinutes(-30), IP="192.168.1.12", Status="Success" },
+        new() { User="billing@hospital.com", Role="Biller", Action="Submitted Claim", Module="Billing", Timestamp=DateTime.Now.AddHours(-1), IP="192.168.1.15", Status="Success" },
+        new() { User="admin@hospital.com", Role="Admin", Action="Suspended Provider", Module="Providers", Timestamp=DateTime.Now.AddHours(-2), IP="192.168.1.10", Status="Warning" },
+        new() { User="nurse.jane@clinic.com", Role="Staff", Action="Viewed Patient Record", Module="Patients", Timestamp=DateTime.Now.AddHours(-3), IP="192.168.1.22", Status="Success" },
+        new() { User="system", Role="System", Action="Auto Logout (Timeout)", Module="Auth", Timestamp=DateTime.Now.AddHours(-4), IP="N/A", Status="Info" },
+        new() { User="admin@hospital.com", Role="Admin", Action="Changed Settings", Module="System", Timestamp=DateTime.Now.AddHours(-5), IP="192.168.1.10", Status="Success" },
+        new() { User="dr.lee@clinic.com", Role="Provider", Action="Cancelled Appointment", Module="Appointments", Timestamp=DateTime.Now.AddHours(-6), IP="192.168.1.18", Status="Warning" },
+        new() { User="billing@hospital.com", Role="Biller", Action="Claim Rejected", Module="Billing", Timestamp=DateTime.Now.AddHours(-7), IP="192.168.1.15", Status="Error" },
+        new() { User="admin@hospital.com", Role="Admin", Action="User Created", Module="Auth", Timestamp=DateTime.Now.AddHours(-8), IP="192.168.1.10", Status="Success" }
+    };
+
+    // 🔹 FILTER
+    IEnumerable<AuditLog> FilteredLogs => Logs
+        .Where(l =>
+            (string.IsNullOrEmpty(SearchText) ||
+             l.User.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+             l.Action.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrEmpty(SelectedModule) || l.Module == SelectedModule)
+        );
+
+    // 🔹 EXPORT FUNCTION
+    async Task ExportLogs()
+    {
+        var csv = "User,Role,Action,Module,Timestamp,IP,Status\n";
+
+        foreach (var l in Logs)
+        {
+            csv += $"{l.User},{l.Role},{l.Action},{l.Module},{l.Timestamp},{l.IP},{l.Status}\n";
+        }
+
+        var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
+
+        await JS.InvokeVoidAsync("downloadFile", "audit_logs.csv", "text/csv", bytes);
+    }
+}

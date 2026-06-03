@@ -1,0 +1,93 @@
+.records-container {
+    padding: 20px;
+    color: teal;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* TABS */
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #e0f7f5;
+}
+
+.tab.active {
+    background: teal;
+    color: white;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border: 1px solid teal;
+    border-radius: 12px;
+    padding: 20px;
+    color:teal
+}
+
+/* TABLE */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    color:teal;
+}
+
+.styled-table th {
+    background: #e0f7f5;
+    padding: 12px;
+    text-align: left;
+}
+
+.styled-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tr:hover {
+    background: #f5fdfc;
+}
+
+/* STATUS */
+.status {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.status.completed {
+    background: #d4edda;
+}
+
+.status.active {
+    background: #cce5ff;
+}
+
+/* BUTTONS */
+.btn-small {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.page-title{
+    color:teal;
+}

@@ -1,0 +1,181 @@
+.patient-container {
+    padding: 18px;
+    color: teal;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: teal;
+}
+
+.sub-text {
+    margin-top: 4px;
+    color: #6a8f8f;
+    font-size: 13px;
+}
+
+/* BUTTON */
+.btn-add,
+.btn-view {
+    border: none;
+    background: teal;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-add {
+    padding: 10px 16px;
+}
+
+.btn-view {
+    padding: 8px 14px;
+}
+
+.btn-add:hover,
+.btn-view:hover {
+    background: #067777;
+}
+
+/* FILTERS */
+.filter-card {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #d7eeee;
+    flex-wrap: wrap;
+}
+
+/* SEARCH */
+.search-box {
+    flex: 1;
+    min-width: 240px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #cfe7e7;
+    padding: 0 14px;
+    font-size: 14px;
+    color: teal;
+}
+
+/* SELECT */
+.filter-select {
+    min-width: 180px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #cfe7e7;
+    padding: 0 12px;
+    font-size: 14px;
+    color: teal;
+    background: white;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #d7eeee;
+    overflow-x: auto;
+}
+
+/* TABLE */
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* HEADER */
+.patient-table thead {
+    background: teal;
+    color: white;
+}
+
+.patient-table th {
+    padding: 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* BODY */
+.patient-table td {
+    padding: 14px;
+    border-bottom: 1px solid #edf7f7;
+    font-size: 14px;
+    color: teal;
+    white-space: nowrap;
+}
+
+.patient-table tbody tr:hover {
+    background: #f7ffff;
+}
+
+/* PATIENT */
+.patient-name {
+    font-weight: 600;
+    color: #145f5f;
+}
+
+/* RISK */
+.risk {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* HIGH */
+.risk-high {
+    background: #ffe5e5;
+    color: #d11a2a;
+}
+
+/* MEDIUM */
+.risk-medium {
+    background: #fff6dd;
+    color: #b58105;
+}
+
+/* LOW */
+.risk-low {
+    background: #e5fff1;
+    color: #0d8b4f;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px) {
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .filter-card {
+        flex-direction: column;
+    }
+
+    .search-box,
+    .filter-select {
+        width: 100%;
+    }
+}

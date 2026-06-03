@@ -1,0 +1,124 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    background:teal;
+    color: #fff;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background:teal;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.menu a {
+    display: block;
+    padding: 10px;
+    color: #bbb;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.menu a:hover,
+.menu a.active {
+    background: #0f2a44;
+    color: #fff;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar {
+    height: 60px;
+    background: #0f2a44;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* DASHBOARD */
+.dashboard-container {
+    padding: 20px;
+}
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    padding: 10px;
+    width: 300px;
+    border-radius: 6px;
+    border: none;
+}
+
+.kpi-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.kpi-card {
+    flex: 1;
+    background: #0f2a44;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+}
+
+/* GRID */
+.main-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.charts-section {
+    flex: 3;
+}
+
+.chart-card {
+    background: #0f2a44;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.chart-placeholder {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alerts-panel {
+    flex: 1;
+    background: #0f2a44;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.alert-item {
+    padding: 10px;
+    border-bottom: 1px solid #1f3b5a;
+    cursor: pointer;
+}

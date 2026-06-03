@@ -1,0 +1,83 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">TeleMed</div>
+
+        <nav class="menu">
+            <a class="@Active("provider/dashboard")" @onclick="@(() => Go("provider/dashboard"))">
+                Dashboard
+            </a>
+
+            <a class="@Active("provider/appointment")" @onclick="@(() => Go("provider/appointment"))">
+                Appointments
+            </a>
+
+            <a class="@Active("provider/patientlist")" @onclick="@(() => Go("provider/patientlist"))">
+                Patients 
+            </a>
+            
+            <a class="@Active("/provider/carehome")" @onclick="@(() => Go("/provider/carehome"))">
+                Care Management
+            </a>
+
+            <a class="@Active("/provider/chat")" @onclick="@(() => Go("/provider/chat"))">
+                Messages
+            </a>
+
+            <a class="@Active("/provider/orders")" @onclick="@(() => Go("/provider/orders"))">
+                Orders
+            </a>
+
+            <a class="@Active("provider/tasks")" @onclick="@(() => Go("provider/tasks"))">
+                Tasks
+            </a>
+
+            <a class="@Active("provider/billing")" @onclick="@(() => Go("provider/billing"))">
+                Billing
+            </a>
+
+            <a class="@Active("provider/settings")" @onclick="@(() => Go("provider/settings"))">
+                Settings
+            </a>
+
+            <a class= @onclick="@(() => Go("/"))">
+                Logout
+            </a>
+            
+        </nav>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main">
+
+        <!-- HEADER (Top Right User Info) -->
+        <div class="topbar">
+            <div class="topbar-right">
+                <div class="user-info">
+                    <div class="user-avatar">MB</div>
+                    <span class="user-name">Dr. Michael Brown</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <main class="content">
+            @Body
+        </main>
+
+    </div>
+
+</div>
+
+@code {
+    void Go(string url) => Nav.NavigateTo(url);
+
+    string Active(string url)
+    {
+        return Nav.Uri.ToLower().Contains(url) ? "active" : "";
+    }
+}

@@ -1,0 +1,172 @@
+@page "/admin/addprovider"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="add-provider-container">
+
+    <div class="form-wrapper">
+
+        <div class="form-header">
+
+            <div>
+                <h2>Add Provider</h2>
+                <p>
+                    Create and manage provider onboarding information
+                </p>
+            </div>
+
+        </div>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label class="required">Provider Name</label>
+                <input type="text" @bind="Model.ProviderName" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Group Name</label>
+                <input type="text" @bind="Model.GroupName" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Email</label>
+                <input type="email" @bind="Model.Email" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Phone</label>
+                <input type="text" @bind="Model.Phone" />
+            </div>
+
+            <div class="form-group">
+                <label>Website</label>
+                <input type="url" @bind="Model.Website" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Timezone</label>
+                <input type="text" @bind="Model.Timezone" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Specialty 1</label>
+                <input type="text" @bind="Model.Specialty1" />
+            </div>
+
+            <div class="form-group">
+                <label>Specialty 2</label>
+                <input type="text" @bind="Model.Specialty2" />
+            </div>
+
+            <div class="form-group">
+                <label>Consultation Fee</label>
+                <input type="number" @bind="Model.ConsultationFee" />
+            </div>
+
+            <div class="form-group full-width">
+                <label>Bio</label>
+                <textarea rows="4" @bind="Model.Bio"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="required">Address Line 1</label>
+                <input type="text" @bind="Model.Address1" />
+            </div>
+
+            <div class="form-group">
+                <label>Address Line 2</label>
+                <input type="text" @bind="Model.Address2" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">City</label>
+                <input type="text" @bind="Model.City" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">State</label>
+                <input type="text" @bind="Model.State" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">ZIP</label>
+                <input type="text" @bind="Model.Zip" />
+            </div>
+
+            <div class="form-group">
+                <label class="required">Country</label>
+                <input type="text" @bind="Model.Country" />
+            </div>
+
+            <div class="form-group">
+                <label>Profile Picture</label>
+                <input type="file" @onchange="OnFileChange" />
+            </div>
+
+            <div class="checkbox-group full-width">
+                <input type="checkbox" @bind="Model.IsActive" />
+                <label>Provider Active</label>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button class="btn-secondary"
+                    @onclick="Cancel">
+                Cancel
+            </button>
+
+            <button class="btn-primary"
+                    @onclick="Submit">
+                Save Provider
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    ProviderModel Model = new();
+
+    class ProviderModel
+    {
+        public string ProviderName { get; set; } = "";
+        public string GroupName { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Website { get; set; } = "";
+        public string Bio { get; set; } = "";
+        public string Specialty1 { get; set; } = "";
+        public string Specialty2 { get; set; } = "";
+        public string Timezone { get; set; } = "";
+        public string Address1 { get; set; } = "";
+        public string Address2 { get; set; } = "";
+        public string City { get; set; } = "";
+        public string State { get; set; } = "";
+        public string Zip { get; set; } = "";
+        public string Country { get; set; } = "";
+        public decimal ConsultationFee { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    void Submit()
+    {
+        Console.WriteLine("Provider Submitted");
+        Nav.NavigateTo("/admin/providers");
+    }
+
+    void Cancel()
+    {
+        Nav.NavigateTo("/admin/providers");
+    }
+
+    void OnFileChange(ChangeEventArgs e)
+    {
+        Console.WriteLine("File selected");
+    }
+}

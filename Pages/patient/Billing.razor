@@ -1,0 +1,221 @@
+@page "/patient/billing"
+@layout PatientLayout
+
+<h2 class="page-title">Billing & Payments</h2>
+
+<div class="billing-container">
+
+    <!-- 🔹 SUMMARY -->
+    <div class="summary-row">
+        <div class="summary-card">
+            <h6>Total Due</h6>
+            <h4>$@TotalDue</h4>
+        </div>
+
+        <div class="summary-card">
+            <h6>Paid</h6>
+            <h4>$@TotalPaid</h4>
+        </div>
+
+        <div class="summary-card">
+            <h6>Insurance Covered</h6>
+            <h4>$@InsuranceCovered</h4>
+        </div>
+    </div>
+
+    <!-- 🔹 TABLE -->
+    <div class="table-card">
+        <h4>Invoice List</h4>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Provider</th>
+                    <th>Service</th>
+                    <th>Total</th>
+                    <th>Allowed</th>
+                    <th>Insurance</th>
+                    <th>Copay</th>
+                    <th>Deductible</th>
+                    <th>Patient Pay</th>
+                    <th>Status</th>
+                    <th>EOB</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var inv in Invoices)
+                {
+                    <tr>
+                        <td>@inv.Id</td>
+                        <td>@inv.Date.ToShortDateString()</td>
+                        <td>@inv.Provider</td>
+                        <td>@inv.Service</td>
+                        <td>$@inv.Total</td>
+                        <td>$@inv.Allowed</td>
+                        <td>$@inv.Insurance</td>
+                        <td>$@inv.Copay</td>
+                        <td>$@inv.Deductible</td>
+                        <td>$@inv.PatientPay</td>
+                        <td>
+                            <span class="status @inv.Status.ToLower()">@inv.Status</span>
+                        </td>
+                        <td>
+                            <button class="btn-primary" @onclick="() => ToggleEOB(inv)">
+                                View
+                            </button>
+                        </td>
+                        <td>
+                            @if (inv.Status != "Paid")
+                            {
+                                <button class="btn-primary" @onclick="() => PayInvoice(inv)">
+                                    Pay
+                                </button>
+                            }
+                            else
+                            {
+                                <span class="paid-text">✔ Paid</span>
+                            }
+                        </td>
+                    </tr>
+
+                    <!-- 🔹 EOB DETAILS -->
+                    @if (inv.ShowEOB)
+                    {
+                        <tr class="eob-row">
+                            <td colspan="13">
+                                <div class="eob-box">
+                                    <p><b>Payer:</b> @inv.Payer</p>
+                                    <p><b>Claim ID:</b> @inv.ClaimId</p>
+                                    <p><b>Adjustment:</b> $@inv.Adjustment</p>
+                                    <p><b>Reason:</b> @inv.Reason</p>
+                                    <p><b>Processed Date:</b> @inv.ProcessedDate.ToShortDateString()</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+
+    // 🔹 MODEL
+    class InvoiceModel
+    {
+        public string Id { get; set; }
+        public DateTime Date { get; set; }
+        public string Provider { get; set; }
+        public string Service { get; set; }
+
+        public int Total { get; set; }
+        public int Allowed { get; set; }
+        public int Insurance { get; set; }
+        public int Copay { get; set; }
+        public int Deductible { get; set; }
+        public int PatientPay { get; set; }
+
+        public int Adjustment { get; set; }
+
+        public string Status { get; set; }
+
+        public string Payer { get; set; }
+        public string ClaimId { get; set; }
+        public string Reason { get; set; }
+        public DateTime ProcessedDate { get; set; }
+
+        public bool ShowEOB { get; set; }
+    }
+
+    // 🔹 DATA (REALISTIC US BILLING)
+    List<InvoiceModel> Invoices = new()
+    {
+        new() {
+            Id="INV1001", Date=DateTime.Today.AddDays(-1),
+            Provider="Dr. Emily Brown", Service="Tele Consultation",
+            Total=150, Allowed=120, Insurance=90, Copay=20, Deductible=10,
+            PatientPay=30, Adjustment=30,
+            Status="Pending",
+            Payer="Aetna", ClaimId="CLM001",
+            Reason="Allowed amount adjustment",
+            ProcessedDate=DateTime.Today
+        },
+
+        new() {
+            Id="INV1002", Date=DateTime.Today.AddDays(-3),
+            Provider="Dr. John Smith", Service="Cardiology Visit",
+            Total=300, Allowed=250, Insurance=200, Copay=30, Deductible=20,
+            PatientPay=50, Adjustment=50,
+            Status="Paid",
+            Payer="Blue Cross", ClaimId="CLM002",
+            Reason="Deductible applied",
+            ProcessedDate=DateTime.Today.AddDays(-2)
+        },
+
+        new() {
+            Id="INV1003", Date=DateTime.Today.AddDays(-5),
+            Provider="LabCorp", Service="Blood Test",
+            Total=200, Allowed=160, Insurance=120, Copay=15, Deductible=25,
+            PatientPay=40, Adjustment=40,
+            Status="Pending",
+            Payer="United Healthcare", ClaimId="CLM003",
+            Reason="Partial coverage",
+            ProcessedDate=DateTime.Today.AddDays(-4)
+        },
+
+        new() {
+            Id="INV1004", Date=DateTime.Today.AddDays(-7),
+            Provider="Dr. Lisa Wong", Service="Diabetes Follow-up",
+            Total=180, Allowed=150, Insurance=100, Copay=25, Deductible=25,
+            PatientPay=50, Adjustment=30,
+            Status="Overdue",
+            Payer="Cigna", ClaimId="CLM004",
+            Reason="Out-of-network adjustment",
+            ProcessedDate=DateTime.Today.AddDays(-6)
+        },
+
+        new() {
+            Id="INV1005", Date=DateTime.Today.AddDays(-10),
+            Provider="Pharmacy", Service="Medication",
+            Total=90, Allowed=80, Insurance=40, Copay=20, Deductible=10,
+            PatientPay=40, Adjustment=10,
+            Status="Paid",
+            Payer="Aetna", ClaimId="CLM005",
+            Reason="Pharmacy benefit",
+            ProcessedDate=DateTime.Today.AddDays(-9)
+        },
+
+        new() {
+            Id="INV1006", Date=DateTime.Today.AddDays(-12),
+            Provider="Radiology Center", Service="X-Ray",
+            Total=250, Allowed=200, Insurance=150, Copay=30, Deductible=20,
+            PatientPay=70, Adjustment=50,
+            Status="Pending",
+            Payer="Blue Cross", ClaimId="CLM006",
+            Reason="Imaging coverage rules",
+            ProcessedDate=DateTime.Today.AddDays(-11)
+        }
+    };
+
+    // 🔹 SUMMARY
+    int TotalDue => Invoices.Where(i => i.Status != "Paid").Sum(i => i.PatientPay);
+    int TotalPaid => Invoices.Where(i => i.Status == "Paid").Sum(i => i.PatientPay);
+    int InsuranceCovered => Invoices.Sum(i => i.Insurance);
+
+    // 🔹 ACTIONS
+    void PayInvoice(InvoiceModel inv)
+    {
+        inv.Status = "Paid";
+    }
+
+    void ToggleEOB(InvoiceModel inv)
+    {
+        inv.ShowEOB = !inv.ShowEOB;
+    }
+}

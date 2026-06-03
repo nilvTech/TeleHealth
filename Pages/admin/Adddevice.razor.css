@@ -1,0 +1,152 @@
+.add-device-page {
+    padding: 24px;
+    background: #f6fbfb;
+    min-height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    color: teal;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 700;
+    color: teal;
+}
+
+.page-header p {
+    margin-top: 6px;
+    color: #6f8f8f;
+}
+
+.form-card {
+    background: white;
+    border-radius: 22px;
+    padding: 28px;
+    border: 1px solid #d9eeee;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: teal;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    height: 50px;
+    border-radius: 14px;
+    border: 1px solid #d6eeee;
+    padding: 0 16px;
+    font-size: 14px;
+    color: teal;
+    background: white;
+}
+
+.form-group textarea {
+    height: 120px;
+    padding-top: 14px;
+    resize: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.12);
+}
+
+.full-width {
+    grid-column: span 3;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.btn-primary {
+    border: none;
+    background: teal;
+    color: white;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #087979;
+}
+
+.btn-secondary {
+    border: none;
+    background: #e9f7f7;
+    color: teal;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@media(max-width:1100px) {
+
+    .form-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .full-width {
+        grid-column: span 2;
+    }
+}
+
+@media(max-width:768px) {
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+}

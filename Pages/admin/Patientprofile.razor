@@ -1,0 +1,428 @@
+@page "/admin/patientprofile/{Id:int}"
+@layout AdminLayout
+
+<div class="profile-container">
+
+    @if (Patient == null)
+    {
+        <div class="profile-card">
+            <h3>Patient not found</h3>
+        </div>
+    }
+    else
+    {
+
+        <!-- HEADER -->
+        <div class="profile-header">
+
+            <div class="profile-left">
+
+                <div class="profile-avatar">
+                    @Initials
+                </div>
+
+                <div class="profile-info">
+
+                    <h2>@Patient.Name</h2>
+
+                    <p>
+                        @Patient.MRN • @Patient.Condition • @Patient.Risk Risk
+                    </p>
+
+                    <span class="status active">
+                        Active
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="profile-actions">
+
+                @if (!IsEditMode)
+                {
+                    <button class="btn-primary"
+                            @onclick="EnableEdit">
+                        Edit Profile
+                    </button>
+                }
+                else
+                {
+                    <button class="btn-primary"
+                            @onclick="SaveProfile">
+                        Save
+                    </button>
+
+                    <button class="btn-secondary"
+                            @onclick="CancelEdit">
+                        Cancel
+                    </button>
+                }
+
+            </div>
+
+        </div>
+
+        <!-- GRID -->
+        <div class="profile-grid">
+
+            <!-- LEFT -->
+            <div class="profile-card">
+
+                <h3>Patient Information</h3>
+
+                <div class="details-grid">
+
+                    <div class="detail-item">
+                        <label>Full Name</label>
+
+                        <input @bind="EditablePatient.Name"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Email</label>
+
+                        <input @bind="EditablePatient.Email"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Phone</label>
+
+                        <input @bind="EditablePatient.Phone"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>MRN</label>
+
+                        <input @bind="EditablePatient.MRN"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Age</label>
+
+                        <input @bind="EditablePatient.Age"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Gender</label>
+
+                        <select @bind="EditablePatient.Gender"
+                                disabled="@(!IsEditMode)">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Insurance</label>
+
+                        <input @bind="EditablePatient.Insurance"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Primary Provider</label>
+
+                        <input @bind="EditablePatient.Provider"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Condition</label>
+
+                        <input @bind="EditablePatient.Condition"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Risk Level</label>
+
+                        <select @bind="EditablePatient.Risk"
+                                disabled="@(!IsEditMode)">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Last Visit</label>
+
+                        <input @bind="EditablePatient.LastVisit"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item">
+                        <label>Address</label>
+
+                        <input @bind="EditablePatient.Address"
+                               disabled="@(!IsEditMode)" />
+                    </div>
+
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <label>Care Notes</label>
+
+                        <textarea @bind="EditablePatient.Notes"
+                                  disabled="@(!IsEditMode)">
+                        </textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="profile-card">
+
+                <h3>Care Summary</h3>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        Upcoming Appointments
+                    </div>
+
+                    <div class="timeline-text">
+                        @EditablePatient.UpcomingAppointments
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        Outstanding Balance
+                    </div>
+
+                    <div class="timeline-text">
+                        $@EditablePatient.Balance
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        RPM Enrollment
+                    </div>
+
+                    <div class="timeline-text">
+                        @EditablePatient.RPMStatus
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        CCM Enrollment
+                    </div>
+
+                    <div class="timeline-text">
+                        @EditablePatient.CCMStatus
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        Emergency Contact
+                    </div>
+
+                    <div class="timeline-text">
+                        @EditablePatient.EmergencyContact
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    bool IsEditMode = false;
+
+    PatientModel? Patient;
+    PatientModel EditablePatient = new();
+
+    string Initials =>
+        Patient == null
+            ? ""
+            : string.Join("", Patient.Name
+                .Split(' ')
+                .Select(x => x[0]));
+
+    public class PatientModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string MRN { get; set; } = "";
+        public int Age { get; set; }
+        public string Gender { get; set; } = "";
+        public string Condition { get; set; } = "";
+        public string Risk { get; set; } = "";
+        public string Insurance { get; set; } = "";
+        public string Provider { get; set; } = "";
+        public string LastVisit { get; set; } = "";
+        public string Address { get; set; } = "";
+        public string Notes { get; set; } = "";
+        public string UpcomingAppointments { get; set; } = "";
+        public string Balance { get; set; } = "";
+        public string RPMStatus { get; set; } = "";
+        public string CCMStatus { get; set; } = "";
+        public string EmergencyContact { get; set; } = "";
+    }
+
+    List<PatientModel> patientList = new()
+    {
+        new()
+        {
+            Id=1,
+            Name="Sarah Johnson",
+            Email="sarah@test.com",
+            Phone="(555) 223-4455",
+            MRN="MRN1001",
+            Age=44,
+            Gender="Female",
+            Condition="Diabetes",
+            Risk="High",
+            Insurance="Aetna",
+            Provider="Dr. Michael Brown",
+            LastVisit="Today",
+            Address="New York, USA",
+            Notes="Patient enrolled in RPM and CCM program.",
+            UpcomingAppointments="4",
+            Balance="420",
+            RPMStatus="Active",
+            CCMStatus="Active",
+            EmergencyContact="John Johnson"
+        },
+
+        new()
+        {
+            Id=2,
+            Name="John Carter",
+            Email="john@test.com",
+            Phone="(555) 123-9876",
+            MRN="MRN1002",
+            Age=58,
+            Gender="Male",
+            Condition="Hypertension",
+            Risk="Medium",
+            Insurance="Blue Cross",
+            Provider="Dr. John Smith",
+            LastVisit="2 days ago",
+            Address="Texas, USA",
+            Notes="Blood pressure improving.",
+            UpcomingAppointments="2",
+            Balance="120",
+            RPMStatus="Active",
+            CCMStatus="Pending",
+            EmergencyContact="Emily Carter"
+        },
+
+        new()
+        {
+            Id=3,
+            Name="Emily Watson",
+            Email="emily@test.com",
+            Phone="(555) 882-1100",
+            MRN="MRN1003",
+            Age=36,
+            Gender="Female",
+            Condition="Asthma",
+            Risk="Low",
+            Insurance="United",
+            Provider="Dr. Sarah Lee",
+            LastVisit="1 week ago",
+            Address="California, USA",
+            Notes="Stable condition.",
+            UpcomingAppointments="1",
+            Balance="0",
+            RPMStatus="Inactive",
+            CCMStatus="Inactive",
+            EmergencyContact="David Watson"
+        }
+    };
+
+    protected override void OnInitialized()
+    {
+        LoadPatient();
+    }
+
+    void LoadPatient()
+    {
+        Patient = patientList.FirstOrDefault(x => x.Id == Id);
+
+        if (Patient != null)
+        {
+            EditablePatient = new PatientModel
+            {
+                Id = Patient.Id,
+                Name = Patient.Name,
+                Email = Patient.Email,
+                Phone = Patient.Phone,
+                MRN = Patient.MRN,
+                Age = Patient.Age,
+                Gender = Patient.Gender,
+                Condition = Patient.Condition,
+                Risk = Patient.Risk,
+                Insurance = Patient.Insurance,
+                Provider = Patient.Provider,
+                LastVisit = Patient.LastVisit,
+                Address = Patient.Address,
+                Notes = Patient.Notes,
+                UpcomingAppointments = Patient.UpcomingAppointments,
+                Balance = Patient.Balance,
+                RPMStatus = Patient.RPMStatus,
+                CCMStatus = Patient.CCMStatus,
+                EmergencyContact = Patient.EmergencyContact
+            };
+        }
+    }
+
+    void EnableEdit()
+    {
+        IsEditMode = true;
+    }
+
+    void CancelEdit()
+    {
+        IsEditMode = false;
+        LoadPatient();
+    }
+
+    void SaveProfile()
+    {
+        if (Patient != null)
+        {
+            Patient.Name = EditablePatient.Name;
+            Patient.Email = EditablePatient.Email;
+            Patient.Phone = EditablePatient.Phone;
+            Patient.MRN = EditablePatient.MRN;
+            Patient.Age = EditablePatient.Age;
+            Patient.Gender = EditablePatient.Gender;
+            Patient.Condition = EditablePatient.Condition;
+            Patient.Risk = EditablePatient.Risk;
+            Patient.Insurance = EditablePatient.Insurance;
+            Patient.Provider = EditablePatient.Provider;
+            Patient.LastVisit = EditablePatient.LastVisit;
+            Patient.Address = EditablePatient.Address;
+            Patient.Notes = EditablePatient.Notes;
+            Patient.UpcomingAppointments = EditablePatient.UpcomingAppointments;
+            Patient.Balance = EditablePatient.Balance;
+            Patient.RPMStatus = EditablePatient.RPMStatus;
+            Patient.CCMStatus = EditablePatient.CCMStatus;
+            Patient.EmergencyContact = EditablePatient.EmergencyContact;
+        }
+
+        IsEditMode = false;
+    }
+
+}

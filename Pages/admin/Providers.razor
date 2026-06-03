@@ -1,0 +1,316 @@
+@page "/admin/providers"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="provider-container" @onclick="CloseMenu">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h2>Providers</h2>
+            <p class="sub-text">
+                Manage provider profiles, approvals and account status
+            </p>
+        </div>
+
+        <button class="btn-primary"
+                @onclick="AddProvider">
+            + Add Provider
+        </button>
+
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+
+        <input class="search-box"
+               placeholder="Search name or email..."
+               @bind="SearchText" />
+
+        <select class="filter-select"
+                @bind="SelectedSpecialty">
+            <option value="">Specialty</option>
+            <option>Cardiology</option>
+            <option>Dermatology</option>
+            <option>General Medicine</option>
+            <option>Orthopedic</option>
+        </select>
+
+        <select class="filter-select"
+                @bind="SelectedStatus">
+            <option value="">Status</option>
+            <option>Active</option>
+            <option>Pending</option>
+            <option>Suspended</option>
+            <option>Rejected</option>
+        </select>
+
+        <select class="filter-select"
+                @bind="SelectedLocation">
+            <option value="">Location</option>
+            <option>New York</option>
+            <option>California</option>
+            <option>Texas</option>
+        </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <div class="table-header">
+            <h3>Provider List</h3>
+        </div>
+
+        <table class="providers-table">
+
+            <thead>
+                <tr>
+                    <th>Provider</th>
+                    <th>Specialty</th>
+                    <th>Experience</th>
+                    <th>License</th>
+                    <th>Status</th>
+                    <th>Fee</th>
+                    <th>Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var p in FilteredProviders)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="provider-cell">
+
+                                <div class="provider-avatar">
+                                    @GetInitials(p.Name)
+                                </div>
+
+                                <div>
+                                    <div class="provider-name">
+                                        @p.Name
+                                    </div>
+
+                                    <div class="provider-email">
+                                        @p.Email
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <td>@p.Specialty</td>
+
+                        <td>@p.ExperienceYears yrs</td>
+
+                        <td>@p.LicenseStatus</td>
+
+                        <td>
+                            <span class="status @GetStatusClass(p.Status)">
+                                @p.Status
+                            </span>
+                        </td>
+
+                        <td>$@p.ConsultationFee</td>
+
+                        <td>@p.Location</td>
+
+                        <!-- ACTION MENU -->
+                        <td class="action-cell">
+
+                            <div class="action-menu"
+                                 @onclick:stopPropagation="true">
+
+                                <button class="menu-btn"
+                                        @onclick="() => ToggleMenu(p.Id)">
+                                    ⋮
+                                </button>
+
+                                @if (openMenuId == p.Id)
+                                {
+                                    <div class="menu-dropdown">
+
+                                        @if (p.Status != "Active")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick="() => HandleAction(() => Approve(p))">
+                                                <span>✔</span>
+                                                Approve
+                                            </button>
+                                        }
+
+                                        @if (p.Status != "Rejected")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick="() => HandleAction(() => Reject(p))">
+                                                <span>✖</span>
+                                                Reject
+                                            </button>
+                                        }
+
+                                        @if (p.Status != "Suspended")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick="() => HandleAction(() => Suspend(p))">
+                                                <span>⏸</span>
+                                                Suspend
+                                            </button>
+                                        }
+
+                                        <div class="menu-divider"></div>
+
+                                        <button class="menu-item"
+                                                @onclick="() => HandleAction(() => ViewProfile(p))">
+                                            <span>👁</span>
+                                            View Profile
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    string SearchText = "";
+    string SelectedSpecialty = "";
+    string SelectedStatus = "";
+    string SelectedLocation = "";
+
+    int? openMenuId = null;
+
+    private void AddProvider()
+    {
+        Nav.NavigateTo("/admin/addprovider");
+    }
+
+    void ToggleMenu(int id)
+    {
+        openMenuId = openMenuId == id ? null : id;
+    }
+
+    void CloseMenu()
+    {
+        openMenuId = null;
+    }
+
+    void HandleAction(Action action)
+    {
+        action.Invoke();
+        openMenuId = null;
+    }
+
+    public class Provider
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Website { get; set; } = "";
+        public string Bio { get; set; } = "";
+        public string GroupName { get; set; } = "";
+        public string Specialty { get; set; } = "";
+        public string Specialty1 { get; set; } = "";
+        public string Specialty2 { get; set; } = "";
+        public int ExperienceYears { get; set; }
+        public string LicenseStatus { get; set; } = "";
+        public string Status { get; set; } = "";
+        public decimal ConsultationFee { get; set; }
+        public string Timezone { get; set; } = "";
+        public string Address1 { get; set; } = "";
+        public string Address2 { get; set; } = "";
+        public string City { get; set; } = "";
+        public string State { get; set; } = "";
+        public string Zip { get; set; } = "";
+        public string Country { get; set; } = "";
+        public string Location { get; set; } = "";
+        public bool IsActive { get; set; }
+    }
+
+    List<Provider> providerList = new()
+    {
+        new Provider { Id=1, Name="Dr. Michael Brown", Email="michael.brown@test.com", Specialty="Interventional Cardiology", ExperienceYears=15,LicenseStatus="Verified", Status="Active", ConsultationFee=150, Location="New York" },    
+
+        new Provider { Id=2, Name="Dr. Sarah Lee", Email="sarah@test.com", Specialty="Dermatology", ExperienceYears=6, LicenseStatus="Pending", Status="Pending", ConsultationFee=80, Location="California" },
+
+        new Provider { Id=3, Name="Dr. Mike Ross", Email="mike@test.com", Specialty="General Medicine", ExperienceYears=8, LicenseStatus="Verified", Status="Active", ConsultationFee=90, Location="Texas" },
+
+        new Provider { Id=4, Name="Dr. Emily Clark", Email="emily@test.com", Specialty="Orthopedic", ExperienceYears=12, LicenseStatus="Verified", Status="Active", ConsultationFee=120, Location="New York" },
+
+        new Provider { Id=5, Name="Dr. David Kim", Email="david@test.com", Specialty="Cardiology", ExperienceYears=5, LicenseStatus="Pending", Status="Pending", ConsultationFee=85, Location="California" },
+
+        new Provider { Id=6, Name="Dr. Anna White", Email="anna@test.com", Specialty="Dermatology", ExperienceYears=7, LicenseStatus="Verified", Status="Suspended", ConsultationFee=70, Location="Texas" },
+
+        new Provider { Id=7, Name="Dr. James Brown", Email="james@test.com", Specialty="General Medicine", ExperienceYears=9, LicenseStatus="Verified", Status="Active", ConsultationFee=95, Location="New York" },
+
+        new Provider { Id=8, Name="Dr. Olivia Green", Email="olivia@test.com", Specialty="Orthopedic", ExperienceYears=11, LicenseStatus="Verified", Status="Active", ConsultationFee=110, Location="California" },
+
+        new Provider { Id=9, Name="Dr. Robert King", Email="robert@test.com", Specialty="Cardiology", ExperienceYears=15, LicenseStatus="Verified", Status="Active", ConsultationFee=130, Location="Texas" },
+
+        new Provider { Id=10, Name="Dr. Sophia Adams", Email="sophia@test.com", Specialty="Dermatology", ExperienceYears=4, LicenseStatus="Pending", Status="Pending", ConsultationFee=75, Location="New York" },
+    
+        new Provider { Id=11, Name="Dr. John Smith", Email="john@test.com", Specialty="Cardiology", ExperienceYears=10, LicenseStatus="Verified", Status="Active", ConsultationFee=100, Location="New York" },
+
+    };
+
+    IEnumerable<Provider> FilteredProviders => providerList
+        .Where(p =>
+            (string.IsNullOrEmpty(SearchText) ||
+             p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+             p.Email.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            &&
+            (string.IsNullOrEmpty(SelectedSpecialty) || p.Specialty == SelectedSpecialty)
+            &&
+            (string.IsNullOrEmpty(SelectedStatus) || p.Status == SelectedStatus)
+            &&
+            (string.IsNullOrEmpty(SelectedLocation) || p.Location == SelectedLocation)
+        );
+
+    void Approve(Provider p) => p.Status = "Active";
+
+    void Reject(Provider p) => p.Status = "Rejected";
+
+    void Suspend(Provider p) => p.Status = "Suspended";
+
+    void ViewProfile(Provider p)
+{
+    Nav.NavigateTo($"/admin/providerprofile/{p.Id}");
+}
+
+    private string GetInitials(string name)
+    {
+        return string.Join("", name
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Take(2)
+            .Select(x => x[0]))
+            .ToUpper();
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Active" => "status-active",
+        "Pending" => "status-pending",
+        "Suspended" => "status-suspended",
+        "Rejected" => "status-rejected",
+        _ => ""
+    };
+}

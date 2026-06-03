@@ -1,0 +1,321 @@
+@page "/provider/appointment"
+@layout ProviderLayout
+@inject NavigationManager Nav
+
+<div class="appointment-container">
+
+    <!-- HEADER -->
+    <div class="header-section">
+
+        <div>
+            <h2 class="page-title">Appointments</h2>
+
+            <p class="page-subtitle">
+                Manage telehealth and in-person consultations
+            </p>
+        </div>
+
+        <button class="btn-add"
+                @onclick="Schedule">
+            + Schedule Appointment
+        </button>
+
+    </div>
+
+   
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+
+        <!-- SEARCH -->
+        <input class="search-box"
+               placeholder="Search patient..."
+               @bind="searchText" />
+
+        <!-- TYPE -->
+        <select class="filter-select"
+                @bind="selectedType">
+
+            <option value="">All Types</option>
+            <option>Telehealth</option>
+            <option>In-Person</option>
+
+        </select>
+
+        <!-- STATUS -->
+        <select class="filter-select"
+                @bind="selectedStatus">
+
+            <option value="">All Status</option>
+            <option>Scheduled</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+
+        </select>
+
+    </div>
+
+    <!-- TABLE CARD -->
+    <div class="table-card">
+
+        <div class="card-header">
+
+            <h3>Upcoming Appointments</h3>
+
+            <span class="appointment-count">
+                @FilteredAppointments.Count() Appointments
+            </span>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table class="appointment-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Time</th>
+
+                        <th>Patient</th>
+
+                        <th>Provider</th>
+
+                        <th>Type</th>
+
+                        <th>Status</th>
+
+                        <th>Reason</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var appt in FilteredAppointments)
+                    {
+                        <tr>
+
+                            <td>@appt.Time</td>
+
+                            <td>
+
+                                <div class="patient-cell">
+
+                                    <div class="patient-name">
+                                        @appt.Patient
+                                    </div>
+
+                                    <div class="patient-mrn">
+                                        @appt.MRN
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td>@appt.Provider</td>
+
+                            <td>@appt.Type</td>
+
+                            <td>
+
+                                <span class="status-badge @GetStatusClass(appt.Status)">
+                                    @appt.Status
+                                </span>
+
+                            </td>
+
+                            <td>@appt.Reason</td>
+
+                            <td>
+
+                                <div class="action-row">
+
+                                    <button class="btn-join"
+                                            @onclick="() => JoinConsult(appt)">
+                                        Join
+                                    </button>
+
+                                  
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string searchText = "";
+
+    private string selectedType = "";
+
+    private string selectedStatus = "";
+
+    private List<AppointmentModel> appointments = new()
+    {
+        new AppointmentModel
+        {
+            Time="09:00 AM",
+            Patient="Sarah Johnson",
+            MRN="PT1001",
+            Provider="Dr. Emily Brown",
+            Type="Telehealth",
+            Status="Scheduled",
+            Reason="Diabetes Follow-up"
+        },
+
+        new AppointmentModel
+        {
+            Time="10:00 AM",
+            Patient="Michael Brown",
+            MRN="PT1002",
+            Provider="Dr. David Wilson",
+            Type="In-Person",
+            Status="Scheduled",
+            Reason="Blood Pressure Review"
+        },
+
+        new AppointmentModel
+        {
+            Time="11:00 AM",
+            Patient="Emily Davis",
+            MRN="PT1003",
+            Provider="Dr. Anna Lee",
+            Type="Telehealth",
+            Status="Completed",
+            Reason="Asthma Management"
+        },
+
+        new AppointmentModel
+        {
+            Time="12:00 PM",
+            Patient="Robert Wilson",
+            MRN="PT1004",
+            Provider="Dr. James Carter",
+            Type="In-Person",
+            Status="Scheduled",
+            Reason="Cardiac Consultation"
+        },
+
+        new AppointmentModel
+        {
+            Time="02:00 PM",
+            Patient="Olivia White",
+            MRN="PT1005",
+            Provider="Dr. Emily Brown",
+            Type="Telehealth",
+            Status="Scheduled",
+            Reason="COPD Monitoring"
+        },
+
+        new AppointmentModel
+        {
+            Time="03:00 PM",
+            Patient="David Lee",
+            MRN="PT1006",
+            Provider="Dr. David Wilson",
+            Type="In-Person",
+            Status="Cancelled",
+            Reason="Diabetes Review"
+        },
+
+        new AppointmentModel
+        {
+            Time="04:00 PM",
+            Patient="Sophia Martinez",
+            MRN="PT1007",
+            Provider="Dr. Anna Lee",
+            Type="Telehealth",
+            Status="Scheduled",
+            Reason="Weight Management"
+        },
+
+        new AppointmentModel
+        {
+            Time="05:00 PM",
+            Patient="James Taylor",
+            MRN="PT1008",
+            Provider="Dr. James Carter",
+            Type="In-Person",
+            Status="Completed",
+            Reason="Cardiac Follow-up"
+        }
+    };
+
+    private IEnumerable<AppointmentModel> FilteredAppointments =>
+        appointments.Where(a =>
+
+            (string.IsNullOrWhiteSpace(searchText)
+             || a.Patient.Contains(searchText,
+                 StringComparison.OrdinalIgnoreCase)
+             || a.MRN.Contains(searchText,
+                 StringComparison.OrdinalIgnoreCase))
+
+            &&
+
+            (string.IsNullOrWhiteSpace(selectedType)
+             || a.Type == selectedType)
+
+            &&
+
+            (string.IsNullOrWhiteSpace(selectedStatus)
+             || a.Status == selectedStatus)
+        );
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Scheduled" => "scheduled",
+        "Completed" => "completed",
+        "Cancelled" => "cancelled",
+        _ => ""
+    };
+
+    private void Schedule()
+    {
+        Nav.NavigateTo("/provider/schedule");
+    }
+
+    private void JoinConsult(AppointmentModel appt)
+    {
+        Nav.NavigateTo("/provider/videoconsult");
+    }
+
+    private void ViewAppointment(AppointmentModel appt)
+    {
+        Console.WriteLine($"Viewing appointment for {appt.Patient}");
+    }
+
+    public class AppointmentModel
+    {
+        public string Time { get; set; } = "";
+
+        public string Patient { get; set; } = "";
+
+        public string MRN { get; set; } = "";
+
+        public string Provider { get; set; } = "";
+
+        public string Type { get; set; } = "";
+
+        public string Status { get; set; } = "";
+
+        public string Reason { get; set; } = "";
+    }
+}

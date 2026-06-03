@@ -1,0 +1,346 @@
+@page "/provider/videoconsult"
+
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<div class="video-consult-page">
+
+    <!-- VIDEO SECTION -->
+    <div class="video-panel">
+
+        <div class="meeting-header">
+
+            <div class="meeting-info">
+                <span class="status-badge live">● Live Consultation</span>
+                <span class="status-badge">Session #VC-10244</span>
+                <span class="status-badge">@videoQuality</span>
+                <span class="status-badge">HIPAA Secure</span>
+            </div>
+
+            <div class="patient-banner">
+                Sarah Johnson | DOB: 12-Feb-1985
+            </div>
+
+        </div>
+
+        <div class="video-container">
+
+            <video id="remoteVideo"
+                   autoplay
+                   playsinline
+                   class="remote-video">
+            </video>
+
+            <div class="patient-label">
+                Sarah Johnson
+            </div>
+
+            <video id="localVideo"
+                   autoplay
+                   muted
+                   playsinline
+                   class="local-video">
+            </video>
+
+        </div>
+
+        <div class="control-bar">
+
+            <button class="control-btn @(isMuted ? "active" : "")"
+                    @onclick="ToggleMute">
+                🎤 Mute
+            </button>
+
+            <button class="control-btn @(isCameraOff ? "active" : "")"
+                    @onclick="ToggleCamera">
+                📷 Camera
+            </button>
+
+            <button class="control-btn"
+                    @onclick="ShareScreen">
+                🖥 Share
+            </button>
+
+            <button class="control-btn"
+                    @onclick="OpenChat">
+                💬 Chat
+            </button>
+
+            <button class="control-btn"
+                    @onclick="ToggleQuality">
+                ⚙ Quality
+            </button>
+
+            <button class="control-btn @(isRecording ? "recording" : "")"
+                    @onclick="StartRecording">
+                ⏺ Record
+            </button>
+
+            <button class="end-btn"
+                    @onclick="EndVisit">
+                End Visit
+            </button>
+
+        </div>
+        <div class="sidebar-panel">
+
+        <div class="tab-header">
+
+            <button class="tab-btn @(activeTab == "Patient" ? "active" : "")"
+                    @onclick='() => ChangeTab("Patient")'>
+                Patient
+            </button>
+
+            <button class="tab-btn @(activeTab == "Soap" ? "active" : "")"
+                    @onclick='() => ChangeTab("Soap")'>
+                SOAP
+            </button>
+
+            <button class="tab-btn @(activeTab == "Chat" ? "active" : "")"
+                    @onclick='() => ChangeTab("Chat")'>
+                Chat
+            </button>
+
+            <button class="tab-btn @(activeTab == "Orders" ? "active" : "")"
+                    @onclick='() => ChangeTab("Orders")'>
+                Orders
+            </button>
+
+        </div>
+
+        @if (activeTab == "Patient")
+        {
+            <div class="panel-content">
+
+                <h4>Patient Information</h4>
+
+                <div class="info-row">
+                    <strong>Name:</strong> Sarah Johnson
+                </div>
+
+                <div class="info-row">
+                    <strong>Age:</strong> 41
+                </div>
+
+                <div class="info-row">
+                    <strong>Gender:</strong> Female
+                </div>
+
+                <div class="info-row">
+                    <strong>Conditions:</strong> Hypertension
+                </div>
+
+                <div class="info-row">
+                    <strong>Allergies:</strong> Penicillin
+                </div>
+
+            </div>
+        }
+
+        @if (activeTab == "Soap")
+        {
+            <div class="panel-content">
+
+                <div class="soap-header">
+
+                    <h4>SOAP Note</h4>
+
+                    <button class="ai-btn"
+                            @onclick="GenerateAISoap">
+                        AI Generate
+                    </button>
+
+                </div>
+
+                <label>Subjective</label>
+                <textarea @bind="soap.S"></textarea>
+
+                <label>Objective</label>
+                <textarea @bind="soap.O"></textarea>
+
+                <label>Assessment</label>
+                <textarea @bind="soap.A"></textarea>
+
+                <label>Plan</label>
+                <textarea @bind="soap.P"></textarea>
+
+                <button class="save-btn"
+                        @onclick="SaveNote">
+                    Save Note
+                </button>
+
+            </div>
+        }
+
+        @if (activeTab == "Chat")
+        {
+            <div class="panel-content">
+
+                <h4>Patient Chat</h4>
+
+                <div class="chat-message incoming">
+                    Hello Doctor.
+                </div>
+
+                <div class="chat-message outgoing">
+                    Hello Sarah. How are you feeling today?
+                </div>
+
+            </div>
+        }
+
+        @if (activeTab == "Orders")
+        {
+            <div class="panel-content">
+
+                <h4>Orders & Prescriptions</h4>
+
+                <button class="save-btn"
+                        @onclick="SendPrescription">
+                    Send Prescription
+                </button>
+
+            </div>
+        }
+
+    </div>
+
+
+    </div>
+
+    
+
+</div>
+
+@code {
+
+    bool isMuted;
+    bool isCameraOff;
+    bool isRecording;
+
+    string activeTab = "Soap";
+    string videoQuality = "720p HD";
+
+    SoapModel soap = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("webrtc.init");
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    void ChangeTab(string tab)
+    {
+        activeTab = tab;
+    }
+
+    async Task ToggleMute()
+    {
+        isMuted = !isMuted;
+
+        try
+        {
+            await JS.InvokeVoidAsync("webrtc.toggleMute", isMuted);
+        }
+        catch
+        {
+        }
+    }
+
+    async Task ToggleCamera()
+    {
+        isCameraOff = !isCameraOff;
+
+        try
+        {
+            await JS.InvokeVoidAsync("webrtc.toggleCamera", isCameraOff);
+        }
+        catch
+        {
+        }
+    }
+
+    async Task ShareScreen()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("webrtc.shareScreen");
+        }
+        catch
+        {
+        }
+    }
+
+    void OpenChat()
+    {
+        activeTab = "Chat";
+    }
+
+    async Task StartRecording()
+    {
+        isRecording = !isRecording;
+
+        try
+        {
+            await JS.InvokeVoidAsync("webrtc.record", isRecording);
+        }
+        catch
+        {
+        }
+    }
+
+    void ToggleQuality()
+    {
+        videoQuality = videoQuality == "720p HD"
+            ? "480p SD"
+            : "720p HD";
+    }
+
+    async Task EndVisit()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("webrtc.endCall");
+        }
+        catch
+        {
+        }
+
+        Nav.NavigateTo("/provider/dashboard");
+    }
+
+    Task GenerateAISoap()
+    {
+        soap.S = "Patient reports headache and dizziness.";
+        soap.O = "Elevated blood pressure observed.";
+        soap.A = "Hypertension not optimally controlled.";
+        soap.P = "Adjust medication and follow-up in two weeks.";
+
+        return Task.CompletedTask;
+    }
+
+    void SaveNote()
+    {
+    }
+
+    Task SendPrescription()
+    {
+        return Task.CompletedTask;
+    }
+
+    public class SoapModel
+    {
+        public string S { get; set; } = "";
+        public string O { get; set; } = "";
+        public string A { get; set; } = "";
+        public string P { get; set; } = "";
+    }
+}

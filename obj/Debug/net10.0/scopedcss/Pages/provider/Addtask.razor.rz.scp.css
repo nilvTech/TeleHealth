@@ -1,0 +1,128 @@
+.create-container[b-ggyihqj4kv] {
+    padding: 20px;
+    background: #f8fafc;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.header[b-ggyihqj4kv] {
+    margin-bottom: 20px;
+}
+
+.header h2[b-ggyihqj4kv] {
+    margin: 0;
+    color: teal;
+}
+
+.sub-text[b-ggyihqj4kv] {
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* CARD */
+.card[b-ggyihqj4kv] {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+    max-width: 1100px;
+}
+
+/* FORM */
+.form-grid[b-ggyihqj4kv] {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.form-group[b-ggyihqj4kv] {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full-width[b-ggyihqj4kv] {
+    grid-column: span 3;
+}
+
+/* LABEL */
+label[b-ggyihqj4kv] {
+    font-size: 13px;
+    color: teal;
+    font-weight: 500;
+}
+
+/* INPUTS */
+input[b-ggyihqj4kv],
+select[b-ggyihqj4kv],
+textarea[b-ggyihqj4kv] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    color: teal;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+textarea[b-ggyihqj4kv] {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input:focus[b-ggyihqj4kv],
+select:focus[b-ggyihqj4kv],
+textarea:focus[b-ggyihqj4kv] {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+/* ACTIONS */
+.actions[b-ggyihqj4kv] {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* BUTTONS */
+.btn-save[b-ggyihqj4kv] {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-save:hover[b-ggyihqj4kv] {
+    background: #0f766e;
+}
+
+.btn-cancel[b-ggyihqj4kv] {
+    background: #64748b;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover[b-ggyihqj4kv] {
+    background: #475569;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+
+    .form-grid[b-ggyihqj4kv] {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width[b-ggyihqj4kv] {
+        grid-column: span 1;
+    }
+}

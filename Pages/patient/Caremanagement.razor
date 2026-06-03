@@ -1,0 +1,279 @@
+@page "/patient/caremanagement"
+@layout PatientLayout
+
+<h2 class="page-title">Care Management</h2>
+
+<div class="care-container">
+
+    <!-- 🔹 PATIENT SUMMARY -->
+    <div class="summary-card">
+        <h3>Sarah Johnson</h3>
+        <p>Age: 34 • Chronic Conditions: Diabetes, Hypertension, Obesity</p>
+        <p class="risk high">Risk Level: High</p>
+    </div>
+
+    <!-- 🔹 TABS -->
+    <div class="tabs">
+        <div class="@Tab("plan")" @onclick='() => ActiveTab="plan"'>Care Plan</div>
+        <div class="@Tab("tasks")" @onclick='() => ActiveTab="tasks"'>Tasks</div>
+        <div class="@Tab("vitals")" @onclick='() => ActiveTab="vitals"'>Vitals</div>
+        <div class="@Tab("team")" @onclick='() => ActiveTab="team"'>Care Team</div>
+        <div class="@Tab("alerts")" @onclick='() => ActiveTab="alerts"'>Alerts</div>
+    </div>
+
+    <!-- 🔹 CARE PLAN -->
+    @if (ActiveTab == "plan")
+    {
+        <div class="card">
+            <h4>Active Care Plan</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Condition</th>
+                        <th>Goal</th>
+                        <th>Target</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in CarePlans)
+                    {
+                        <tr>
+                            <td>@c.Condition</td>
+                            <td>@c.Goal</td>
+                            <td>@c.Target</td>
+                            <td><span class="status @c.Status.ToLower()">@c.Status</span></td>
+                            <td>@c.LastUpdated.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 TASKS -->
+    @if (ActiveTab == "tasks")
+    {
+        <div class="card">
+            <h4>Daily Care Tasks</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Frequency</th>
+                        <th>Due</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Tasks)
+                    {
+                        <tr>
+                            <td>@t.Name</td>
+                            <td>@t.Frequency</td>
+                            <td>@t.Due</td>
+                            <td><span class="status @t.Status.ToLower()">@t.Status</span></td>
+                            <td>
+                                <button class="btn-primary" @onclick="() => CompleteTask(t)">
+                                    Complete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 VITALS -->
+    @if (ActiveTab == "vitals")
+    {
+        <div class="card">
+            <h4>Vitals Monitoring (RPM)</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>BP</th>
+                        <th>Heart Rate</th>
+                        <th>Glucose</th>
+                        <th>Weight</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Vitals)
+                    {
+                        <tr>
+                            <td>@v.Date.ToShortDateString()</td>
+                            <td>@v.BP</td>
+                            <td>@v.HeartRate</td>
+                            <td>@v.Glucose</td>
+                            <td>@v.Weight</td>
+                            <td><span class="status @v.Status.ToLower()">@v.Status</span></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 CARE TEAM -->
+    @if (ActiveTab == "team")
+    {
+        <div class="card">
+            <h4>Care Team</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Specialty</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in CareTeam)
+                    {
+                        <tr>
+                            <td>@t.Name</td>
+                            <td>@t.Role</td>
+                            <td>@t.Specialty</td>
+                            <td>@t.Contact</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 ALERTS -->
+    @if (ActiveTab == "alerts")
+    {
+        <div class="card">
+            <h4>Health Alerts</h4>
+
+            <ul class="alerts-list">
+                @foreach (var a in Alerts)
+                {
+                    <li class="@a.Level.ToLower()">
+                        <b>@a.Title</b> - @a.Description
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+</div>
+
+@code {
+
+    string ActiveTab = "plan";
+    string Tab(string t) => ActiveTab == t ? "tab active" : "tab";
+
+    // 🔹 MODELS
+    class CarePlanModel
+    {
+        public string Condition { get; set; }
+        public string Goal { get; set; }
+        public string Target { get; set; }
+        public string Status { get; set; }
+        public DateTime LastUpdated { get; set; }
+    }
+
+    class TaskModel
+    {
+        public string Name { get; set; }
+        public string Frequency { get; set; }
+        public string Due { get; set; }
+        public string Status { get; set; }
+    }
+
+    class VitalModel
+    {
+        public DateTime Date { get; set; }
+        public string BP { get; set; }
+        public int HeartRate { get; set; }
+        public int Glucose { get; set; }
+        public int Weight { get; set; }
+        public string Status { get; set; }
+    }
+
+    class TeamModel
+    {
+        public string Name { get; set; }
+        public string Role { get; set; }
+        public string Specialty { get; set; }
+        public string Contact { get; set; }
+    }
+
+    class AlertModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Level { get; set; }
+    }
+
+    // 🔹 DATA (6–7 ENTRIES EACH)
+
+    List<CarePlanModel> CarePlans = new()
+    {
+        new() { Condition="Diabetes", Goal="Control Blood Sugar", Target="HbA1c < 7%", Status="Active", LastUpdated=DateTime.Today },
+        new() { Condition="Hypertension", Goal="Maintain BP", Target="<130/80", Status="Active", LastUpdated=DateTime.Today.AddDays(-2)},
+        new() { Condition="Obesity", Goal="Weight Reduction", Target="-5 kg in 3 months", Status="Active", LastUpdated=DateTime.Today.AddDays(-5)},
+        new() { Condition="Cholesterol", Goal="Reduce LDL", Target="<100 mg/dL", Status="Active", LastUpdated=DateTime.Today.AddDays(-10)},
+        new() { Condition="Sleep Disorder", Goal="Improve sleep cycle", Target="7 hrs/day", Status="Monitoring", LastUpdated=DateTime.Today.AddDays(-7)},
+        new() { Condition="Anxiety", Goal="Reduce stress", Target="Weekly therapy", Status="Active", LastUpdated=DateTime.Today.AddDays(-3)}
+    };
+
+    List<TaskModel> Tasks = new()
+    {
+        new() { Name="Take Metformin", Frequency="Daily", Due="Today", Status="Pending"},
+        new() { Name="Check BP", Frequency="Daily", Due="Today", Status="Pending"},
+        new() { Name="Morning Walk 30 mins", Frequency="Daily", Due="Today", Status="Completed"},
+        new() { Name="Insulin Injection", Frequency="Daily", Due="Today", Status="Pending"},
+        new() { Name="Diet Logging", Frequency="Daily", Due="Today", Status="Pending"},
+        new() { Name="Telehealth Follow-up", Frequency="Weekly", Due="Tomorrow", Status="Pending"}
+    };
+
+    List<VitalModel> Vitals = new()
+    {
+        new() { Date=DateTime.Today, BP="130/85", HeartRate=72, Glucose=110, Weight=70, Status="Normal"},
+        new() { Date=DateTime.Today.AddDays(-1), BP="140/90", HeartRate=75, Glucose=140, Weight=70, Status="High"},
+        new() { Date=DateTime.Today.AddDays(-2), BP="135/88", HeartRate=73, Glucose=120, Weight=71, Status="Normal"},
+        new() { Date=DateTime.Today.AddDays(-3), BP="150/95", HeartRate=80, Glucose=160, Weight=71, Status="Critical"},
+        new() { Date=DateTime.Today.AddDays(-4), BP="128/82", HeartRate=70, Glucose=100, Weight=69, Status="Normal"},
+        new() { Date=DateTime.Today.AddDays(-5), BP="138/86", HeartRate=74, Glucose=130, Weight=70, Status="Warning"}
+    };
+
+    List<TeamModel> CareTeam = new()
+    {
+        new() { Name="Dr. Emily Brown", Role="Primary Physician", Specialty="Internal Medicine", Contact="emily@care.com"},
+        new() { Name="Dr. John Smith", Role="Cardiologist", Specialty="Cardiology", Contact="john@care.com"},
+        new() { Name="Dr. Lisa Wong", Role="Endocrinologist", Specialty="Diabetes", Contact="lisa@care.com"},
+        new() { Name="Nurse Kelly Adams", Role="Care Coordinator", Specialty="CCM", Contact="kelly@care.com"},
+        new() { Name="Dr. Mark Lee", Role="Nutritionist", Specialty="Diet Planning", Contact="mark@care.com"},
+        new() { Name="Dr. Sarah White", Role="Psychologist", Specialty="Behavioral Health", Contact="sarah@care.com"}
+    };
+
+    List<AlertModel> Alerts = new()
+    {
+        new() { Title="High BP Alert", Description="BP above 150/95 recorded", Level="High"},
+        new() { Title="Missed Medication", Description="Metformin missed yesterday", Level="Medium"},
+        new() { Title="High Glucose", Description="Glucose > 160 mg/dL", Level="High"},
+        new() { Title="Weight Gain", Description="+2kg in last week", Level="Medium"},
+        new() { Title="Low Activity", Description="No physical activity recorded", Level="Low"},
+        new() { Title="Sleep Issue", Description="Less than 5 hrs sleep", Level="Low"}
+    };
+
+    void CompleteTask(TaskModel t)
+    {
+        t.Status = "Completed";
+    }
+}

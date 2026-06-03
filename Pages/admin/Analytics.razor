@@ -1,0 +1,279 @@
+@page "/admin/analytics"
+@layout AdminLayout
+
+<h2 class="h2">Reports and Analytics</h2>
+
+<div class="actions-bar">
+
+    <button class="btn-export">
+        ⬇ Export Excel
+    </button>
+
+    <button class="btn-export">
+        ⬇ Export PDF
+    </button>
+
+</div>
+<div class="analytics-container">
+
+    <!-- 🔹 TABS -->
+    <div class="tabs-header">
+        <div class="@Tab("revenue")" @onclick='() => ActiveTab="revenue"'>Revenue Analytics</div>
+        <div class="@Tab("providers")" @onclick='() => ActiveTab="providers"'>Providers Performance </div>
+        <div class="@Tab("patients")" @onclick='() => ActiveTab="patients"'>Patients Engagement</div>
+        <div class="@Tab("claims")" @onclick='() => ActiveTab="claims"'>Claims Analytics</div>
+        <div class="@Tab("forecast")" @onclick='() => ActiveTab="forecast"'>Financial Forecast</div>
+    </div>
+
+    <!-- 🔹 REVENUE -->
+    @if (ActiveTab == "revenue")
+    {
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Insurance</th>
+                        <th>Self Pay</th>
+                        <th>Claims Paid</th>
+                        <th>Avg Claim</th>
+                        <th>Outstanding</th>
+                        <th>AR Days</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in RevenueData)
+                    {
+                        <tr>
+                            <td>@r.Date</td>
+                            <td>$@r.Total</td>
+                            <td>$@r.Insurance</td>
+                            <td>$@r.SelfPay</td>
+                            <td>@r.PaidClaims</td>
+                            <td>$@r.AvgClaim</td>
+                            <td>$@r.Outstanding</td>
+                            <td>@r.ARDays</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 PROVIDERS -->
+    @if (ActiveTab == "providers")
+    {
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialty</th>
+                        <th>Visits</th>
+                        <th>Patients</th>
+                        <th>Revenue</th>
+                        <th>Utilization %</th>
+                        <th>Rating</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Providers)
+                    {
+                        <tr>
+                            <td>@p.Name</td>
+                            <td>@p.Specialty</td>
+                            <td>@p.Visits</td>
+                            <td>@p.Patients</td>
+                            <td>$@p.Revenue</td>
+                            <td>@p.Utilization</td>
+                            <td>@p.Rating</td>
+                            <td>@p.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 PATIENTS -->
+    @if (ActiveTab == "patients")
+    {
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>Total</th>
+                        <th>Visits</th>
+                        <th>Chronic %</th>
+                        <th>Retention %</th>
+                        <th>No-show %</th>
+                        <th>Revenue/Patient</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in PatientStats)
+                    {
+                        <tr>
+                            <td>@p.Segment</td>
+                            <td>@p.Total</td>
+                            <td>@p.Visits</td>
+                            <td>@p.Chronic</td>
+                            <td>@p.Retention</td>
+                            <td>@p.NoShow</td>
+                            <td>$@p.RevenuePerPatient</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 CLAIMS -->
+    @if (ActiveTab == "claims")
+    {
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CPT</th>
+                        <th>Description</th>
+                        <th>Submitted</th>
+                        <th>Paid</th>
+                        <th>Rejected</th>
+                        <th>Denial %</th>
+                        <th>Days</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Claims)
+                    {
+                        <tr>
+                            <td>@c.CPT</td>
+                            <td>@c.Description</td>
+                            <td>@c.Submitted</td>
+                            <td>@c.Paid</td>
+                            <td>@c.Rejected</td>
+                            <td>@c.Denial</td>
+                            <td>@c.Days</td>
+                            <td>$@c.Amount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 FORECAST -->
+    @if (ActiveTab == "forecast")
+    {
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Revenue</th>
+                        <th>Visits</th>
+                        <th>Growth %</th>
+                        <th>Cost</th>
+                        <th>Margin %</th>
+                        <th>Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var f in Forecast)
+                    {
+                        <tr>
+                            <td>@f.Month</td>
+                            <td>$@f.Revenue</td>
+                            <td>@f.Visits</td>
+                            <td>@f.Growth</td>
+                            <td>$@f.Cost</td>
+                            <td>@f.Margin</td>
+                            <td>@f.Risk</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+@code {
+
+    string ActiveTab = "revenue";
+    string Tab(string t) => ActiveTab == t ? "tab active" : "tab";
+
+    // MODELS
+    class Revenue { public string Date {get;set;} public int Total {get;set;} public int Insurance {get;set;} public int SelfPay {get;set;} public int PaidClaims {get;set;} public int AvgClaim {get;set;} public int Outstanding {get;set;} public int ARDays {get;set;} }
+    class Provider { public string Name {get;set;} public string Specialty {get;set;} public int Visits {get;set;} public int Patients {get;set;} public int Revenue {get;set;} public int Utilization {get;set;} public double Rating {get;set;} public string Status {get;set;} }
+    class PatientSeg { public string Segment {get;set;} public int Total {get;set;} public int Visits {get;set;} public int Chronic {get;set;} public int Retention {get;set;} public int NoShow {get;set;} public int RevenuePerPatient {get;set;} }
+    class Claim { public string CPT {get;set;} public string Description {get;set;} public int Submitted {get;set;} public int Paid {get;set;} public int Rejected {get;set;} public int Denial {get;set;} public int Days {get;set;} public int Amount {get;set;} }
+    class ForecastM { public string Month {get;set;} public int Revenue {get;set;} public int Visits {get;set;} public int Growth {get;set;} public int Cost {get;set;} public int Margin {get;set;} public string Risk {get;set;} }
+
+    // SAMPLE DATA (10 rows each)
+    List<Revenue> RevenueData = Enumerable.Range(1,10).Select(i => new Revenue{
+        Date=$"{i} Apr", Total=10000+i*500, Insurance=8000+i*400, SelfPay=2000+i*100,
+        PaidClaims=80+i, AvgClaim=120+i, Outstanding=3000+i*200, ARDays=25+i
+    }).ToList();
+
+   List<Provider> Providers = new()
+{
+    new(){Name="Dr. John Smith", Specialty="Cardiology", Visits=52, Patients=45, Revenue=7800, Utilization=88, Rating=4.7, Status="Active"},
+    new(){Name="Dr. Sarah Lee", Specialty="Dermatology", Visits=40, Patients=36, Revenue=5200, Utilization=76, Rating=4.5, Status="Active"},
+    new(){Name="Dr. Michael Brown", Specialty="Internal Medicine", Visits=60, Patients=50, Revenue=9100, Utilization=92, Rating=4.8, Status="Active"},
+    new(){Name="Dr. Emily Davis", Specialty="Pediatrics", Visits=35, Patients=30, Revenue=4200, Utilization=70, Rating=4.4, Status="Active"},
+    new(){Name="Dr. David Wilson", Specialty="Orthopedics", Visits=48, Patients=42, Revenue=8600, Utilization=85, Rating=4.6, Status="Active"},
+    new(){Name="Dr. Olivia Martinez", Specialty="Psychiatry", Visits=30, Patients=28, Revenue=3900, Utilization=68, Rating=4.3, Status="Active"},
+    new(){Name="Dr. James Anderson", Specialty="Endocrinology", Visits=44, Patients=39, Revenue=7200, Utilization=80, Rating=4.6, Status="Active"},
+    new(){Name="Dr. Sophia Taylor", Specialty="Neurology", Visits=38, Patients=34, Revenue=6900, Utilization=78, Rating=4.5, Status="Active"},
+    new(){Name="Dr. Daniel Thomas", Specialty="Pulmonology", Visits=41, Patients=37, Revenue=6500, Utilization=75, Rating=4.4, Status="Active"},
+    new(){Name="Dr. Ava Jackson", Specialty="Family Medicine", Visits=55, Patients=48, Revenue=8000, Utilization=90, Rating=4.7, Status="Active"}
+};
+
+   List<PatientSeg> PatientStats = new()
+{
+    new(){Segment="Chronic Care Management (CCM)", Total=320, Visits=4, Chronic=85, Retention=92, NoShow=6, RevenuePerPatient=220},
+    new(){Segment="Remote Patient Monitoring (RPM)", Total=280, Visits=5, Chronic=75, Retention=88, NoShow=8, RevenuePerPatient=260},
+    new(){Segment="Behavioral Health Integration (BHI)", Total=190, Visits=3, Chronic=65, Retention=85, NoShow=10, RevenuePerPatient=180},
+    new(){Segment="Transitional Care Management (TCM)", Total=140, Visits=2, Chronic=55, Retention=80, NoShow=12, RevenuePerPatient=200},
+    new(){Segment="General Telehealth", Total=500, Visits=2, Chronic=20, Retention=75, NoShow=15, RevenuePerPatient=140},
+    new(){Segment="Preventive Care", Total=220, Visits=1, Chronic=10, Retention=70, NoShow=18, RevenuePerPatient=110},
+    new(){Segment="Post-Discharge Follow-up", Total=160, Visits=2, Chronic=60, Retention=82, NoShow=9, RevenuePerPatient=190},
+    new(){Segment="Chronic Cardiac Care", Total=130, Visits=4, Chronic=90, Retention=91, NoShow=5, RevenuePerPatient=300},
+    new(){Segment="Diabetes Management", Total=210, Visits=3, Chronic=95, Retention=89, NoShow=7, RevenuePerPatient=250},
+    new(){Segment="Hypertension Program", Total=260, Visits=3, Chronic=88, Retention=87, NoShow=9, RevenuePerPatient=230}
+};
+
+   List<Claim> Claims = new()
+{
+    new(){CPT="99213", Description="Office Visit (Established Patient)", Submitted=120, Paid=100, Rejected=20, Denial=16, Days=5, Amount=12000},
+    new(){CPT="99457", Description="Remote Monitoring Mgmt", Submitted=90, Paid=80, Rejected=10, Denial=11, Days=6, Amount=9000},
+    new(){CPT="99490", Description="Chronic Care Management", Submitted=110, Paid=95, Rejected=15, Denial=13, Days=7, Amount=15000},
+    new(){CPT="93000", Description="Electrocardiogram", Submitted=80, Paid=70, Rejected=10, Denial=12, Days=4, Amount=8000},
+    new(){CPT="80050", Description="General Health Panel", Submitted=75, Paid=60, Rejected=15, Denial=20, Days=6, Amount=7000},
+    new(){CPT="71020", Description="Chest X-Ray", Submitted=60, Paid=50, Rejected=10, Denial=16, Days=5, Amount=6500},
+    new(){CPT="85025", Description="CBC Blood Test", Submitted=95, Paid=85, Rejected=10, Denial=10, Days=3, Amount=6000},
+    new(){CPT="99214", Description="Detailed Office Visit", Submitted=105, Paid=90, Rejected=15, Denial=14, Days=5, Amount=13000},
+    new(){CPT="36415", Description="Venipuncture", Submitted=70, Paid=65, Rejected=5, Denial=7, Days=2, Amount=3000},
+    new(){CPT="99495", Description="Transitional Care Mgmt", Submitted=55, Paid=45, Rejected=10, Denial=18, Days=8, Amount=8500}
+};
+
+    List<ForecastM> Forecast = new()
+{
+    new(){Month="May 2026", Revenue=45000, Visits=1200, Growth=12, Cost=25000, Margin=44, Risk="Low"},
+    new(){Month="Jun 2026", Revenue=52000, Visits=1350, Growth=15, Cost=27000, Margin=48, Risk="Medium"},
+    new(){Month="Jul 2026", Revenue=58000, Visits=1500, Growth=18, Cost=30000, Margin=50, Risk="Low"},
+    new(){Month="Aug 2026", Revenue=60000, Visits=1600, Growth=20, Cost=32000, Margin=52, Risk="Low"},
+    new(){Month="Sep 2026", Revenue=62000, Visits=1700, Growth=22, Cost=34000, Margin=55, Risk="Low"},
+    new(){Month="Oct 2026", Revenue=65000, Visits=1800, Growth=24, Cost=36000, Margin=58, Risk="Medium"},
+    new(){Month="Nov 2026", Revenue=70000, Visits=2000, Growth=28, Cost=38000, Margin=60, Risk="Low"},
+    new(){Month="Dec 2026", Revenue=75000, Visits=2200, Growth=30, Cost=40000, Margin=62, Risk="Low"},
+    new(){Month="Jan 2027", Revenue=78000, Visits=2300, Growth=32, Cost=42000, Margin=63, Risk="Medium"},
+    new(){Month="Feb 2027", Revenue=82000, Visits=2500, Growth=35, Cost=45000, Margin=65, Risk="Low"}
+};
+}

@@ -1,0 +1,72 @@
+.audit-container[b-v9gv2nkvfq] {
+    color: teal;
+}
+
+/* 🔹 ACTION BAR */
+.actions-bar[b-v9gv2nkvfq] {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+/* 🔹 BUTTON */
+.btn-export[b-v9gv2nkvfq] {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-export:hover[b-v9gv2nkvfq] {
+    background: #146C63;
+}
+
+/* 🔹 FILTER */
+.filter-bar[b-v9gv2nkvfq] {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box[b-v9gv2nkvfq] {
+    padding: 8px;
+    border: 1px solid teal;
+    border-radius: 6px;
+    width: 250px;
+}
+
+/* 🔹 TABLE */
+.table-card[b-v9gv2nkvfq] {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+table[b-v9gv2nkvfq] {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th[b-v9gv2nkvfq], td[b-v9gv2nkvfq] {
+    padding: 10px;
+    border-bottom: 1px solid teal;
+    white-space: nowrap;
+}
+
+tr:hover[b-v9gv2nkvfq] {
+    background: #f5fdfc;
+}
+
+/* 🔹 STATUS COLORS */
+.status.success[b-v9gv2nkvfq] { color: #4caf50; }
+.status.warning[b-v9gv2nkvfq] { color: #ff9800; }
+.status.error[b-v9gv2nkvfq] { color: #f44336; }
+.status.info[b-v9gv2nkvfq] { color: #2196f3; }
+
+/* 🔹 TITLE */
+.h2[b-v9gv2nkvfq] {
+    color: teal;
+}

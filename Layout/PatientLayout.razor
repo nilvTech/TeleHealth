@@ -1,0 +1,85 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">TeleMed</div>
+
+        <nav class="menu">
+            <a class="@Active("patient/dashboard")" @onclick="@(() => Go("patient/dashboard"))">
+                Dashboard
+            </a>
+
+            <a class="@Active("patient/appointment")" @onclick="@(() => Go("patient/appointment"))">
+                Appointments
+            </a>
+
+            <a class="@Active("patient/videoconsultation")" @onclick="@(() => Go("patient/videoconsultation"))">
+                Video Consult
+            </a>
+
+            <a class="@Active("/patient/caremanagement")" @onclick="@(() => Go("/patient/caremanagement"))">
+                Care Management
+            </a>
+
+            <a class="@Active("/patient/rpm")" @onclick="@(() => Go("/patient/rpm"))">
+                RPM
+            </a>
+
+            <a class="@Active("/patient/messages")" @onclick="@(() => Go("/patient/messages"))">
+                Messages
+            </a>
+            <a class="@Active("/patient/orders")" @onclick="@(() => Go("/patient/orders"))">
+                Orders
+            </a>
+
+            <a class="@Active("patient/billing")" @onclick="@(() => Go("patient/billing"))">
+                Billing
+            </a>
+
+            <a class="@Active("patient/profile")" @onclick="@(() => Go("patient/profile"))">
+                Profile
+            </a>
+
+            <a class="@Active("patient/settings")" @onclick="@(() => Go("patient/settings"))">
+                Settings
+            </a>
+            
+            <a class= @onclick="@(() => Go("/"))">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main">
+
+        <!-- HEADER (Top Right User Info) -->
+        <div class="topbar">
+            <div class="topbar-right">
+                <div class="user-info">
+                    <div class="user-avatar">SJ</div>
+                    <span class="user-name">Ms.Sarah Johnson</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <main class="content">
+            @Body
+        </main>
+
+    </div>
+
+</div>
+
+@code {
+    void Go(string url) => Nav.NavigateTo(url);
+
+    string Active(string url)
+    {
+        return Nav.Uri.ToLower().Contains(url) ? "active" : "";
+    }
+}

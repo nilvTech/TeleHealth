@@ -1,0 +1,217 @@
+.video-container {
+    padding: 20px;
+    color: teal;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* HEADER */
+.video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4fdfc;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid teal;
+    margin-bottom: 20px;
+}
+
+.doctor-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.call-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.badge {
+    background: #e0f7f5;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.badge.success {
+    background: #d4edda;
+}
+
+.time {
+    font-weight: bold;
+}
+
+.btn-end {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* GRID */
+.video-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* VIDEO PANEL */
+.video-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid teal;
+}
+
+.video-wrapper {
+    position: relative;
+    background: black;
+    height: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* MAIN VIDEO */
+.remote-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* SELF VIDEO */
+.local-container {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 180px;
+    height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid white;
+    background: black;
+}
+
+.local-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* LABELS */
+.label {
+    position: absolute;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.doctor-label {
+    bottom: 10px;
+    left: 10px;
+}
+
+.patient-label {
+    bottom: 5px;
+    left: 5px;
+}
+
+/* CONTROLS */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.control-btn {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.control-btn.active {
+    background: #004d4d;
+}
+
+.control-btn.recording {
+    background: red;
+}
+
+/* SIDE PANEL */
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid teal;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+/* CHAT */
+.chat-box {
+    height: 220px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.chat-msg {
+    padding: 8px 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+    max-width: 80%;
+    font-size: 13px;
+}
+
+.chat-msg.me {
+    background: teal;
+    color: white;
+    margin-left: auto;
+}
+
+.chat-msg.other {
+    background: #e0f7f5;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid teal;
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+}
+
+/* UPLOAD */
+.upload-card input {
+    margin-top: 10px;
+}
+
+.upload-card ul {
+    margin-top: 10px;
+    padding-left: 20px;
+    font-size: 13px;
+}

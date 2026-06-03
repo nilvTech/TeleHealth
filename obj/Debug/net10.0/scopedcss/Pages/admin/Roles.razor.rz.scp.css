@@ -1,0 +1,99 @@
+.role-container[b-9928t75s4p] {
+    padding: 20px;
+}
+
+/* HEADER */
+.actions-bar[b-9928t75s4p] {
+    margin-bottom: 15px;
+}
+
+/* TABLE */
+.roles-table[b-9928t75s4p], .matrix-card[b-9928t75s4p] {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+/* MAIN TABLE */
+table[b-9928t75s4p] {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid teal;
+}
+
+th[b-9928t75s4p], td[b-9928t75s4p] {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid teal;
+    font-size: 14px;
+}
+
+/* HEADER */
+th[b-9928t75s4p] {
+    background: #e6f7f6;
+    color: teal;
+    font-weight: bold;
+}
+
+/* ROW HOVER */
+tr:hover[b-9928t75s4p] {
+    background: #f5fdfc;
+}
+
+/* STATUS */
+.status[b-9928t75s4p] {
+    background: #d1f2ef;
+    color: teal;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* BUTTONS */
+.btn-primary[b-9928t75s4p] {
+    background: teal;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover[b-9928t75s4p] {
+    background: #146c63;
+}
+
+.btn-secondary[b-9928t75s4p] {
+    background: teal;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover[b-9928t75s4p] {
+    background: #0f7f7a;
+}
+
+/* MATRIX */
+.matrix-card h4[b-9928t75s4p] {
+    margin-bottom: 15px;
+    color: teal;
+}
+
+.matrix-table input[type="checkbox"][b-9928t75s4p] {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/* SAVE BUTTON */
+.save-bar[b-9928t75s4p] {
+    margin-top: 15px;
+}
+
+/* TITLE */
+.h2[b-9928t75s4p] {
+    color: teal;
+}

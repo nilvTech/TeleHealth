@@ -1,0 +1,314 @@
+@page "/admin/devices"
+@layout AdminLayout
+
+<h2 class="page-title">Devices</h2>
+
+<div class="devices-container">
+
+    <!-- SUMMARY -->
+   
+    <!-- FILTERS -->
+    <div class="filter-card">
+
+        <div class="filter-row">
+
+            <div class="filter-group">
+                <label>Search Device</label>
+                <input class="input"
+                       placeholder="Search by device or patient..." />
+            </div>
+
+            <div class="filter-group">
+                <label>Device Type</label>
+                <select class="input">
+                    <option>All Devices</option>
+                    <option>Blood Pressure Monitor</option>
+                    <option>Glucose Monitor</option>
+                    <option>Pulse Oximeter</option>
+                    <option>Weight Scale</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Status</label>
+                <select class="input">
+                    <option>All Status</option>
+                    <option>Connected</option>
+                    <option>Offline</option>
+                    <option>Low Battery</option>
+                </select>
+            </div>
+
+            <div class="filter-btn">
+                <button class="btn-primary">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DEVICE TABLE -->
+    <div class="card">
+
+        <div class="card-header">
+
+            <h3>Registered RPM Devices</h3>
+
+            <div class="header-actions">
+
+                <button class="btn-secondary">
+                    Export
+                </button>
+
+                <button class="btn-primary">
+                    Add Device
+                </button>
+
+            </div>
+
+        </div>
+
+        <table class="styled-table">
+
+            <thead>
+
+                <tr>
+                    <th>Device ID</th>
+                    <th>Device</th>
+                    <th>Assigned Patient</th>
+                    <th>Provider Group</th>
+                    <th>Battery</th>
+                    <th>Signal</th>
+                    <th>Last Sync</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var d in Device)
+                {
+                    <tr>
+
+                        <td>@d.DeviceId</td>
+
+                        <td>
+
+                            <div class="device-info">
+
+                                <div class="device-icon">
+                                    @d.Icon
+                                </div>
+
+                                <div>
+                                    <strong>@d.DeviceName</strong>
+                                    <span>@d.Type</span>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td>@d.Patient</td>
+
+                        <td>@d.ProviderGroup</td>
+
+                        <td>@d.Battery</td>
+
+                        <td>@d.Signal</td>
+
+                        <td>@d.LastSync</td>
+
+                        <td>
+
+                            <span class="status @d.StatusClass">
+                                @d.Status
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <div class="action-row">
+
+                                <button class="btn-small">
+                                    View
+                                </button>
+
+                                <button class="btn-small secondary">
+                                    Edit
+                                </button>
+
+                                <button class="btn-small danger">
+                                    Disable
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- ALERTS -->
+    <div class="card">
+
+        <div class="card-header">
+            <h3>System Device Alerts</h3>
+        </div>
+
+        <div class="alert-list">
+
+            @foreach (var a in Alerts)
+            {
+                <div class="alert-item">
+
+                    <div>
+
+                        <h5>@a.Title</h5>
+
+                        <p>@a.Description</p>
+
+                    </div>
+
+                    <span class="priority @a.Priority.ToLower()">
+                        @a.Priority
+                    </span>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    class DeviceModel
+    {
+        public string DeviceId { get; set; }
+        public string Icon { get; set; }
+        public string DeviceName { get; set; }
+        public string Type { get; set; }
+        public string Patient { get; set; }
+        public string ProviderGroup { get; set; }
+        public string Battery { get; set; }
+        public string Signal { get; set; }
+        public string LastSync { get; set; }
+        public string Status { get; set; }
+        public string StatusClass { get; set; }
+    }
+
+    class AlertModel
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Priority { get; set; }
+    }
+
+    List<DeviceModel> Device = new()
+    {
+        new() {
+            DeviceId="DEV-1001",
+            Icon="🩺",
+            DeviceName="BP Monitor X2",
+            Type="Blood Pressure Monitor",
+            Patient="Sarah Johnson",
+            ProviderGroup="Heart Care Group",
+            Battery="84%",
+            Signal="Excellent",
+            LastSync="2 mins ago",
+            Status="Connected",
+            StatusClass="connected"
+        },
+
+        new() {
+            DeviceId="DEV-1002",
+            Icon="🩸",
+            DeviceName="GlucoTrack Pro",
+            Type="Glucose Monitor",
+            Patient="Michael Brown",
+            ProviderGroup="Diabetes Care Center",
+            Battery="18%",
+            Signal="Good",
+            LastSync="5 mins ago",
+            Status="Low Battery",
+            StatusClass="warning"
+        },
+
+        new() {
+            DeviceId="DEV-1003",
+            Icon="❤️",
+            DeviceName="PulseCare Sensor",
+            Type="Pulse Oximeter",
+            Patient="Emily Davis",
+            ProviderGroup="Wellness Medical Group",
+            Battery="66%",
+            Signal="Weak",
+            LastSync="25 mins ago",
+            Status="Offline",
+            StatusClass="offline"
+        },
+
+        new() {
+            DeviceId="DEV-1004",
+            Icon="⚖️",
+            DeviceName="Smart Scale Max",
+            Type="Weight Scale",
+            Patient="Robert Wilson",
+            ProviderGroup="Primary Care Associates",
+            Battery="91%",
+            Signal="Excellent",
+            LastSync="1 min ago",
+            Status="Connected",
+            StatusClass="connected"
+        },
+
+        new() {
+            DeviceId="DEV-1005",
+            Icon="🌡️",
+            DeviceName="TempCare Plus",
+            Type="Temperature Monitor",
+            Patient="Lisa Anderson",
+            ProviderGroup="Family Health Group",
+            Battery="42%",
+            Signal="Good",
+            LastSync="8 mins ago",
+            Status="Connected",
+            StatusClass="connected"
+        }
+    };
+
+    List<AlertModel> Alerts = new()
+    {
+        new() {
+            Title="Low Battery Warning",
+            Description="12 glucose monitors are below 15% battery.",
+            Priority="High"
+        },
+
+        new() {
+            Title="Device Offline",
+            Description="PulseCare Sensor DEV-1003 lost connection.",
+            Priority="Critical"
+        },
+
+        new() {
+            Title="Firmware Update Available",
+            Description="86 RPM devices require software updates.",
+            Priority="Medium"
+        }
+    };
+}

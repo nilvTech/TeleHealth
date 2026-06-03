@@ -1,0 +1,172 @@
+@* RPM.razor *@
+@page "/provider/carehome"
+@layout ProviderLayout
+@inject NavigationManager Nav
+
+<h3 class="page-title">Care Management</h3>
+
+<div class="rpm-container">
+
+    <div class="filter-bar">
+
+        <input class="search-box"
+               placeholder="Search patient..."
+               @bind="searchText"
+               @bind:event="oninput" />
+
+        <select class="filter-select" @bind="selectedCondition">
+            <option value="">All Conditions</option>
+            <option>Diabetes</option>
+            <option>Hypertension</option>
+            <option>Asthma</option>
+            <option>Cardiac</option>
+            <option>COPD</option>
+        </select>
+
+        <select class="filter-select" @bind="selectedRisk">
+            <option value="">All Risk</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+        </select>
+
+    </div>
+
+    <div class="table-card">
+
+        <table class="styled-table">
+
+            <thead>
+                <tr>
+                    <th>MRN</th>
+                    <th>Patient</th>
+                    <th>Age</th>
+                    <th>Condition</th>
+                    <th>Heart Rate</th>
+                    <th>Blood Pressure</th>
+                    <th>Status</th>
+                    <th>Last Reading</th>
+                    <th>Risk</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var p in FilteredPatients)
+                {
+                    <tr>
+
+                        <td>@p.MRN</td>
+                        <td>@p.Name</td>
+                        <td>@p.Age</td>
+                        <td>@p.Condition</td>
+                        <td>@p.HeartRate bpm</td>
+                        <td>@p.BloodPressure</td>
+
+                        <td>
+                            <span class="status @p.Status.ToLower()">
+                                @p.Status
+                            </span>
+                        </td>
+
+                        <td>@p.LastReading</td>
+
+                        <td>
+                            <span class="risk @GetRiskClass(p.Risk)">
+                                @p.Risk
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="action-row">
+
+                                <button class="btn-small"
+                                        @onclick="() => ViewPatient(p.Id)">
+                                    View
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string searchText = "";
+    private string selectedCondition = "";
+    private string selectedRisk = "";
+
+    class PatientModel
+    {
+        public int Id { get; set; }
+        public string MRN { get; set; } = "";
+        public string Name { get; set; } = "";
+        public int Age { get; set; }
+        public string Condition { get; set; } = "";
+        public string Risk { get; set; } = "";
+        public int HeartRate { get; set; }
+        public string BloodPressure { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string LastReading { get; set; } = "";
+    }
+
+    List<PatientModel> Patients = new()
+    {
+        new() { Id=1, MRN="1001", Name="Sarah Johnson", Age=52, Condition="Diabetes", Risk="High", HeartRate=92, BloodPressure="154/96", Status="Critical", LastReading="2 mins ago" },
+
+        new() { Id=2, MRN="1002", Name="Michael Brown", Age=61, Condition="Hypertension", Risk="High", HeartRate=88, BloodPressure="148/90", Status="Warning", LastReading="5 mins ago" },
+
+        new() { Id=3, MRN="1003", Name="Emily Davis", Age=45, Condition="Asthma", Risk="Low", HeartRate=74, BloodPressure="120/80", Status="Stable", LastReading="7 mins ago" },
+
+        new() { Id=4, MRN="1004", Name="Robert Wilson", Age=70, Condition="Cardiac", Risk="High", HeartRate=98, BloodPressure="166/102", Status="Critical", LastReading="1 min ago" },
+
+        new() { Id=5, MRN="1005", Name="Olivia White", Age=38, Condition="COPD", Risk="Medium", HeartRate=82, BloodPressure="130/84", Status="Stable", LastReading="10 mins ago" },
+
+        new() { Id=6, MRN="1006", Name="David Lee", Age=57, Condition="Diabetes", Risk="Medium", HeartRate=79, BloodPressure="138/86", Status="Warning", LastReading="12 mins ago" },
+
+        new() { Id=7, MRN="1007", Name="Sophia Martinez", Age=49, Condition="Hypertension", Risk="Medium", HeartRate=83, BloodPressure="142/88", Status="Warning", LastReading="6 mins ago" },
+
+        new() { Id=8, MRN="1008", Name="James Taylor", Age=63, Condition="Cardiac", Risk="High", HeartRate=95, BloodPressure="170/100", Status="Critical", LastReading="3 mins ago" },
+
+        new() { Id=9, MRN="1009", Name="Linda Anderson", Age=41, Condition="Asthma", Risk="Low", HeartRate=72, BloodPressure="118/76", Status="Stable", LastReading="15 mins ago" },
+
+        new() { Id=10, MRN="1010", Name="Daniel Thomas", Age=55, Condition="COPD", Risk="Medium", HeartRate=86, BloodPressure="136/82", Status="Stable", LastReading="8 mins ago" }
+    };
+
+    IEnumerable<PatientModel> FilteredPatients => Patients
+        .Where(p =>
+            (string.IsNullOrWhiteSpace(searchText) ||
+             p.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) &&
+
+            (string.IsNullOrWhiteSpace(selectedCondition) ||
+             p.Condition == selectedCondition) &&
+
+            (string.IsNullOrWhiteSpace(selectedRisk) ||
+             p.Risk == selectedRisk)
+        );
+
+    private string GetRiskClass(string risk) => risk switch
+    {
+        "High" => "risk-high",
+        "Medium" => "risk-medium",
+        "Low" => "risk-low",
+        _ => ""
+    };
+
+    void ViewPatient(int id)
+    {
+        Nav.NavigateTo($"/provider/caremanagement/{id}");
+    }
+}

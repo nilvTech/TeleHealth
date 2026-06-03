@@ -1,0 +1,170 @@
+@page "/provider/addclaim"
+@inject NavigationManager Nav
+
+<div class="claim-form-container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h4>Create Claim</h4>
+        <button class="btn-back" @onclick="GoBack">← Back</button>
+    </div>
+
+    <!-- FORM -->
+    <div class="card">
+
+        <h5>Patient & Provider Info</h5>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Patient Name</label>
+                <input @bind="claim.Patient" />
+            </div>
+
+            <div>
+                <label>Provider</label>
+                <input @bind="claim.Provider" />
+            </div>
+
+            <div>
+                <label>Payer</label>
+                <select @bind="claim.Payer">
+                    <option>Aetna</option>
+                    <option>Blue Cross</option>
+                    <option>United Healthcare</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CPT SECTION -->
+    <div class="card">
+
+        <h5>CPT Codes</h5>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Units</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var cpt in claim.CPTCodes)
+                {
+                    <tr>
+                        <td><input @bind="cpt.Code" /></td>
+                        <td><input @bind="cpt.Description" /></td>
+                        <td><input type="number" @bind="cpt.Units" /></td>
+                        <td><input type="number" @bind="cpt.Amount" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button class="btn-add" @onclick="AddCPT">+ Add CPT</button>
+
+    </div>
+
+    <!-- TIME TRACKING -->
+    <div class="card">
+
+        <h5>Time Tracking</h5>
+
+        <div class="form-grid">
+            <div>
+                <label>Time Spent (minutes)</label>
+                <input type="number" @bind="claim.TimeSpent" />
+            </div>
+
+            <div>
+                <label>Suggested CPT</label>
+                <input value="@GetSuggestedCPT()" readonly />
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+        <button class="btn-submit" @onclick="SubmitClaim">
+            Submit Claim
+        </button>
+
+        <button class="btn-save" @onclick="SaveDraft">
+            Save Draft
+        </button>
+
+    </div>
+
+</div>
+
+@code {
+
+    private ClaimModel claim = new()
+    {
+        CPTCodes = new List<CPTModel>
+        {
+            new CPTModel()
+        }
+    };
+
+    private void AddCPT()
+    {
+        claim.CPTCodes.Add(new CPTModel());
+    }
+
+    private string GetSuggestedCPT()
+    {
+        return claim.TimeSpent switch
+        {
+            <= 15 => "99212",
+            <= 30 => "99213",
+            <= 45 => "99214",
+            _ => "99215"
+        };
+    }
+
+    private void SubmitClaim()
+    {
+        claim.Status = "Submitted";
+        Nav.NavigateTo("/provider/billing");
+    }
+
+    private void SaveDraft()
+    {
+        claim.Status = "Draft";
+        Nav.NavigateTo("/provider/billing");
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/provider/billing");
+    }
+
+    // MODELS
+    public class ClaimModel
+    {
+        public string Patient { get; set; } = "";
+        public string Provider { get; set; } = "";
+        public string Payer { get; set; } = "";
+        public int TimeSpent { get; set; }
+        public string Status { get; set; } = "";
+
+        public List<CPTModel> CPTCodes { get; set; } = new();
+    }
+
+    public class CPTModel
+    {
+        
+        public string Code { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int Units { get; set; }
+        public decimal Amount { get; set; }
+    }
+}

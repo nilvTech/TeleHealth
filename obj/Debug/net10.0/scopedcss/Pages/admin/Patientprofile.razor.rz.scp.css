@@ -1,0 +1,213 @@
+.profile-container[b-l6hxb8jgjc] {
+    padding: 24px;
+    background: #f8fafc;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: teal;
+}
+
+/* PROFILE HEADER */
+.profile-header[b-l6hxb8jgjc] {
+    background: white;
+    border-radius: 22px;
+    border: 1px solid #d8eeee;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.profile-left[b-l6hxb8jgjc] {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-avatar[b-l6hxb8jgjc] {
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    background: teal;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.profile-info h2[b-l6hxb8jgjc] {
+    margin: 0;
+    color: teal;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.profile-info p[b-l6hxb8jgjc] {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* STATUS */
+.status[b-l6hxb8jgjc] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.status.active[b-l6hxb8jgjc] {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* BUTTONS */
+.profile-actions[b-l6hxb8jgjc] {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-primary[b-l6hxb8jgjc],
+.btn-secondary[b-l6hxb8jgjc] {
+    height: 46px;
+    border-radius: 12px;
+    padding: 0 22px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary[b-l6hxb8jgjc] {
+    background: teal;
+    color: white;
+}
+
+.btn-secondary[b-l6hxb8jgjc] {
+    background: #e8fbfb;
+    color: teal;
+}
+
+/* GRID */
+.profile-grid[b-l6hxb8jgjc] {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 22px;
+}
+
+/* CARD */
+.profile-card[b-l6hxb8jgjc] {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #d8eeee;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    padding: 24px;
+}
+
+.profile-card h3[b-l6hxb8jgjc] {
+    margin-top: 0;
+    margin-bottom: 22px;
+    color: teal;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* DETAILS */
+.details-grid[b-l6hxb8jgjc] {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+.detail-item label[b-l6hxb8jgjc] {
+    display: block;
+    margin-bottom: 8px;
+    color: #5f7f7f;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.detail-item input[b-l6hxb8jgjc],
+.detail-item textarea[b-l6hxb8jgjc],
+.detail-item select[b-l6hxb8jgjc] {
+    width: 100%;
+    border: 1px solid #d6eeee;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: teal;
+    outline: none;
+}
+
+.detail-item textarea[b-l6hxb8jgjc] {
+    resize: none;
+    min-height: 90px;
+}
+
+.detail-item input:focus[b-l6hxb8jgjc],
+.detail-item textarea:focus[b-l6hxb8jgjc],
+.detail-item select:focus[b-l6hxb8jgjc] {
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.12);
+}
+
+/* TIMELINE */
+.timeline-item[b-l6hxb8jgjc] {
+    padding: 14px 0;
+    border-bottom: 1px solid #edf6f6;
+}
+
+.timeline-item:last-child[b-l6hxb8jgjc] {
+    border-bottom: none;
+}
+
+.timeline-date[b-l6hxb8jgjc] {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.timeline-text[b-l6hxb8jgjc] {
+    color: teal;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px) {
+
+    .profile-grid[b-l6hxb8jgjc] {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:768px) {
+
+    .details-grid[b-l6hxb8jgjc] {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-header[b-l6hxb8jgjc] {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-actions[b-l6hxb8jgjc] {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .btn-primary[b-l6hxb8jgjc],
+    .btn-secondary[b-l6hxb8jgjc] {
+        width: 100%;
+    }
+}

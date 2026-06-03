@@ -1,0 +1,823 @@
+@page "/provider/caremanagement/{PatientId:int?}"
+
+@inject NavigationManager Nav
+
+<div class="care-container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div>
+            <h2>Care Management</h2>
+
+            <p class="sub-text">
+                Manage patient profile, vitals, medications, goals and provider reviews
+            </p>
+        </div>
+
+        <div class="header-actions">
+
+            <select class="patient-select"
+                    @bind="SelectedPatientId"
+                    @bind:after="LoadSelectedPatient">
+
+                <option value="0">Select Patient</option>
+
+                @foreach (var patient in Patients)
+                {
+                    <option value="@patient.Id">
+                        @patient.Name
+                    </option>
+                }
+
+            </select>
+
+            @if (SelectedPatient != null)
+            {
+                @if (!IsEditMode)
+                {
+                    <button class="btn-edit"
+                            @onclick="EnableEdit">
+                        Edit
+                    </button>
+                }
+                else
+                {
+                    <button class="btn-save"
+                            @onclick="SaveChanges">
+                        Save
+                    </button>
+
+                    <button class="btn-secondary"
+                            @onclick="CancelEdit">
+                        Cancel
+                    </button>
+                }
+            }
+
+        </div>
+
+    </div>
+
+    @if (SelectedPatient != null)
+    {
+        <div class="care-grid">
+
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+
+                <!-- PROFILE -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Patient Profile</h3>
+
+                        <span class="risk">
+                            @SelectedPatient.RiskLevel Risk
+                        </span>
+                    </div>
+
+                    <div class="profile-grid">
+
+                        <div class="profile-item">
+                            <label>Patient Name</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.Name" />
+                            }
+                            else
+                            {
+                                <span>@SelectedPatient.Name</span>
+                            }
+                        </div>
+
+                        <div class="profile-item">
+                            <label>Age</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input type="number"
+                                       @bind="SelectedPatient.Age" />
+                            }
+                            else
+                            {
+                                <span>@SelectedPatient.Age Years</span>
+                            }
+                        </div>
+
+                        <div class="profile-item">
+                            <label>Conditions</label>
+
+                            @if (IsEditMode)
+                            {
+                                <textarea class="full-textarea"
+                                          @bind="SelectedPatient.Conditions">
+                                </textarea>
+                            }
+                            else
+                            {
+                                <span>@SelectedPatient.Conditions</span>
+                            }
+                        </div>
+
+                        <div class="profile-item">
+                            <label>Care Manager</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.CareManager" />
+                            }
+                            else
+                            {
+                                <span>@SelectedPatient.CareManager</span>
+                            }
+                        </div>
+
+                        <div class="profile-item">
+                            <label>Risk Level</label>
+
+                            @if (IsEditMode)
+                            {
+                                <select @bind="SelectedPatient.RiskLevel">
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <span>@SelectedPatient.RiskLevel</span>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RPM -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>RPM Monitoring</h3>
+                    </div>
+
+                    <div class="device-grid">
+
+                        @foreach (var device in SelectedPatient.Devices)
+                        {
+                            <div class="device-card">
+
+                                @if (IsEditMode)
+                                {
+                                    <input class="device-input"
+                                           @bind="device.Name" />
+
+                                    <input class="device-input"
+                                           @bind="device.Value" />
+                                }
+                                else
+                                {
+                                    <div class="device-name">
+                                        @device.Name
+                                    </div>
+
+                                    <div class="device-value">
+                                        @device.Value
+                                    </div>
+                                }
+
+                                <div class="trend @(device.IsCritical ? "critical" : "normal")">
+                                    @device.Trend
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+                <!-- VITALS -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Vitals</h3>
+                    </div>
+
+                    <div class="vitals-grid">
+
+                        <div class="vital-box">
+
+                            <label>Blood Pressure</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.BloodPressure" />
+                            }
+                            else
+                            {
+                                <div class="vital-value">
+                                    @SelectedPatient.BloodPressure
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="vital-box">
+
+                            <label>Heart Rate</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.HeartRate" />
+                            }
+                            else
+                            {
+                                <div class="vital-value">
+                                    @SelectedPatient.HeartRate
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="vital-box">
+
+                            <label>SpO2</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.SpO2" />
+                            }
+                            else
+                            {
+                                <div class="vital-value">
+                                    @SelectedPatient.SpO2
+                                </div>
+                            }
+
+                        </div>
+
+                        <div class="vital-box">
+
+                            <label>Weight</label>
+
+                            @if (IsEditMode)
+                            {
+                                <input @bind="SelectedPatient.Weight" />
+                            }
+                            else
+                            {
+                                <div class="vital-value">
+                                    @SelectedPatient.Weight
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- MEDICATIONS -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Medications</h3>
+                    </div>
+
+                    @foreach (var medication in SelectedPatient.Medications)
+                    {
+                        <div class="care-item">
+
+                            @if (IsEditMode)
+                            {
+                                <textarea class="full-textarea"
+                                          @bind="medication.Title">
+                                </textarea>
+                            }
+                            else
+                            {
+                                <span>@medication.Title</span>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+
+                <!-- CARE PLAN -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Care Plan</h3>
+                    </div>
+
+                    @foreach (var item in SelectedPatient.CarePlans)
+                    {
+                        <div class="care-item">
+
+                            @if (IsEditMode)
+                            {
+                                <textarea class="full-textarea"
+                                          @bind="item.Title">
+                                </textarea>
+                            }
+                            else
+                            {
+                                <span>@item.Title</span>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+                <!-- GOALS -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Goals</h3>
+                    </div>
+
+                    @foreach (var goal in SelectedPatient.Goals)
+                    {
+                        <div class="goal-card">
+
+                            <div class="goal-left">
+
+                                @if (IsEditMode)
+                                {
+                                    <input class="full-input"
+                                           @bind="goal.Title" />
+
+                                    <input type="range"
+                                           min="0"
+                                           max="100"
+                                           @bind="goal.Progress" />
+                                }
+                                else
+                                {
+                                    <b>@goal.Title</b>
+
+                                    <div class="progress-bar">
+                                        <div class="progress"
+                                             style="width:@goal.Progress%">
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <span class="goal-status">
+                                @goal.Status
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+                <!-- TASKS -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Tasks</h3>
+                    </div>
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var task in SelectedPatient.Tasks)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @if (IsEditMode)
+                                        {
+                                            <input @bind="task.Name" />
+                                        }
+                                        else
+                                        {
+                                            @task.Name
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (IsEditMode)
+                                        {
+                                            <select @bind="task.Status">
+                                                <option>Pending</option>
+                                                <option>Completed</option>
+                                                <option>In Progress</option>
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            @task.Status
+                                        }
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- FOLLOW UPS -->
+                <div class="card equal-card">
+
+                    <div class="card-header">
+                        <h3>Follow Ups</h3>
+                    </div>
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in SelectedPatient.FollowUps)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @if (IsEditMode)
+                                        {
+                                            <input type="date"
+                                                   value="@item.Date.ToString("yyyy-MM-dd")"
+                                                   @onchange="(e => UpdateFollowUpDate(item, e.Value?.ToString()))" />
+                                        }
+                                        else
+                                        {
+                                            @item.Date.ToShortDateString()
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (IsEditMode)
+                                        {
+                                            <input @bind="item.Type" />
+                                        }
+                                        else
+                                        {
+                                            @item.Type
+                                        }
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PROVIDER REVIEW -->
+        <div class="card provider-review-card">
+
+            <div class="card-header">
+                <h3>Provider Review</h3>
+            </div>
+
+            <div class="provider-review-grid">
+
+                <div class="profile-item">
+                    <label>Reviewed By</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="SelectedPatient.ProviderName" />
+                    }
+                    else
+                    {
+                        <span>@SelectedPatient.ProviderName</span>
+                    }
+                </div>
+
+                <div class="profile-item">
+                    <label>Review Date</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input type="date"
+                               value="@SelectedPatient.ReviewDate.ToString("yyyy-MM-dd")"
+                               @onchange="UpdateReviewDate" />
+                    }
+                    else
+                    {
+                        <span>@SelectedPatient.ReviewDate.ToShortDateString()</span>
+                    }
+                </div>
+
+                <div class="profile-item full-width">
+                    <label>Provider Notes</label>
+
+                    @if (IsEditMode)
+                    {
+                        <textarea class="provider-textarea"
+                                  @bind="SelectedPatient.ProviderNotes">
+                        </textarea>
+                    }
+                    else
+                    {
+                        <span>@SelectedPatient.ProviderNotes</span>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int? PatientId { get; set; }
+
+    private int SelectedPatientId = 0;
+
+    private bool IsEditMode = false;
+
+    private List<PatientProfile> Patients = new();
+
+    private PatientProfile? SelectedPatient;
+
+    protected override void OnInitialized()
+    {
+        Patients = new()
+        {
+            CreatePatient(1,"Sarah Johnson",52,"High","Diabetes","154/96","Nurse Emily","92 bpm"),
+            CreatePatient(2,"Michael Brown",61,"High","Hypertension","148/90","Nurse Alex","88 bpm"),
+            CreatePatient(3,"Emily Davis",45,"Low","Asthma","120/80","Nurse Linda","74 bpm"),
+            CreatePatient(4,"Robert Wilson",70,"High","Cardiac","166/102","Nurse Kelly","98 bpm"),
+            CreatePatient(5,"Olivia White",38,"Medium","COPD","130/84","Nurse Sam","82 bpm"),
+            CreatePatient(6,"David Lee",57,"Medium","Diabetes","138/86","Nurse Brian","79 bpm"),
+            CreatePatient(7,"Sophia Martinez",49,"Medium","Hypertension","142/88","Nurse Olivia","83 bpm"),
+            CreatePatient(8,"James Taylor",63,"High","Cardiac","170/100","Nurse Rachel","95 bpm"),
+            CreatePatient(9,"Linda Anderson",41,"Low","Asthma","118/76","Nurse Kate","72 bpm"),
+            CreatePatient(10,"Daniel Thomas",55,"Medium","COPD","136/82","Nurse Megan","86 bpm")
+        };
+
+        if (PatientId.HasValue)
+        {
+            SelectedPatientId = PatientId.Value;
+            LoadSelectedPatient();
+        }
+    }
+
+    private void LoadSelectedPatient()
+    {
+        SelectedPatient = Patients
+            .FirstOrDefault(x => x.Id == SelectedPatientId);
+    }
+
+    private void EnableEdit()
+    {
+        IsEditMode = true;
+    }
+
+    private void SaveChanges()
+    {
+        IsEditMode = false;
+    }
+
+    private void CancelEdit()
+    {
+        IsEditMode = false;
+    }
+
+    private void UpdateReviewDate(ChangeEventArgs e)
+    {
+        if (DateTime.TryParse(e.Value?.ToString(), out var dt))
+        {
+            if (SelectedPatient != null)
+            {
+                SelectedPatient.ReviewDate = dt;
+            }
+        }
+    }
+
+    private void UpdateFollowUpDate(FollowUp item, string? value)
+    {
+        if (DateTime.TryParse(value, out var dt))
+        {
+            item.Date = dt;
+        }
+    }
+
+    private PatientProfile CreatePatient(
+        int id,
+        string name,
+        int age,
+        string risk,
+        string condition,
+        string bp,
+        string manager,
+        string hr)
+    {
+        return new PatientProfile
+        {
+            Id = id,
+            Name = name,
+            Age = age,
+            RiskLevel = risk,
+            Conditions = condition,
+            LastReading = bp,
+            CareManager = manager,
+
+            BloodPressure = bp,
+            HeartRate = hr,
+            SpO2 = "98%",
+            Weight = "72 Kg",
+
+            ProviderName = "Dr. Michael",
+            ReviewDate = DateTime.Today,
+            ProviderNotes = "Patient progressing well with treatment plan.",
+
+            CarePlans = new()
+            {
+                new CarePlanItem { Title="Daily Monitoring" },
+                new CarePlanItem { Title="Medication Adherence" },
+                new CarePlanItem { Title="Lifestyle Management" }
+            },
+
+            Medications = new()
+            {
+                new MedicationItem { Title="Metformin 500mg" },
+                new MedicationItem { Title="Lisinopril 10mg" },
+                new MedicationItem { Title="Aspirin 75mg" }
+            },
+
+            Devices = new()
+            {
+                new Device
+                {
+                    Name="Blood Pressure",
+                    Value=bp,
+                    Trend="↑",
+                    IsCritical = risk == "High"
+                },
+
+                new Device
+                {
+                    Name="Heart Rate",
+                    Value=hr,
+                    Trend="→",
+                    IsCritical = false
+                }
+            },
+
+            Goals = new()
+            {
+                new Goal
+                {
+                    Title="Improve Health Metrics",
+                    Progress=65,
+                    Status="Active"
+                }
+            },
+
+            Tasks = new()
+            {
+                new TaskItem
+                {
+                    Name="Medication Reminder",
+                    Status="Pending"
+                }
+            },
+
+            FollowUps = new()
+            {
+                new FollowUp
+                {
+                    Date=DateTime.Today.AddDays(7),
+                    Type="Video Call"
+                }
+            }
+        };
+    }
+
+    public class PatientProfile
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+
+        public int Age { get; set; }
+
+        public string RiskLevel { get; set; } = "";
+
+        public string Conditions { get; set; } = "";
+
+        public string LastReading { get; set; } = "";
+
+        public string CareManager { get; set; } = "";
+
+        public string BloodPressure { get; set; } = "";
+
+        public string HeartRate { get; set; } = "";
+
+        public string SpO2 { get; set; } = "";
+
+        public string Weight { get; set; } = "";
+
+        public string ProviderName { get; set; } = "";
+
+        public DateTime ReviewDate { get; set; }
+
+        public string ProviderNotes { get; set; } = "";
+
+        public List<CarePlanItem> CarePlans { get; set; } = new();
+
+        public List<MedicationItem> Medications { get; set; } = new();
+
+        public List<Device> Devices { get; set; } = new();
+
+        public List<Goal> Goals { get; set; } = new();
+
+        public List<TaskItem> Tasks { get; set; } = new();
+
+        public List<FollowUp> FollowUps { get; set; } = new();
+    }
+
+    public class CarePlanItem
+    {
+        public string Title { get; set; } = "";
+    }
+
+    public class MedicationItem
+    {
+        public string Title { get; set; } = "";
+    }
+
+    public class Device
+    {
+        public string Name { get; set; } = "";
+
+        public string Value { get; set; } = "";
+
+        public string Trend { get; set; } = "";
+
+        public bool IsCritical { get; set; }
+    }
+
+    public class Goal
+    {
+        public string Title { get; set; } = "";
+
+        public int Progress { get; set; }
+
+        public string Status { get; set; } = "";
+    }
+
+    public class TaskItem
+    {
+        public string Name { get; set; } = "";
+
+        public string Status { get; set; } = "";
+    }
+
+    public class FollowUp
+    {
+        public DateTime Date { get; set; }
+
+        public string Type { get; set; } = "";
+    }
+}

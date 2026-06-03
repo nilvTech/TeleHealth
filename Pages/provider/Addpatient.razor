@@ -1,0 +1,415 @@
+@page "/provider/addpatient"
+@inject NavigationManager Nav
+
+<div class="page-wrapper">
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div>
+            <h2>Add New Patient</h2>
+            <p>Create patient profile and insurance details</p>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn-secondary" @onclick="Cancel">
+                Cancel
+            </button>
+
+            <button class="btn-primary" @onclick="SavePatient">
+                Save Patient
+            </button>
+        </div>
+
+    </div>
+    <!-- FORM GRID -->
+    <div class="form-container">
+
+        <!-- LEFT COLUMN -->
+        <div class="card">
+
+            <div class="section-header">
+                <h3>Personal Information</h3>
+            </div>
+
+            <div class="profile-upload">
+
+                <div class="avatar">
+                    MJ
+                </div>
+
+                <div>
+                    <button class="upload-btn">
+                        Upload Photo
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Primary Provider *</label>
+                    <select @bind="patient.Provider">
+                        <option>Dr. Michael</option>
+                        <option>Dr. Emily Brown</option>
+                        <option>Dr. Sarah Wilson</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Patient Status *</label>
+                    <select @bind="patient.Status">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                        <option>Pending</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input @bind="patient.FirstName" />
+                </div>
+
+                <div class="form-group">
+                    <label>Middle Name</label>
+                    <input @bind="patient.MiddleName" />
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input @bind="patient.LastName" />
+                </div>
+
+                <div class="form-group">
+                    <label>Gender *</label>
+                    <select @bind="patient.Gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date of Birth *</label>
+                    <input type="date" @bind="patient.DOB" />
+                </div>
+
+                <div class="form-group">
+                    <label>Marital Status</label>
+                    <select @bind="patient.MaritalStatus">
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Divorced</option>
+                        <option>Widowed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>SSN *</label>
+                    <input @bind="patient.SSN" />
+                </div>
+
+                <div class="form-group">
+                    <label>MRN *</label>
+                    <input @bind="patient.MRN" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" @bind="patient.Email" />
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Phone *</label>
+                    <input @bind="patient.Phone" />
+                </div>
+
+                <div class="form-group">
+                    <label>Secondary Phone</label>
+                    <input @bind="patient.SecondaryPhone" />
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Language</label>
+                    <select @bind="patient.Language">
+                        <option>English</option>
+                        <option>Spanish</option>
+                        <option>French</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Address *</label>
+                    <textarea @bind="patient.Address"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>City</label>
+                    <input @bind="patient.City" />
+                </div>
+
+                <div class="form-group">
+                    <label>State</label>
+                    <input @bind="patient.State" />
+                </div>
+
+                <div class="form-group">
+                    <label>Zip Code</label>
+                    <input @bind="patient.ZipCode" />
+                </div>
+
+                <div class="form-group">
+                    <label>Emergency Contact</label>
+                    <input @bind="patient.EmergencyContact" />
+                </div>
+
+                <div class="form-group">
+                    <label>Emergency Phone</label>
+                    <input @bind="patient.EmergencyPhone" />
+                </div>
+
+                <div class="form-group">
+                    <label>Relationship</label>
+                    <select @bind="patient.Relationship">
+                        <option>Spouse</option>
+                        <option>Parent</option>
+                        <option>Child</option>
+                        <option>Sibling</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- COMMUNICATION -->
+            <div class="checkbox-section">
+
+                <h4>Preferred Communication</h4>
+
+                <div class="checkbox-group">
+
+                    <label>
+                        <input type="checkbox" @bind="patient.Message" />
+                        Text Message
+                    </label>
+
+                    <label>
+                        <input type="checkbox" @bind="patient.Call" />
+                        Phone Call
+                    </label>
+
+                    <label>
+                        <input type="checkbox" @bind="patient.EmailComm" />
+                        Email
+                    </label>
+
+                    <label>
+                        <input type="checkbox" @bind="patient.VideoVisit" />
+                        Video Visit
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right-column">
+
+            <!-- INSURANCE -->
+            <div class="card">
+
+                <div class="section-header">
+                    <h3>Insurance Information</h3>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Insurance Type *</label>
+                        <select @bind="patient.InsuranceType">
+                            <option>Private</option>
+                            <option>Medicare</option>
+                            <option>Medicaid</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Insurance Company *</label>
+                        <input @bind="patient.InsuranceCompany" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Policy Holder *</label>
+                        <input @bind="patient.PolicyHolder" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Policy Number *</label>
+                        <input @bind="patient.PolicyNumber" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Group Number</label>
+                        <input @bind="patient.GroupNumber" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Employer Name</label>
+                        <input @bind="patient.Employer" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Plan Type</label>
+                        <select @bind="patient.PlanType">
+                            <option>PPO</option>
+                            <option>HMO</option>
+                            <option>EPO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Copay Amount</label>
+                        <input @bind="patient.Copay" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Eligibility Verified</label>
+                        <select @bind="patient.Verified">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Insurance Active</label>
+                        <select @bind="patient.ActiveInsurance">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- MEDICAL -->
+            <div class="card">
+
+                <div class="section-header">
+                    <h3>Medical Information</h3>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Primary Diagnosis</label>
+                        <input @bind="patient.Diagnosis" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Risk Level</label>
+                        <select @bind="patient.RiskLevel">
+                            <option>Low</option>
+                            <option>Medium</option>
+                            <option>High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Allergies</label>
+                        <textarea @bind="patient.Allergies"></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Current Medications</label>
+                        <textarea @bind="patient.Medications"></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Care Notes</label>
+                        <textarea @bind="patient.Notes"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private PatientModel patient = new();
+
+    private void SavePatient()
+    {
+        Console.WriteLine("Patient Saved");
+        Nav.NavigateTo("/provider/patientlist");
+    }
+
+    private void Cancel()
+    {
+        Nav.NavigateTo("/provider/patientlist");
+    }
+
+    public class PatientModel
+    {
+        public string Provider { get; set; } = "Dr. Michael";
+        public string Status { get; set; } = "Active";
+
+        public string FirstName { get; set; } = "";
+        public string MiddleName { get; set; } = "";
+        public string LastName { get; set; } = "";
+
+        public string Gender { get; set; } = "Male";
+
+        public DateTime DOB { get; set; } = DateTime.Today;
+
+        public string MaritalStatus { get; set; } = "Single";
+
+        public string SSN { get; set; } = "";
+        public string MRN { get; set; } = "";
+
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string SecondaryPhone { get; set; } = "";
+
+        public string Language { get; set; } = "English";
+
+        public string Address { get; set; } = "";
+        public string City { get; set; } = "";
+        public string State { get; set; } = "";
+        public string ZipCode { get; set; } = "";
+
+        public string EmergencyContact { get; set; } = "";
+        public string EmergencyPhone { get; set; } = "";
+        public string Relationship { get; set; } = "Spouse";
+
+        public bool Message { get; set; } = true;
+        public bool Call { get; set; } = true;
+        public bool EmailComm { get; set; } = false;
+        public bool VideoVisit { get; set; } = false;
+
+        public string InsuranceType { get; set; } = "Private";
+        public string InsuranceCompany { get; set; } = "";
+        public string PolicyHolder { get; set; } = "";
+        public string PolicyNumber { get; set; } = "";
+        public string GroupNumber { get; set; } = "";
+        public string Employer { get; set; } = "";
+        public string PlanType { get; set; } = "PPO";
+        public string Copay { get; set; } = "";
+        public string Verified { get; set; } = "Yes";
+        public string ActiveInsurance { get; set; } = "Yes";
+
+        public string Diagnosis { get; set; } = "";
+        public string RiskLevel { get; set; } = "Low";
+        public string Allergies { get; set; } = "";
+        public string Medications { get; set; } = "";
+        public string Notes { get; set; } = "";
+    }
+}

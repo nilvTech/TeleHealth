@@ -1,0 +1,237 @@
+@page "/admin/settings"
+@layout AdminLayout
+
+<h2 class="h2">System Settings</h2>
+
+<div class="settings-container">
+
+    <!-- 🔹 TABS -->
+    <div class="tabs-header">
+        <div class="@Tab("telehealth")" @onclick='() => ActiveTab = "telehealth"'>Telehealth</div>
+        <div class="@Tab("security")" @onclick='() => ActiveTab = "security"'>Security</div>
+        <div class="@Tab("notifications")" @onclick='() => ActiveTab = "notifications"'>Notifications</div>
+        <div class="@Tab("billing")" @onclick='() => ActiveTab = "billing"'>Billing</div>
+        <div class="@Tab("integrations")" @onclick='() => ActiveTab = "integrations"'>Integrations</div>
+        <div class="@Tab("roles")" @onclick='() => ActiveTab = "roles"'>Roles & Access</div>
+        <div class="@Tab("system")" @onclick='() => ActiveTab = "system"'>System</div>
+    </div>
+
+    <!-- 🔹 TELEHEALTH -->
+    @if (ActiveTab == "telehealth")
+    {
+        <div class="settings-card">
+            <h4>Telehealth Settings</h4>
+
+            <label>Video Quality</label>
+            <select @bind="Setting.VideoQuality">
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+                <option>HD</option>
+            </select>
+
+            <label>Session Timeout (minutes)</label>
+            <input type="number" @bind="Setting.SessionTimeout" />
+
+            <label>Max Participants per Session</label>
+            <input type="number" @bind="Setting.MaxParticipants" />
+
+            <label>Allow Recording</label>
+            <input type="checkbox" @bind="Setting.AllowRecording" />
+
+            <label>Auto End Call on Disconnect</label>
+            <input type="checkbox" @bind="Setting.AutoEndCall" />
+        </div>
+    }
+
+    <!-- 🔹 SECURITY -->
+    @if (ActiveTab == "security")
+    {
+        <div class="settings-card">
+            <h4>Security & Compliance</h4>
+
+            <label>Password Min Length</label>
+            <input type="number" @bind="Setting.PasswordLength" />
+
+            <div class="checkbox-row">
+                <input type="checkbox" @bind="Setting.Enable2FA" />
+                <label>Enable 2FA</label>
+            </div>
+
+            <label>Session Expiry (minutes)</label>
+            <input type="number" @bind="Setting.SessionExpiry" />
+
+            <label>IP Whitelisting</label>
+            <input type="text" placeholder="e.g. 192.168.1.1" @bind="Setting.IPWhitelist" />
+
+            <label>Audit Logging</label>
+            <input type="checkbox" @bind="Setting.EnableAuditLogs" />
+        </div>
+    }
+
+    <!-- 🔹 NOTIFICATIONS -->
+    @if (ActiveTab == "notifications")
+    {
+        <div class="settings-card">
+            <h4>Notifications</h4>
+
+            <label>Email Notifications</label>
+            <input type="checkbox" @bind="Setting.EmailNotifications" />
+
+            <label>SMS Notifications</label>
+            <input type="checkbox" @bind="Setting.SMSNotifications" />
+
+            <label>Appointment Reminders</label>
+            <input type="checkbox" @bind="Setting.AppointmentReminders" />
+
+            <label>Reminder Time (minutes before)</label>
+            <input type="number" @bind="Setting.ReminderTime" />
+        </div>
+    }
+
+    <!-- 🔹 BILLING -->
+    @if (ActiveTab == "billing")
+    {
+        <div class="settings-card">
+            <h4>Billing & Claims</h4>
+
+            <label>Default Currency</label>
+            <input type="text" @bind="Setting.Currency" />
+
+            <label>Auto Submit Claims</label>
+            <input type="checkbox" @bind="Setting.AutoSubmitClaims" />
+
+            <label>Claim Retry Attempts</label>
+            <input type="number" @bind="Setting.RetryAttempts" />
+
+            <label>Enable Copay</label>
+            <input type="checkbox" @bind="Setting.EnableCopay" />
+        </div>
+    }
+
+    <!-- 🔹 INTEGRATIONS -->
+    @if (ActiveTab == "integrations")
+    {
+        <div class="settings-card">
+            <h4>Integrations</h4>
+
+            <label>EHR API Key</label>
+            <input type="text" @bind="Setting.EHRKey" />
+
+            <label>Payment Gateway Key</label>
+            <input type="text" @bind="Setting.PaymentKey" />
+
+            <label>SMS Gateway</label>
+            <input type="text" @bind="Setting.SMSGateway" />
+
+            <label>Webhook URL</label>
+            <input type="text" @bind="Setting.Webhook" />
+        </div>
+    }
+
+    <!-- 🔹 ROLES -->
+    @if (ActiveTab == "roles")
+    {
+        <div class="settings-card">
+            <h4>Role Defaults</h4>
+
+            <label>Default Role for Provider</label>
+            <input type="text" @bind="Setting.DefaultProviderRole" />
+
+            <label>Default Role for Patient</label>
+            <input type="text" @bind="Setting.DefaultPatientRole" />
+
+            <label>Allow Custom Roles</label>
+            <input type="checkbox" @bind="Setting.AllowCustomRoles" />
+        </div>
+    }
+
+    <!-- 🔹 SYSTEM -->
+    @if (ActiveTab == "system")
+    {
+        <div class="settings-card">
+            <h4>System Settings</h4>
+
+            <label>Environment</label>
+            <select @bind="Setting.Environment">
+                <option>Production</option>
+                <option>Staging</option>
+                <option>Development</option>
+            </select>
+
+            <label>Maintenance Mode</label>
+            <input type="checkbox" @bind="Setting.MaintenanceMode" />
+
+            <label>Timezone</label>
+            <input type="text" @bind="Setting.Timezone" />
+
+            <label>Data Retention (days)</label>
+            <input type="number" @bind="Setting.RetentionDays" />
+        </div>
+    }
+
+    <!-- 🔹 SAVE -->
+    <div class="save-section">
+        <button class="btn-primary" @onclick="SaveSettings">Save Settings</button>
+    </div>
+
+</div>
+
+@code {
+
+    string ActiveTab = "telehealth";
+    string Tab(string t) => ActiveTab == t ? "tab active" : "tab";
+
+    SettingsModel Setting = new();
+
+    public class SettingsModel
+    {
+        // Telehealth
+        public string VideoQuality { get; set; } = "HD";
+        public int SessionTimeout { get; set; } = 30;
+        public int MaxParticipants { get; set; } = 2;
+        public bool AllowRecording { get; set; }
+        public bool AutoEndCall { get; set; }
+
+        // Security
+        public int PasswordLength { get; set; } = 8;
+        public bool Enable2FA { get; set; }
+        public int SessionExpiry { get; set; } = 60;
+        public string IPWhitelist { get; set; }
+        public bool EnableAuditLogs { get; set; }
+
+        // Notifications
+        public bool EmailNotifications { get; set; }
+        public bool SMSNotifications { get; set; }
+        public bool AppointmentReminders { get; set; }
+        public int ReminderTime { get; set; } = 30;
+
+        // Billing
+        public string Currency { get; set; } = "USD";
+        public bool AutoSubmitClaims { get; set; }
+        public int RetryAttempts { get; set; } = 3;
+        public bool EnableCopay { get; set; }
+
+        // Integrations
+        public string EHRKey { get; set; }
+        public string PaymentKey { get; set; }
+        public string SMSGateway { get; set; }
+        public string Webhook { get; set; }
+
+        // Roles
+        public string DefaultProviderRole { get; set; }
+        public string DefaultPatientRole { get; set; }
+        public bool AllowCustomRoles { get; set; }
+
+        // System
+        public string Environment { get; set; } = "Production";
+        public bool MaintenanceMode { get; set; }
+        public string Timezone { get; set; }
+        public int RetentionDays { get; set; } = 365;
+    }
+
+    void SaveSettings()
+    {
+        Console.WriteLine("Settings Saved");
+    }
+}

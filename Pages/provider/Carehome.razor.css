@@ -1,0 +1,157 @@
+.page-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: teal;
+    margin-bottom: 18px;
+}
+
+/* MAIN */
+.rpm-container {
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* FILTERS */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.search-box,
+.filter-select {
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid #cfe8e8;
+    border-radius: 8px;
+    font-size: 14px;
+    color: teal;
+    background: white;
+}
+
+.search-box {
+    width: 260px;
+}
+
+/* TABLE CARD */
+.table-card {
+    background: white;
+    border: 1px solid #d9eeee;
+    border-radius: 14px;
+    overflow-x: auto;
+}
+
+/* TABLE */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+}
+
+.styled-table thead {
+    background: teal;
+}
+
+.styled-table th {
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.styled-table td {
+    padding: 12px;
+    border-bottom: 1px solid #edf5f5;
+    color: #215f5f;
+    font-size: 13px;
+}
+
+
+
+/* STATUS */
+.status {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status.stable {
+    background: #dff8ea;
+    color: #168a55;
+}
+
+.status.warning {
+    background: #fff3d9;
+    color: #c78b00;
+}
+
+.status.critical {
+    background: #ffe3e3;
+    color: #cf2d2d;
+}
+
+/* RISK */
+.risk {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.risk-high {
+    background: #ffe3e3;
+    color: #cf2d2d;
+}
+
+.risk-medium {
+    background: #fff2d8;
+    color: #c98a00;
+}
+
+.risk-low {
+    background: #e1f8e8;
+    color: #198754;
+}
+
+/* BUTTONS */
+.action-row {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-small {
+    border: none;
+    background: teal;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.btn-small:hover {
+    background: #087979;
+}
+
+.btn-small.secondary {
+    background: #e9f7f7;
+    color: teal;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+
+    .filter-bar {
+        flex-direction: column;
+    }
+
+    .search-box,
+    .filter-select {
+        width: 100%;
+    }
+}

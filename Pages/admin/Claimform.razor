@@ -1,0 +1,175 @@
+@page "/admin/claimform"
+@layout AdminLayout
+
+<h2 class="h2">Claim Form</h2>
+<div class="claim-container">
+
+    
+
+    <!-- 🔹 PATIENT INFO -->
+    <div class="card">
+        <h4>Patient Information</h4>
+
+        <div class="grid">
+            <div>
+                <label>Patient Name</label>
+                <input @bind="Form.PatientName" />
+            </div>
+
+            <div>
+                <label>Date of Birth</label>
+                <input type="date" @bind="Form.DOB" />
+            </div>
+
+            <div>
+                <label>Gender</label>
+                <select @bind="Form.Gender">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Phone</label>
+                <input @bind="Form.Phone" />
+            </div>
+
+            <div class="full">
+                <label>Address</label>
+                <input @bind="Form.Address" />
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 INSURANCE -->
+    <div class="card">
+        <h4>Insurance Details</h4>
+
+        <div class="grid">
+            <div>
+                <label>Insurance Plan</label>
+                <input @bind="Form.InsurancePlan" />
+            </div>
+
+            <div>
+                <label>Policy Number</label>
+                <input @bind="Form.PolicyNumber" />
+            </div>
+
+            <div>
+                <label>Insured Name</label>
+                <input @bind="Form.InsuredName" />
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 CLAIM DETAILS -->
+    <div class="card">
+        <h4>Claim Details</h4>
+
+        <div class="grid">
+            <div>
+                <label>Date of Illness</label>
+                <input type="date" @bind="Form.IllnessDate" />
+            </div>
+
+            <div>
+                <label>Referring Provider</label>
+                <input @bind="Form.RefProvider" />
+            </div>
+
+            <div>
+                <label>Diagnosis Code</label>
+                <input @bind="Form.Diagnosis" />
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔹 SERVICE TABLE -->
+    <div class="card">
+        <h4>Services</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>CPT Code</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var s in Services)
+                {
+                    <tr>
+                        <td><input type="date" @bind="s.Date" /></td>
+                        <td><input @bind="s.CPT" /></td>
+                        <td><input @bind="s.Description" /></td>
+                        <td><input type="number" @bind="s.Amount" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button class="btn-secondary" @onclick="AddRow">+ Add Row</button>
+    </div>
+
+    <!-- 🔹 TOTAL -->
+    <div class="card total">
+        <h4>Total: $@TotalAmount</h4>
+    </div>
+
+    <!-- 🔹 ACTION -->
+    <div class="actions">
+        <button class="btn-primary" @onclick="Submit">Submit Claim</button>
+    </div>
+
+</div>
+
+@code {
+
+    class ClaimForm
+    {
+        public string PatientName { get; set; }
+        public DateTime DOB { get; set; } = DateTime.Now;
+        public string Gender { get; set; } = "Male";
+        public string Phone { get; set; }
+        public string Address { get; set; }
+
+        public string InsurancePlan { get; set; }
+        public string PolicyNumber { get; set; }
+        public string InsuredName { get; set; }
+
+        public DateTime IllnessDate { get; set; } = DateTime.Now;
+        public string RefProvider { get; set; }
+        public string Diagnosis { get; set; }
+    }
+
+    class ServiceLine
+    {
+        public DateTime Date { get; set; } = DateTime.Now;
+        public string CPT { get; set; }
+        public string Description { get; set; }
+        public decimal Amount { get; set; }
+    }
+
+    ClaimForm Form = new();
+
+    List<ServiceLine> Services = new()
+    {
+        new ServiceLine()
+    };
+
+    decimal TotalAmount => Services.Sum(s => s.Amount);
+
+    void AddRow()
+    {
+        Services.Add(new ServiceLine());
+    }
+
+    void Submit()
+    {
+        Console.WriteLine("Claim Submitted");
+    }
+}

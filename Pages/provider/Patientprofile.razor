@@ -1,0 +1,138 @@
+@page "/provider/patientprofile"
+
+<div class="profile-container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h3>Patient Profile</h3>
+        <div class="patient-info">
+            <span><b>John Doe</b></span>
+            <span>Age: 45</span>
+            <span>MRN: 10234</span>
+        </div>
+    </div>
+
+    <!-- GRID LAYOUT -->
+    <div class="grid">
+
+        <!-- LEFT SIDE -->
+        <div class="left">
+
+            <!-- VITALS -->
+            <div class="card">
+                <h4>Vitals</h4>
+                <div class="vitals">
+                    <div>BP: 140/90</div>
+                    <div>HR: 78 bpm</div>
+                    <div>SpO2: 97%</div>
+                    <div>Weight: 72 kg</div>
+                </div>
+            </div>
+
+            <!-- CONDITIONS -->
+            <div class="card">
+                <h4>Conditions</h4>
+                <ul>
+                    <li>Diabetes</li>
+                    <li>Hypertension</li>
+                </ul>
+            </div>
+
+            <!-- CARE PLAN -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Care Plan</h4>
+                    <button class="btn-primary" @onclick="UpdateCarePlan">Update</button>
+                </div>
+
+                <table class="table">
+                    <tr>
+                        <th>Goal</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                    </tr>
+                    @foreach (var plan in carePlans)
+                    {
+                        <tr>
+                            <td>@plan.Goal</td>
+                            <td>@plan.Task</td>
+                            <td>@plan.Status</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right">
+
+            <!-- NOTES -->
+            <div class="card">
+                <div class="card-header">
+                    <h4>Notes History</h4>
+                    <button class="btn-primary" @onclick="AddNote">Add Note</button>
+                </div>
+
+                <div class="notes-list">
+                    @foreach (var note in notes)
+                    {
+                        <div class="note-item">
+                            <div class="note-date">@note.Date</div>
+                            <div class="note-text">@note.Text</div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    // Notes Data
+    private List<Note> notes = new()
+    {
+        new Note { Date = "12 Feb 2026", Text = "Patient BP elevated. Advised medication." },
+        new Note { Date = "05 Feb 2026", Text = "Routine follow-up. Stable condition." }
+    };
+
+    // Care Plan Data
+    private List<CarePlan> carePlans = new()
+    {
+        new CarePlan { Goal="Control BP", Task="Daily Monitoring", Status="Active" },
+        new CarePlan { Goal="Reduce Sugar", Task="Diet Plan", Status="Ongoing" }
+    };
+
+    // Actions
+    private void AddNote()
+    {
+        notes.Insert(0, new Note
+        {
+            Date = DateTime.Now.ToString("dd MMM yyyy"),
+            Text = "New note added..."
+        });
+    }
+
+    private void UpdateCarePlan()
+    {
+        Console.WriteLine("Update Care Plan Clicked");
+    }
+
+    // Models
+    public class Note
+    {
+        public string Date { get; set; }
+        public string Text { get; set; }
+    }
+
+    public class CarePlan
+    {
+        public string Goal { get; set; }
+        public string Task { get; set; }
+        public string Status { get; set; }
+    }
+}

@@ -1,0 +1,77 @@
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+ <aside class="sidebar">
+        <div class="logo">TeleMed</div>
+
+        <nav class="menu">
+            <a class="@Active("admin/dashboard")" @onclick="@(() => Go("admin/dashboard"))">
+                Dashboard
+            </a>
+            <a class="@Active("admin/providers")" @onclick="@(() => Go("admin/providers"))">
+                Providers
+            </a>
+            <a class="@Active("admin/patients")" @onclick="@(() => Go("admin/patients"))">
+                Patients
+            </a>
+             <a class="@Active("admin/devices")" @onclick="@(() => Go("admin/devices"))">
+                Devices
+            </a>
+            <a class="@Active("admin/billing")" @onclick="@(() => Go("admin/billing"))">
+                Billing and Claims 
+            </a>
+            <a class="@Active("/admin/analytics")" @onclick="@(() => Go("/admin/analytics"))">
+                 Reports & Analytics
+            </a>
+            <a class="@Active("/admin/audit")" @onclick="@(() => Go("/admin/audit"))">
+                Compliance & Audit Logs
+            </a>
+            <a class="@Active("/admin/roles")" @onclick="@(() => Go("/admin/roles"))">
+                Role & Access Management
+            </a>
+            <a class="@Active("admin/settings")" @onclick="@(() => Go("admin/settings"))">
+                Settings
+            </a>
+
+            <a class= @onclick="@(() => Go("/"))">
+                Logout
+            </a>
+        </nav>
+    </aside>
+
+
+    <!-- MAIN AREA -->
+    <div class="main">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <div class="topbar-right">
+                <div class="user-info">
+                    <div class="user-avatar">MB</div>
+                    <span class="user-name">Dr. Michael Brown</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENT -->
+        <main class="content">
+            @Body
+        </main>
+
+    </div>
+
+</div>
+
+@code {
+    void Go(string url) => Nav.NavigateTo(url);
+
+    string Active(string url)
+    {
+        return Nav.Uri.EndsWith(url, StringComparison.OrdinalIgnoreCase)
+            ? "active"
+            : "";
+    }
+}

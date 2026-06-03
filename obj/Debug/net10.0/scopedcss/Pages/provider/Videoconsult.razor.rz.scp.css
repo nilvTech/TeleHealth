@@ -1,0 +1,306 @@
+.video-consult-page[b-cjtdck3ad3] {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 15px;
+    height: calc(100vh - 90px);
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ==========================
+   VIDEO PANEL
+========================== */
+
+.video-panel[b-cjtdck3ad3] {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    min-width: 0;
+}
+
+.meeting-header[b-cjtdck3ad3] {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+}
+
+.meeting-info[b-cjtdck3ad3] {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.status-badge[b-cjtdck3ad3] {
+    background: #f1f5f9;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.live[b-cjtdck3ad3] {
+    color: #16a34a;
+}
+
+.patient-banner[b-cjtdck3ad3] {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ==========================
+   VIDEO AREA
+========================== */
+
+.video-container[b-cjtdck3ad3] {
+    flex: 1;
+    position: relative;
+    background: #111827;
+    min-height: 500px;
+}
+
+.remote-video[b-cjtdck3ad3] {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.local-video[b-cjtdck3ad3] {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 220px;
+    height: 160px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    background: black;
+}
+
+.patient-label[b-cjtdck3ad3] {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    background: rgba(0,0,0,.55);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+/* ==========================
+   CONTROL BAR
+========================== */
+
+.control-bar[b-cjtdck3ad3] {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+}
+
+.control-btn[b-cjtdck3ad3] {
+    border: none;
+    background: #f1f5f9;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.control-btn:hover[b-cjtdck3ad3] {
+    background: #e2e8f0;
+}
+
+.control-btn.active[b-cjtdck3ad3] {
+    background: #fde68a;
+}
+
+.control-btn.recording[b-cjtdck3ad3] {
+    background: #fecaca;
+}
+
+.end-btn[b-cjtdck3ad3] {
+    border: none;
+    background: #dc2626;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* ==========================
+   RIGHT SIDEBAR
+========================== */
+
+.sidebar-panel[b-cjtdck3ad3] {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    height: 100%;
+}
+
+/* ==========================
+   TABS
+========================== */
+
+.tab-header[b-cjtdck3ad3] {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+}
+
+.tab-btn[b-cjtdck3ad3] {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 14px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.tab-btn.active[b-cjtdck3ad3] {
+    background: teal;
+    color: white;
+}
+
+/* ==========================
+   PANEL CONTENT
+========================== */
+
+.panel-content[b-cjtdck3ad3] {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.panel-content h4[b-cjtdck3ad3] {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+
+.info-row[b-cjtdck3ad3] {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+/* ==========================
+   SOAP NOTE
+========================== */
+
+.soap-header[b-cjtdck3ad3] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ai-btn[b-cjtdck3ad3],
+.save-btn[b-cjtdck3ad3] {
+    border: none;
+    background: teal;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+label[b-cjtdck3ad3] {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+textarea[b-cjtdck3ad3] {
+    width: 100%;
+    min-height: 90px;
+    resize: vertical;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    margin-bottom: 12px;
+}
+
+/* ==========================
+   CHAT
+========================== */
+
+.chat-message[b-cjtdck3ad3] {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    max-width: 85%;
+}
+
+.incoming[b-cjtdck3ad3] {
+    background: #f1f5f9;
+}
+
+.outgoing[b-cjtdck3ad3] {
+    background: #ccfbf1;
+    margin-left: auto;
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+.panel-content[b-cjtdck3ad3]::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel-content[b-cjtdck3ad3]::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 1100px) {
+
+    .video-consult-page[b-cjtdck3ad3] {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .sidebar-panel[b-cjtdck3ad3] {
+        height: 600px;
+    }
+
+    .local-video[b-cjtdck3ad3] {
+        width: 180px;
+        height: 130px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .meeting-info[b-cjtdck3ad3] {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .control-bar[b-cjtdck3ad3] {
+        justify-content: flex-start;
+    }
+
+    .local-video[b-cjtdck3ad3] {
+        width: 140px;
+        height: 100px;
+    }
+}

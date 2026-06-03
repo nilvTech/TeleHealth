@@ -1,0 +1,124 @@
+.layout[b-3ivzwzxwor] {
+    display: flex;
+    height: 100vh;
+    background:teal;
+    color: #fff;
+}
+
+/* SIDEBAR */
+.sidebar[b-3ivzwzxwor] {
+    width: 220px;
+    background:teal;
+    padding: 20px;
+}
+
+.logo[b-3ivzwzxwor] {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.menu a[b-3ivzwzxwor] {
+    display: block;
+    padding: 10px;
+    color: #bbb;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.menu a:hover[b-3ivzwzxwor],
+.menu a.active[b-3ivzwzxwor] {
+    background: #0f2a44;
+    color: #fff;
+}
+
+/* MAIN */
+.main[b-3ivzwzxwor] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOPBAR */
+.topbar[b-3ivzwzxwor] {
+    height: 60px;
+    background: #0f2a44;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* DASHBOARD */
+.dashboard-container[b-3ivzwzxwor] {
+    padding: 20px;
+}
+
+.top-header[b-3ivzwzxwor] {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-box[b-3ivzwzxwor] {
+    padding: 10px;
+    width: 300px;
+    border-radius: 6px;
+    border: none;
+}
+
+.kpi-row[b-3ivzwzxwor] {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.kpi-card[b-3ivzwzxwor] {
+    flex: 1;
+    background: #0f2a44;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.kpi-card:hover[b-3ivzwzxwor] {
+    transform: translateY(-3px);
+}
+
+/* GRID */
+.main-grid[b-3ivzwzxwor] {
+    display: flex;
+    gap: 20px;
+}
+
+.charts-section[b-3ivzwzxwor] {
+    flex: 3;
+}
+
+.chart-card[b-3ivzwzxwor] {
+    background: #0f2a44;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.chart-placeholder[b-3ivzwzxwor] {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alerts-panel[b-3ivzwzxwor] {
+    flex: 1;
+    background: #0f2a44;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.alert-item[b-3ivzwzxwor] {
+    padding: 10px;
+    border-bottom: 1px solid #1f3b5a;
+    cursor: pointer;
+}

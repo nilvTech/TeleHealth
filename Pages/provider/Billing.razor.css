@@ -1,0 +1,447 @@
+/* =========================================
+   BILLING PAGE
+========================================= */
+
+.billing-container {
+    padding: 20px;
+    background: #f6fbfb;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: teal;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.billing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.billing-header h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: teal;
+}
+
+.sub-text {
+    margin-top: 5px;
+    color: #6d8f8f;
+    font-size: 13px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn-primary {
+    height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 10px;
+    background: teal;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #0b8c8c;
+}
+
+/* =========================================
+   CARD
+========================================= */
+
+.card {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid #d8eeee;
+    padding: 16px;
+    overflow-x: auto;
+    overflow-y: visible !important;
+}
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.card-header {
+    margin-bottom: 14px;
+}
+
+.card-header h3 {
+    margin: 0;
+    color: teal;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table {
+    width: 100%;
+    min-width: 1500px;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+/* =========================================
+   TABLE HEAD
+========================================= */
+
+.table th {
+    padding: 10px 12px;
+    border-bottom: 1px solid #d7eeee;
+    text-align: left;
+    color: teal;
+    font-size: 13px;
+    font-weight: 600;
+    background: #f8ffff;
+    white-space: nowrap;
+}
+
+/* =========================================
+   TABLE BODY
+========================================= */
+
+.table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #edf7f7;
+    color: #355b5b;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: visible !important;
+}
+
+.table tr {
+    transition: 0.2s ease;
+    height: auto !important;
+}
+
+.table tr:hover {
+    background: #f7ffff;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.status-submitted {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.status-process {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.status-paid {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.status-denied {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* =========================================
+   PRIORITY
+========================================= */
+
+.priority {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.priority-high {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.priority-medium {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.priority-low {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* =========================================
+   CPT TAG
+========================================= */
+
+.code-tag {
+    background: #ecfeff;
+    color: teal;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* =========================================
+   ACTION COLUMN
+========================================= */
+
+.action-cell {
+    position: relative;
+    width: 70px;
+    text-align: center;
+    overflow: visible !important;
+}
+
+.action-menu {
+    position: relative;
+    display: inline-block;
+}
+
+/* =========================================
+   MENU BUTTON
+========================================= */
+
+.menu-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #d6ecec;
+    background: #f8ffff;
+    color: teal;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.menu-btn:hover {
+    background: #eefcfc;
+    border-color: #bfe3e3;
+}
+
+/* =========================================
+   DROPDOWN
+========================================= */
+
+.menu-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 210px;
+    background: white;
+    border: 1px solid #d8eeee;
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+    z-index: 9999;
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+/* =========================================
+   MENU ITEM
+========================================= */
+
+.menu-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: #124b4b;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-align: left;
+}
+
+.menu-item:hover {
+    background: #f2fdfd;
+}
+
+.menu-item span:first-child {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.menu-divider {
+    height: 1px;
+    background: #e8f3f3;
+    margin: 6px 0;
+}
+
+/* =========================================
+   DANGER
+========================================= */
+
+.danger-item {
+    color: #dc2626;
+}
+
+.danger-item:hover {
+    background: #fff1f1;
+}
+
+/* =========================================
+   FORM ELEMENTS
+========================================= */
+
+input,
+select,
+textarea {
+    width: 100%;
+    border: 1px solid #d5ecec;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: teal;
+    background: white;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.08);
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #5f7f7f;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+/* =========================================
+   ACTION BUTTONS
+========================================= */
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    height: 42px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: none;
+    background: #e9fbfb;
+    color: teal;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background: #dff7f7;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+.card::-webkit-scrollbar {
+    height: 8px;
+}
+
+.card::-webkit-scrollbar-track {
+    background: #eef8f8;
+    border-radius: 20px;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background: #bddede;
+    border-radius: 20px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:1200px) {
+
+    .form-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:768px) {
+
+    .billing-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+
+    .table {
+        min-width: 1300px;
+    }
+}

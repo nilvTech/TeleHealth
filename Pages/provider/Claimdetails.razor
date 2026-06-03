@@ -1,0 +1,225 @@
+
+
+@page "/provider/createclaim"
+
+@inject NavigationManager Nav
+
+<div class="claim-container">
+
+    <div class="header">
+
+        <div>
+            <h2>Create Claim</h2>
+            <p class="sub-text">
+                Create and submit new insurance claims
+            </p>
+        </div>
+
+        <button class="btn-secondary"
+                @onclick="GoBack">
+            Back
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Patient</label>
+                <input @bind="claim.Patient" />
+            </div>
+
+            <div class="form-group">
+                <label>Provider</label>
+                <input @bind="claim.Provider" />
+            </div>
+
+            <div class="form-group">
+                <label>Payer</label>
+
+                <select @bind="claim.Payer">
+                    <option>Aetna</option>
+                    <option>United Healthcare</option>
+                    <option>Cigna</option>
+                    <option>Blue Cross</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>CPT Code</label>
+                <input @bind="claim.CPT" />
+            </div>
+
+            <div class="form-group">
+                <label>ICD Code</label>
+                <input @bind="claim.ICD" />
+            </div>
+
+            <div class="form-group">
+                <label>Claim Type</label>
+
+                <select @bind="claim.ClaimType">
+                    <option>RPM</option>
+                    <option>CCM</option>
+                    <option>PCM</option>
+                    <option>TCM</option>
+                    <option>BHI</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Priority</label>
+
+                <select @bind="claim.Priority">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Minutes</label>
+                <input type="number"
+                       @bind="claim.TimeSpent" />
+            </div>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input type="number"
+                       @bind="claim.Amount" />
+            </div>
+
+            <div class="form-group">
+                <label>Copay</label>
+                <input type="number"
+                       @bind="claim.Copay" />
+            </div>
+
+            <div class="form-group">
+                <label>Balance</label>
+                <input type="number"
+                       @bind="claim.Balance" />
+            </div>
+
+            <div class="form-group">
+                <label>Authorization No</label>
+                <input @bind="claim.AuthorizationNo" />
+            </div>
+
+            <div class="form-group">
+                <label>Facility</label>
+                <input @bind="claim.Facility" />
+            </div>
+
+            <div class="form-group">
+                <label>Service Date</label>
+                <input type="date"
+                       @bind="claim.ServiceDate" />
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+
+                <select @bind="claim.Status">
+                    <option>Pending</option>
+                    <option>Submitted</option>
+                    <option>In Process</option>
+                </select>
+            </div>
+
+            <div class="form-group checkbox-group">
+
+                <label>
+                    <input type="checkbox"
+                           @bind="claim.IsUrgent" />
+
+                    Urgent Claim
+                </label>
+
+            </div>
+
+            <div class="form-group full-width">
+
+                <label>Notes</label>
+
+                <textarea @bind="claim.Notes"></textarea>
+
+            </div>
+
+        </div>
+
+        <div class="actions">
+
+            <button class="btn-primary"
+                    @onclick="SaveClaim">
+                Save Claim
+            </button>
+
+            <button class="btn-secondary"
+                    @onclick="GoBack">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private ClaimModel claim = new()
+    {
+        Status = "Pending",
+        ServiceDate = DateTime.Today
+    };
+
+    private void SaveClaim()
+    {
+        Nav.NavigateTo("/provider/billing");
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/provider/billing");
+    }
+
+    public class ClaimModel
+    {
+        public string Patient { get; set; } = "";
+
+        public string Provider { get; set; } = "";
+
+        public string Payer { get; set; } = "";
+
+        public string CPT { get; set; } = "";
+
+        public string ICD { get; set; } = "";
+
+        public int TimeSpent { get; set; }
+
+        public decimal Amount { get; set; }
+
+        public decimal Copay { get; set; }
+
+        public decimal Balance { get; set; }
+
+        public string Status { get; set; } = "";
+
+        public string ClaimType { get; set; } = "";
+
+        public string Priority { get; set; } = "";
+
+        public string AuthorizationNo { get; set; } = "";
+
+        public string Facility { get; set; } = "";
+
+        public string Notes { get; set; } = "";
+
+        public DateTime ServiceDate { get; set; }
+
+        public bool IsUrgent { get; set; }
+    }
+}

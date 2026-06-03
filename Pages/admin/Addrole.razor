@@ -1,0 +1,112 @@
+@page "/admin/addrole"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<h2 class="h2">Create Role</h2>
+
+<div class="form-container">
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label class="required">Role Name</label>
+            <input @bind="Role.Name" />
+        </div>
+
+        <div class="form-group">
+            <label class="required">Role Code</label>
+            <input @bind="Role.Code" />
+        </div>
+
+        <div class="form-group">
+            <label>Role Type</label>
+            <select @bind="Role.Type">
+                <option>Admin</option>
+                <option>Clinical</option>
+                <option>Billing</option>
+                <option>Support</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Access Level</label>
+            <select @bind="Role.AccessLevel">
+                <option>Full</option>
+                <option>Restricted</option>
+                <option>ReadOnly</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select @bind="Role.Status">
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Default Landing Page</label>
+            <input @bind="Role.LandingPage" placeholder="/admin/dashboard" />
+        </div>
+
+        <div class="form-group">
+            <label>Data Scope</label>
+            <select @bind="Role.DataScope">
+                <option>All</option>
+                <option>Assigned</option>
+                <option>Location-Based</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Requires MFA</label>
+            <select @bind="Role.MFA">
+                <option>true</option>
+                <option>false</option>
+            </select>
+        </div>
+
+        <div class="form-group full-width">
+            <label>Description</label>
+            <textarea @bind="Role.Description"></textarea>
+        </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="action-bar">
+        <button class="btn-secondary" @onclick="Cancel">Cancel</button>
+        <button class="btn-primary" @onclick="Save">Create Role</button>
+    </div>
+
+</div>
+
+@code {
+
+    RoleModel Role = new();
+
+    class RoleModel
+    {
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Type { get; set; } = "Admin";
+        public string AccessLevel { get; set; } = "Full";
+        public string Status { get; set; } = "Active";
+        public string LandingPage { get; set; }
+        public string DataScope { get; set; }
+        public bool MFA { get; set; }
+        public string Description { get; set; }
+    }
+
+    void Save()
+    {
+        Console.WriteLine("Role Created");
+        Nav.NavigateTo("/admin/roles");
+    }
+
+    void Cancel()
+    {
+        Nav.NavigateTo("/admin/roles");
+    }
+}

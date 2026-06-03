@@ -1,0 +1,514 @@
+@page "/provider/billing"
+
+@inject NavigationManager Nav
+
+<div class="billing-container">
+
+    <!-- HEADER -->
+    <div class="billing-header">
+
+        <div>
+            <h2>Billing & Claims</h2>
+
+            <p class="sub-text">
+                Manage claims, reimbursements and payment lifecycle
+            </p>
+        </div>
+
+        <button class="btn-primary"
+                @onclick="CreateClaim">
+            + Create Claim
+        </button>
+
+    </div>
+
+    <!-- CLAIMS -->
+    <div class="card">
+
+        <div class="card-header">
+            <h3>Claims List</h3>
+        </div>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Patient</th>
+                    <th>Provider</th>
+                    <th>Payer</th>
+                    <th>CPT</th>
+                    <th>ICD</th>
+                    <th>Claim Type</th>
+                    <th>Priority</th>
+                    <th>Minutes</th>
+                    <th>Amount</th>
+                    <th>Copay</th>
+                    <th>Balance</th>
+                    <th>Service Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var claim in claims)
+                {
+                    <tr>
+
+                        <td>#@claim.ClaimId</td>
+
+                        <td>@claim.Patient</td>
+
+                        <td>@claim.Provider</td>
+
+                        <td>@claim.Payer</td>
+
+                        <td>
+                            <span class="code-tag">
+                                @claim.CPT
+                            </span>
+                        </td>
+
+                        <td>@claim.ICD</td>
+
+                        <td>@claim.ClaimType</td>
+
+                        <td>
+                            <span class="priority @GetPriorityClass(claim.Priority)">
+                                @claim.Priority
+                            </span>
+                        </td>
+
+                        <td>@claim.TimeSpent mins</td>
+
+                        <td>$@claim.Amount</td>
+
+                        <td>$@claim.Copay</td>
+
+                        <td>$@claim.Balance</td>
+
+                        <td>@claim.ServiceDate.ToShortDateString()</td>
+
+                        <td>
+                            <span class="status @GetStatusClass(claim.Status)">
+                                @claim.Status
+                            </span>
+                        </td>
+
+                        <td class="action-cell">
+
+                            <div class="action-menu">
+
+                                <button class="menu-btn"
+                                        @onclick="() => ToggleMenu(claim)">
+                                    ⋮
+                                </button>
+
+                                @if (claim.ShowMenu)
+                                {
+                                    <div class="menu-dropdown">
+
+                                        @if (claim.Status != "Pending")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='() => UpdateStatus(claim, "Pending")'>
+                                                <span>🕒</span>
+                                                <span>Pending</span>
+                                            </button>
+                                        }
+
+                                        @if (claim.Status != "Submitted")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='() => UpdateStatus(claim, "Submitted")'>
+                                                <span>📤</span>
+                                                <span>Submitted</span>
+                                            </button>
+                                        }
+
+                                        @if (claim.Status != "In Process")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='() => UpdateStatus(claim, "In Process")'>
+                                                <span>⚙</span>
+                                                <span>In Process</span>
+                                            </button>
+                                        }
+
+                                        @if (claim.Status != "Paid")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='() => UpdateStatus(claim, "Paid")'>
+                                                <span>✔</span>
+                                                <span>Paid</span>
+                                            </button>
+                                        }
+
+                                        @if (claim.Status != "Denied")
+                                        {
+                                            <button class="menu-item"
+                                                    @onclick='() => UpdateStatus(claim, "Denied")'>
+                                                <span>✖</span>
+                                                <span>Denied</span>
+                                            </button>
+                                        }
+
+                                        <div class="menu-divider"></div>
+
+                                        <button class="menu-item danger-item"
+                                                @onclick='() => DeleteClaim(claim.ClaimId)'>
+                                            <span>🗑</span>
+                                            <span>Delete</span>
+                                        </button>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    private List<ClaimModel> claims = new()
+    {
+        new ClaimModel
+        {
+            ClaimId = 1001,
+            Patient="Sarah Johnson",
+            Provider="Dr. Michael Brown",
+            Payer="Aetna",
+            CPT="99442",
+            ICD="I10",
+            TimeSpent=25,
+            Amount=120,
+            Copay=20,
+            Balance=100,
+            Status="Pending",
+            ClaimType="RPM",
+            Priority="High",
+            ServiceDate=DateTime.Today.AddDays(-1)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1002,
+            Patient="John Smith",
+            Provider="Dr. Wilson",
+            Payer="Cigna",
+            CPT="99441",
+            ICD="E11.9",
+            TimeSpent=15,
+            Amount=80,
+            Copay=10,
+            Balance=70,
+            Status="Submitted",
+            ClaimType="CCM",
+            Priority="Medium",
+            ServiceDate=DateTime.Today.AddDays(-2)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1003,
+            Patient="Michael Lee",
+            Provider="Dr. Adams",
+            Payer="Blue Cross",
+            CPT="99443",
+            ICD="J20",
+            TimeSpent=35,
+            Amount=150,
+            Copay=30,
+            Balance=120,
+            Status="Paid",
+            ClaimType="PCM",
+            Priority="Low",
+            ServiceDate=DateTime.Today.AddDays(-3)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1004,
+            Patient="Emily Davis",
+            Provider="Dr. Rachel Green",
+            Payer="United Healthcare",
+            CPT="99213",
+            ICD="J45.909",
+            TimeSpent=22,
+            Amount=95,
+            Copay=15,
+            Balance=80,
+            Status="In Process",
+            ClaimType="Follow-up",
+            Priority="Medium",
+            ServiceDate=DateTime.Today.AddDays(-4)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1005,
+            Patient="Robert Wilson",
+            Provider="Dr. Steven Clark",
+            Payer="Humana",
+            CPT="99457",
+            ICD="I25.10",
+            TimeSpent=30,
+            Amount=145,
+            Copay=25,
+            Balance=120,
+            Status="Denied",
+            ClaimType="RPM",
+            Priority="High",
+            ServiceDate=DateTime.Today.AddDays(-5)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1006,
+            Patient="Olivia White",
+            Provider="Dr. Monica Hall",
+            Payer="Aetna",
+            CPT="99490",
+            ICD="J44.9",
+            TimeSpent=40,
+            Amount=180,
+            Copay=35,
+            Balance=145,
+            Status="Pending",
+            ClaimType="CCM",
+            Priority="High",
+            ServiceDate=DateTime.Today.AddDays(-6)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1007,
+            Patient="David Lee",
+            Provider="Dr. Carter",
+            Payer="Blue Shield",
+            CPT="99439",
+            ICD="E11.65",
+            TimeSpent=28,
+            Amount=125,
+            Copay=20,
+            Balance=105,
+            Status="Submitted",
+            ClaimType="PCM",
+            Priority="Medium",
+            ServiceDate=DateTime.Today.AddDays(-7)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1008,
+            Patient="Sophia Martinez",
+            Provider="Dr. Andrew Lewis",
+            Payer="Medicare",
+            CPT="99214",
+            ICD="I11.9",
+            TimeSpent=18,
+            Amount=90,
+            Copay=10,
+            Balance=80,
+            Status="Paid",
+            ClaimType="Consultation",
+            Priority="Low",
+            ServiceDate=DateTime.Today.AddDays(-8)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1009,
+            Patient="James Taylor",
+            Provider="Dr. Smith",
+            Payer="Cigna",
+            CPT="99458",
+            ICD="I50.9",
+            TimeSpent=32,
+            Amount=160,
+            Copay=30,
+            Balance=130,
+            Status="Pending",
+            ClaimType="RPM",
+            Priority="High",
+            ServiceDate=DateTime.Today.AddDays(-9)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1010,
+            Patient="Linda Anderson",
+            Provider="Dr. Kevin Moore",
+            Payer="Humana",
+            CPT="99487",
+            ICD="J45",
+            TimeSpent=20,
+            Amount=88,
+            Copay=8,
+            Balance=80,
+            Status="In Process",
+            ClaimType="CCM",
+            Priority="Low",
+            ServiceDate=DateTime.Today.AddDays(-10)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1011,
+            Patient="Daniel Thomas",
+            Provider="Dr. Grace Miller",
+            Payer="Aetna",
+            CPT="99215",
+            ICD="E78.5",
+            TimeSpent=26,
+            Amount=135,
+            Copay=20,
+            Balance=115,
+            Status="Submitted",
+            ClaimType="Follow-up",
+            Priority="Medium",
+            ServiceDate=DateTime.Today.AddDays(-11)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1012,
+            Patient="Emma Brown",
+            Provider="Dr. Olivia Scott",
+            Payer="Blue Cross",
+            CPT="99457",
+            ICD="F41.9",
+            TimeSpent=24,
+            Amount=110,
+            Copay=15,
+            Balance=95,
+            Status="Denied",
+            ClaimType="Behavioral",
+            Priority="Medium",
+            ServiceDate=DateTime.Today.AddDays(-12)
+        },
+
+        new ClaimModel
+        {
+            ClaimId = 1013,
+            Patient="William Harris",
+            Provider="Dr. Benjamin Young",
+            Payer="Medicaid",
+            CPT="99454",
+            ICD="N18.9",
+            TimeSpent=36,
+            Amount=175,
+            Copay=40,
+            Balance=135,
+            Status="Paid",
+            ClaimType="Chronic Care",
+            Priority="High",
+            ServiceDate=DateTime.Today.AddDays(-13)
+        }
+    };
+
+    private void ToggleMenu(ClaimModel selectedClaim)
+    {
+        foreach (var claim in claims)
+        {
+            claim.ShowMenu = false;
+        }
+
+        selectedClaim.ShowMenu = true;
+    }
+
+    private void UpdateStatus(ClaimModel claim, string status)
+    {
+        claim.Status = status;
+        claim.ShowMenu = false;
+    }
+
+    private void DeleteClaim(int claimId)
+    {
+        var claim = claims.FirstOrDefault(x => x.ClaimId == claimId);
+
+        if (claim != null)
+        {
+            claims.Remove(claim);
+        }
+    }
+
+    private void CreateClaim()
+    {
+        Nav.NavigateTo("/provider/createclaim");
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Pending" => "status-pending",
+        "Submitted" => "status-submitted",
+        "In Process" => "status-process",
+        "Paid" => "status-paid",
+        "Denied" => "status-denied",
+        _ => ""
+    };
+
+    private string GetPriorityClass(string priority) => priority switch
+    {
+        "High" => "priority-high",
+        "Medium" => "priority-medium",
+        "Low" => "priority-low",
+        _ => ""
+    };
+
+    public class ClaimModel
+    {
+        public int ClaimId { get; set; }
+
+        public string Patient { get; set; } = "";
+
+        public string Provider { get; set; } = "";
+
+        public string Payer { get; set; } = "";
+
+        public string CPT { get; set; } = "";
+
+        public string ICD { get; set; } = "";
+
+        public int TimeSpent { get; set; }
+
+        public decimal Amount { get; set; }
+
+        public decimal Copay { get; set; }
+
+        public decimal Balance { get; set; }
+
+        public string Status { get; set; } = "";
+
+        public string ClaimType { get; set; } = "";
+
+        public string Priority { get; set; } = "";
+
+        public string AuthorizationNo { get; set; } = "";
+
+        public string Facility { get; set; } = "";
+
+        public string Notes { get; set; } = "";
+
+        public DateTime ServiceDate { get; set; }
+
+        public DateTime SubmittedDate { get; set; }
+
+        public bool IsUrgent { get; set; }
+
+        public bool ShowMenu { get; set; }
+    }
+}

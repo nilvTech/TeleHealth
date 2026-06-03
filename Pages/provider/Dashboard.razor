@@ -1,0 +1,601 @@
+@page "/provider/dashboard"
+@layout ProviderLayout
+@inject NavigationManager Nav
+
+<div class="dashboard-container">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+
+        <div>
+            <h2>Good Morning, Dr. Michael</h2>
+            <p class="sub-text">
+                Monday, June 15, 2025
+            </p>
+        </div>
+
+        <div class="header-actions">
+
+            <button class="header-btn"
+                    @onclick="NavigateToAppointment">
+                Appointments
+            </button>
+
+            <button class="header-btn"
+                    @onclick="NavigateToMessages">
+                Messages
+            </button>
+
+            <button class="header-btn primary"
+                    @onclick="NavigateToVideoConsult">
+                Start Visit
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+
+        <div class="stat-card teal">
+
+            <div class="stat-top">
+                <span class="stat-icon">🩺</span>
+                <span class="trend positive">+12%</span>
+            </div>
+
+            <h3>12</h3>
+
+            <p>Today's Visits</p>
+
+            <small>
+                4 completed · 3 in progress
+            </small>
+
+        </div>
+
+        <div class="stat-card blue">
+
+            <div class="stat-top">
+                <span class="stat-icon">💬</span>
+                <span class="trend positive">+5</span>
+            </div>
+
+            <h3>18</h3>
+
+            <p>Unread Messages</p>
+
+            <small>
+               5 New Messages
+            </small>
+
+        </div>
+
+        <div class="stat-card red">
+
+            <div class="stat-top">
+                <span class="stat-icon">⚠️</span>
+                <span class="trend negative">Critical</span>
+            </div>
+
+            <h3>5</h3>
+
+            <p>RPM Alerts</p>
+
+            <small>
+                2 require immediate review
+            </small>
+
+        </div>
+
+        <div class="stat-card yellow">
+
+            <div class="stat-top">
+                <span class="stat-icon">📋</span>
+                <span class="trend neutral">Pending</span>
+            </div>
+
+            <h3>8</h3>
+
+            <p>Orders Pending</p>
+
+            <small>
+                Awaiting signature and review
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <div class="quick-actions">
+
+        <button class="quick-card"
+                @onclick="NavigateToAppointment">
+
+            <span class="quick-icon">📅</span>
+
+            <div>
+                <h4>Appointments</h4>
+                <p>Manage today's patient visits</p>
+            </div>
+
+        </button>
+
+        <button class="quick-card"
+                @onclick="NavigateToOrders">
+
+            <span class="quick-icon">🧾</span>
+
+            <div>
+                <h4>Orders</h4>
+                <p>Create labs, imaging and referrals</p>
+            </div>
+
+        </button>
+
+        <button class="quick-card"
+                @onclick="NavigateToCareManagement">
+
+            <span class="quick-icon">❤️</span>
+
+            <div>
+                <h4>Care Management</h4>
+                <p>Monitor RPM and CCM patients</p>
+            </div>
+
+        </button>
+
+        <button class="quick-card"
+                @onclick="NavigateToMessages">
+
+            <span class="quick-icon">💬</span>
+
+            <div>
+                <h4>Messages</h4>
+                <p>Secure provider communication</p>
+            </div>
+
+        </button>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="main-grid">
+
+        <!-- LEFT -->
+        <div class="left-panel">
+
+            <!-- APPOINTMENTS -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>Today's Appointment Queue</h3>
+                        <p>
+                            Upcoming consultations and follow-ups
+                        </p>
+                    </div>
+
+                    <button class="view-btn"
+                            @onclick="NavigateToAppointment">
+                        View All
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Visit Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Appointments)
+                            {
+                                <tr>
+
+                                    <td>@item.Time</td>
+
+                                    <td>
+
+                                        <div class="patient-info">
+
+                                            <div class="patient-avatar">
+                                                @item.Patient.Substring(0,1)
+                                            </div>
+
+                                            <div>
+                                                <strong>@item.Patient</strong>
+                                                <p>@item.Age yrs · @item.Condition</p>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>@item.VisitType</td>
+
+                                    <td>
+
+                                        <span class="status-badge @GetStatusClass(item.Status)">
+                                            @item.Status
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button class="action-btn"
+                                                @onclick="NavigateToVideoConsult">
+                                            Join
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- CARE TASKS -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>Care Management Tasks</h3>
+                        <p>
+                            Pending provider activities
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="task-list">
+
+                    @foreach (var task in Tasks)
+                    {
+                        <div class="task-item">
+
+                            <div class="task-left">
+
+                                <div class="task-icon">
+                                    @task.Icon
+                                </div>
+
+                                <div>
+
+                                    <h4>@task.Title</h4>
+
+                                    <p>
+                                        @task.Description
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <span class="task-priority @task.Priority.ToLower()">
+                                @task.Priority
+                            </span>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right-panel">
+
+            <!-- RPM ALERTS -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>RPM Critical Alerts</h3>
+                        <p>Remote patient monitoring</p>
+                    </div>
+
+                </div>
+
+                <div class="alert-list">
+
+                    @foreach (var alert in Alerts)
+                    {
+                        <div class="alert-card @alert.Level.ToLower()">
+
+                            <div class="alert-top">
+
+                                <strong>@alert.Level</strong>
+
+                                <span>@alert.Time</span>
+
+                            </div>
+
+                            <h4>@alert.Patient</h4>
+
+                            <p>@alert.Message</p>
+
+                            <button class="mini-btn"
+                                    @onclick="NavigateToCareManagement">
+                                Review
+                            </button>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <!-- PROVIDER ACTIVITY -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h3>Recent Activity</h3>
+                        <p>Latest updates and notifications</p>
+                    </div>
+
+                </div>
+
+                <div class="activity-list">
+
+                    @foreach (var activity in Activities)
+                    {
+                        <div class="activity-item">
+
+                            <div class="activity-dot"></div>
+
+                            <div>
+
+                                <h4>@activity.Title</h4>
+
+                                <p>@activity.Description</p>
+
+                                <span>@activity.Time</span>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private void NavigateToVideoConsult()
+    {
+        Nav.NavigateTo("/provider/videoconsult");
+    }
+
+    private void NavigateToAppointment()
+    {
+        Nav.NavigateTo("/provider/appointment");
+    }
+
+    private void NavigateToMessages()
+    {
+        Nav.NavigateTo("/provider/chat");
+    }
+
+    private void NavigateToOrders()
+    {
+        Nav.NavigateTo("/provider/orders");
+    }
+
+    private void NavigateToCareManagement()
+    {
+        Nav.NavigateTo("/provider/caremanagement");
+    }
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Completed" => "completed",
+        "In Progress" => "progress",
+        "Ready" => "ready",
+        "Scheduled" => "scheduled",
+        _ => "scheduled"
+    };
+
+    private List<AppointmentModel> Appointments = new()
+    {
+        new()
+        {
+            Time="09:00 AM",
+            Patient="John Miller",
+            Age=58,
+            Condition="Hypertension",
+            VisitType="Follow-Up",
+            Status="Completed"
+        },
+
+        new()
+        {
+            Time="10:30 AM",
+            Patient="Lisa Kim",
+            Age=43,
+            Condition="Diabetes",
+            VisitType="Telehealth",
+            Status="In Progress"
+        },
+
+        new()
+        {
+            Time="12:00 PM",
+            Patient="Sarah Johnson",
+            Age=52,
+            Condition="COPD",
+            VisitType="Chronic Care",
+            Status="Ready"
+        },
+
+        new()
+        {
+            Time="03:30 PM",
+            Patient="Robert Brown",
+            Age=64,
+            Condition="Cardiac",
+            VisitType="In-Person",
+            Status="Scheduled"
+        }
+    };
+
+    private List<TaskModel> Tasks = new()
+    {
+        new()
+        {
+            Icon="📋",
+            Title="Review RPM Readings",
+            Description="5 patient vitals need review",
+            Priority="High"
+        },
+
+        new()
+        {
+            Icon="💊",
+            Title="Approve Medication Refill",
+            Description="3 refill requests pending",
+            Priority="Medium"
+        },
+
+        new()
+        {
+            Icon="🧾",
+            Title="Sign Lab Orders",
+            Description="CBC and MRI orders pending",
+            Priority="High"
+        },
+
+        new()
+        {
+            Icon="📞",
+            Title="Patient Follow-Up",
+            Description="Call patient regarding symptoms",
+            Priority="Low"
+        }
+    };
+
+    private List<AlertModel> Alerts = new()
+    {
+        new()
+        {
+            Level="Critical",
+            Patient="Sarah Johnson",
+            Message="Blood pressure elevated to 182/105",
+            Time="8:42 AM"
+        },
+
+        new()
+        {
+            Level="High",
+            Patient="Tom Brown",
+            Message="SpO2 dropped below 91%",
+            Time="9:15 AM"
+        },
+
+        new()
+        {
+            Level="Medium",
+            Patient="Lisa Kim",
+            Message="Weight gain detected over 3 days",
+            Time="1 day ago"
+        }
+    };
+
+    private List<ActivityModel> Activities = new()
+    {
+        new()
+        {
+            Title="SOAP Note Signed",
+            Description="Consultation completed for John Miller",
+            Time="10 mins ago"
+        },
+
+        new()
+        {
+            Title="New Message Received",
+            Description="Care coordinator sent update",
+            Time="30 mins ago"
+        },
+
+        new()
+        {
+            Title="Order Completed",
+            Description="MRI Brain imaging finalized",
+            Time="1 hour ago"
+        },
+
+        new()
+        {
+            Title="Patient Joined Waiting Room",
+            Description="Lisa Kim ready for consultation",
+            Time="2 hours ago"
+        }
+    };
+
+    public class AppointmentModel
+    {
+        public string Time { get; set; } = "";
+        public string Patient { get; set; } = "";
+        public int Age { get; set; }
+        public string Condition { get; set; } = "";
+        public string VisitType { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+
+    public class TaskModel
+    {
+        public string Icon { get; set; } = "";
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Priority { get; set; } = "";
+    }
+
+    public class AlertModel
+    {
+        public string Level { get; set; } = "";
+        public string Patient { get; set; } = "";
+        public string Message { get; set; } = "";
+        public string Time { get; set; } = "";
+    }
+
+    public class ActivityModel
+    {
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Time { get; set; } = "";
+    }
+}

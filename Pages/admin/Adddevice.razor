@@ -1,0 +1,166 @@
+@page "/admin/adddevice"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="add-device-page">
+
+    <div class="page-header">
+
+        <div>
+            <h2>Add New Device</h2>
+            <p>Register and assign RPM device to patient</p>
+        </div>
+
+        <button class="btn-secondary"
+                @onclick="Back">
+            Back
+        </button>
+
+    </div>
+
+    <div class="form-card">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Device ID</label>
+                <input @bind="Device.DeviceId" />
+            </div>
+
+            <div class="form-group">
+                <label>Serial Number</label>
+                <input @bind="Device.SerialNumber" />
+            </div>
+
+            <div class="form-group">
+                <label>Device Name</label>
+                <input @bind="Device.DeviceName" />
+            </div>
+
+            <div class="form-group">
+                <label>Device Type</label>
+                <select @bind="Device.Type">
+                    <option>Blood Pressure Monitor</option>
+                    <option>Glucose Monitor</option>
+                    <option>Pulse Oximeter</option>
+                    <option>Weight Scale</option>
+                    <option>Temperature Monitor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Manufacturer</label>
+                <input @bind="Device.Manufacturer" />
+            </div>
+
+            <div class="form-group">
+                <label>Model</label>
+                <input @bind="Device.Model" />
+            </div>
+
+            <div class="form-group">
+                <label>Assigned Patient</label>
+                <select @bind="Device.Patient">
+                    <option>Sarah Johnson</option>
+                    <option>John Carter</option>
+                    <option>Emily Watson</option>
+                    <option>David Wilson</option>
+                    <option>Emma Anderson</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Provider Group</label>
+                <select @bind="Device.ProviderGroup">
+                    <option>Heart Care Group</option>
+                    <option>Diabetes Care Center</option>
+                    <option>Primary Care Associates</option>
+                    <option>Family Health Group</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Connectivity</label>
+                <select @bind="Device.Connectivity">
+                    <option>Bluetooth</option>
+                    <option>WiFi</option>
+                    <option>Cellular</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Battery Percentage</label>
+                <input @bind="Device.Battery" />
+            </div>
+
+            <div class="form-group">
+                <label>Status</label>
+                <select @bind="Device.Status">
+                    <option>Connected</option>
+                    <option>Offline</option>
+                    <option>Low Battery</option>
+                    <option>Maintenance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Firmware Version</label>
+                <input @bind="Device.Firmware" />
+            </div>
+
+            <div class="form-group full-width">
+                <label>Notes</label>
+                <textarea @bind="Device.Notes"></textarea>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button class="btn-secondary"
+                    @onclick="Back">
+                Cancel
+            </button>
+
+            <button class="btn-primary"
+                    @onclick="Save">
+                Save Device
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    DeviceModel Device = new();
+
+    class DeviceModel
+    {
+        public string DeviceId { get; set; } = "DEV-1011";
+        public string SerialNumber { get; set; } = "SN-989898";
+        public string DeviceName { get; set; } = "Smart BP Elite";
+        public string Type { get; set; } = "Blood Pressure Monitor";
+        public string Manufacturer { get; set; } = "MedTech";
+        public string Model { get; set; } = "MT-X2";
+        public string Patient { get; set; } = "Sarah Johnson";
+        public string ProviderGroup { get; set; } = "Heart Care Group";
+        public string Connectivity { get; set; } = "Bluetooth";
+        public string Battery { get; set; } = "94%";
+        public string Status { get; set; } = "Connected";
+        public string Firmware { get; set; } = "v2.1.0";
+        public string Notes { get; set; } = "";
+    }
+
+    void Save()
+    {
+        Nav.NavigateTo("/admin/devices");
+    }
+
+    void Back()
+    {
+        Nav.NavigateTo("/admin/devices");
+    }
+}

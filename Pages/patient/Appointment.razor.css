@@ -1,0 +1,163 @@
+.appointment-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.page-title {
+    color: teal;
+    margin-bottom: 20px;
+}
+
+/* HEADER */
+.header-row {
+    margin-bottom: 15px;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: teal;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border: 1px solid teal;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    color: teal;
+    margin-bottom: 20px;
+}
+
+/* FORM GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+label {
+    font-weight: 600;
+    color: teal;
+    margin-bottom: 6px;
+}
+
+/* INPUT */
+.input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid teal;
+    font-size: 14px;
+}
+
+.textarea {
+    height: 90px;
+}
+
+/* BUTTONS */
+.btn-row {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background: teal;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary:hover {
+    background: #146C63;
+}
+
+.btn-small {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: teal;
+    color: white;
+    border: none;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-small.danger {
+    background: #f44336;
+}
+
+/* TABLE */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th {
+    background: #e6f5f4;
+    color: teal;
+    padding: 10px;
+}
+
+.styled-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* STATUS */
+.status.upcoming { color: teal; }
+.status.completed { color: green; }
+
+/* CONFIRM */
+.confirm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.notes-box {
+    margin-top: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+.success-alert {
+    background: #e9fbf4;
+    border: 1px solid #22b573;
+    color: #0b7d52;
+    padding: 16px 20px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

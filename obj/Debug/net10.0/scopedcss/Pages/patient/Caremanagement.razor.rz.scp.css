@@ -1,0 +1,97 @@
+.care-container[b-4b7sgwpgx5] {
+    padding: 20px;
+    color: teal;
+}
+
+/* SUMMARY */
+.summary-card[b-4b7sgwpgx5] {
+    background: #e0f7f5;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.risk.high[b-4b7sgwpgx5] {
+    color: red;
+    font-weight: bold;
+}
+
+/* TABS */
+.tabs[b-4b7sgwpgx5] {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab[b-4b7sgwpgx5] {
+    padding: 10px 15px;
+    background: #e0f7f5;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.tab.active[b-4b7sgwpgx5] {
+    background: teal;
+    color: white;
+}
+
+/* CARD */
+.card[b-4b7sgwpgx5] {
+    background: white;
+    border: 1px solid teal;
+    padding: 20px;
+    border-radius: 10px;
+    color:teal;
+}
+
+/* TABLE */
+.styled-table[b-4b7sgwpgx5] {
+    width: 100%;
+    border-collapse: collapse;
+    color:teal
+}
+
+.styled-table th[b-4b7sgwpgx5] {
+    background: #e0f7f5;
+    padding: 10px;
+}
+
+.styled-table td[b-4b7sgwpgx5] {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* STATUS */
+.status[b-4b7sgwpgx5] {
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.status.active[b-4b7sgwpgx5] { background: #cce5ff; }
+.status.pending[b-4b7sgwpgx5] { background: #fff3cd; }
+.status.completed[b-4b7sgwpgx5] { background: #d4edda; }
+.status.high[b-4b7sgwpgx5] { background: #f8d7da; }
+
+/* BUTTON */
+.btn-primary[b-4b7sgwpgx5] {
+    background: teal;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+}
+
+/* ALERTS */
+.alerts-list li[b-4b7sgwpgx5] {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+}
+
+.alerts-list li.high[b-4b7sgwpgx5] { background: #f8d7da; }
+.alerts-list li.medium[b-4b7sgwpgx5] { background: #fff3cd; }
+.alerts-list li.low[b-4b7sgwpgx5] { background: #defabe; }
+
+.page-title[b-4b7sgwpgx5]{
+    color:teal;
+}

@@ -1,0 +1,93 @@
+.records-container[b-ltmdje2s85] {
+    padding: 20px;
+    color: teal;
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* TABS */
+.tabs[b-ltmdje2s85] {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.tab[b-ltmdje2s85] {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #e0f7f5;
+}
+
+.tab.active[b-ltmdje2s85] {
+    background: teal;
+    color: white;
+}
+
+/* CARD */
+.card[b-ltmdje2s85] {
+    background: white;
+    border: 1px solid teal;
+    border-radius: 12px;
+    padding: 20px;
+    color:teal
+}
+
+/* TABLE */
+.styled-table[b-ltmdje2s85] {
+    width: 100%;
+    border-collapse: collapse;
+    color:teal;
+}
+
+.styled-table th[b-ltmdje2s85] {
+    background: #e0f7f5;
+    padding: 12px;
+    text-align: left;
+}
+
+.styled-table td[b-ltmdje2s85] {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tr:hover[b-ltmdje2s85] {
+    background: #f5fdfc;
+}
+
+/* STATUS */
+.status[b-ltmdje2s85] {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.status.completed[b-ltmdje2s85] {
+    background: #d4edda;
+}
+
+.status.active[b-ltmdje2s85] {
+    background: #cce5ff;
+}
+
+/* BUTTONS */
+.btn-small[b-ltmdje2s85] {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary[b-ltmdje2s85] {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.page-title[b-ltmdje2s85]{
+    color:teal;
+}

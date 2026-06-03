@@ -1,0 +1,144 @@
+@page "/provider/addtask"
+
+@inject NavigationManager Nav
+
+<div class="create-container">
+
+    <div class="header">
+
+        <div>
+            <h2>Create Task</h2>
+            <p class="sub-text">
+                Create care coordination and follow-up tasks
+            </p>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="form-grid">
+
+            <!-- TASK NAME -->
+            <div class="form-group">
+                <label>Task Name</label>
+                <input @bind="newTask.Name"
+                       placeholder="Enter task name" />
+            </div>
+
+            <!-- PATIENT -->
+            <div class="form-group">
+                <label>Patient</label>
+
+                <select @bind="newTask.Patient">
+                    <option value="">Select Patient</option>
+                    <option>Sarah Johnson</option>
+                    <option>Michael Brown</option>
+                    <option>Emily Davis</option>
+                    <option>Robert Wilson</option>
+                </select>
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+                <label>Category</label>
+
+                <select @bind="newTask.Category">
+                    <option>Follow-up</option>
+                    <option>Medication</option>
+                    <option>Lab</option>
+                    <option>Care Plan</option>
+                </select>
+            </div>
+
+            <!-- PRIORITY -->
+            <div class="form-group">
+                <label>Priority</label>
+
+                <select @bind="newTask.Priority">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+            </div>
+
+            <!-- DUE DATE -->
+            <div class="form-group">
+                <label>Due Date</label>
+
+                <input type="date"
+                       @bind="newTask.DueDate" />
+            </div>
+
+            <!-- ASSIGNED -->
+            <div class="form-group">
+                <label>Assigned To</label>
+
+                <input @bind="newTask.AssignedTo"
+                       placeholder="Assigned provider" />
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="form-group full-width">
+                <label>Description</label>
+
+                <textarea @bind="newTask.Description"
+                          placeholder="Enter task description">
+                </textarea>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button class="btn-save"
+                    @onclick="SaveTask">
+                Save Task
+            </button>
+
+            <button class="btn-cancel"
+                    @onclick="GoBack">
+                Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private TaskModel newTask = new()
+    {
+        DueDate = DateTime.Today
+    };
+
+    private void SaveTask()
+    {
+        Nav.NavigateTo("/provider/tasks");
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/provider/tasks");
+    }
+
+    public class TaskModel
+    {
+        public string Name { get; set; } = "";
+
+        public DateTime DueDate { get; set; }
+
+        public string Patient { get; set; } = "";
+
+        public string Priority { get; set; } = "Medium";
+
+        public string Category { get; set; } = "Follow-up";
+
+        public string AssignedTo { get; set; } = "";
+
+        public string Description { get; set; } = "";
+    }
+}

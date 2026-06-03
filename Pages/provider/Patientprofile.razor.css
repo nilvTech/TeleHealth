@@ -1,0 +1,97 @@
+.profile-container {
+    padding: 20px;
+    color: #e5e7eb;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: teal;
+}
+
+.patient-info span {
+    margin-left: 15px;
+    color: teal;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* CARDS */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    color:teal;
+}
+
+/* CARD HEADER */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:teal
+}
+
+/* VITALS */
+.vitals {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    color:teal
+}
+
+/* TABLE */
+.table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    color:teal;
+
+}
+
+.table th, .table td {
+    padding: 10px;
+    border-bottom: 1px solid teal;
+    color : teal
+}
+
+/* NOTES */
+.notes-list {
+    margin-top: 10px;
+    color:teal
+}
+
+.note-item {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color:teal
+}
+
+.note-date {
+    font-size: 12px;
+    color:teal;
+}
+
+/* BUTTON */
+.btn-primary {
+    background: teal;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #059669;
+}

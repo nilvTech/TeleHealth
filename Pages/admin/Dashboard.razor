@@ -1,0 +1,421 @@
+@page "/admin/dashboard"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="dashboard-container">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+
+        <div class="header-left">
+
+            <h2 class="page-title">
+             Dashboard
+            </h2>
+        </div>
+
+        <div class="header-right">
+
+            <div class="search-wrapper">
+                <input class="search-box"
+                       placeholder="Search patients, providers, claims..." />
+            </div>
+
+            <button class="icon-btn">
+                🔔
+                <span class="badge">5</span>
+            </button>
+
+            <div class="user-card">
+
+                <div class="user-avatar">
+                    AS
+                </div>
+
+                <div class="user-details">
+                    <span class="user-name">
+                        Dr. Alex Smith
+                    </span>
+
+                    <span class="user-role">
+                        Super Admin
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="stats-grid">
+
+        <div class="stat-card clickable"
+             @onclick='() => Navigate("patients")'>
+
+            <div class="stat-top">
+                <span class="stat-icon">🧑‍⚕️</span>
+                <span class="stat-title">Active Patients</span>
+            </div>
+
+            <h3>@ActivePatients</h3>
+
+            <p>+12% from last week</p>
+
+        </div>
+
+        <div class="stat-card clickable"
+             @onclick='() => Navigate("providers")'>
+
+            <div class="stat-top">
+                <span class="stat-icon">👨‍⚕️</span>
+                <span class="stat-title">Providers</span>
+            </div>
+
+            <h3>@ActiveProviders</h3>
+
+            <p>8 new onboarded</p>
+
+        </div>
+
+        <div class="stat-card clickable"
+             @onclick='() => Navigate("appointment")'>
+
+            <div class="stat-top">
+                <span class="stat-icon">📅</span>
+                <span class="stat-title">Appointments</span>
+            </div>
+
+            <h3>@TodayAppointments</h3>
+
+            <p>Today’s appointments</p>
+
+        </div>
+
+        <div class="stat-card clickable"
+             @onclick='() => Navigate("billing")'>
+
+            <div class="stat-top">
+                <span class="stat-icon">💰</span>
+                <span class="stat-title">Revenue</span>
+            </div>
+
+            <h3>$@RevenueToday</h3>
+
+            <p>Collected today</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span class="stat-icon">🆕</span>
+                <span class="stat-title">New Patients</span>
+            </div>
+
+            <h3>@NewPatients</h3>
+
+            <p>Registered this week</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span class="stat-icon">✅</span>
+                <span class="stat-title">Completed Visits</span>
+            </div>
+
+            <h3>@CompletedVisits</h3>
+
+            <p>Visits completed today</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span class="stat-icon">❌</span>
+                <span class="stat-title">Cancelled</span>
+            </div>
+
+            <h3>@CancelledAppointments</h3>
+
+            <p>Appointments cancelled</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+                <span class="stat-icon">📄</span>
+                <span class="stat-title">Pending Claims</span>
+            </div>
+
+            <h3>@PendingClaims</h3>
+
+            <p>Claims awaiting review</p>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="dashboard-grid">
+
+        <!-- LEFT SIDE -->
+        <div class="left-panel">
+
+            <!-- TODAY SCHEDULE -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h4>
+                        Today’s Schedule
+                    </h4>
+
+                    <button class="view-btn">
+                        View All
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table class="dashboard-table">
+
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>Patient</th>
+                                <th>Provider</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var appt in TodaySchedule)
+                            {
+                                <tr>
+
+                                    <td>@appt.Time</td>
+
+                                    <td>@appt.Patient</td>
+
+                                    <td>@appt.Provider</td>
+
+                                    <td>
+                                        <span class="status @GetScheduleStatus(appt.Status)">
+                                            @appt.Status
+                                        </span>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <!-- RECENT PATIENTS -->
+            <div class="card">
+
+                <div class="card-header">
+
+                    <h4>
+                        Recent Patients
+                    </h4>
+
+                    <button class="view-btn">
+                        View All
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table class="dashboard-table">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Condition</th>
+                                <th>Last Visit</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var p in RecentPatients)
+                            {
+                                <tr>
+
+                                    <td>@p.Name</td>
+
+                                    <td>@p.Condition</td>
+
+                                    <td>@p.LastVisit</td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-panel">
+
+            <!-- ALERTS -->
+            <div class="card">
+
+                <div class="card-header">
+                    <h4>System Alerts</h4>
+                </div>
+
+                @foreach (var a in Alerts)
+                {
+                    <div class="alert-item">
+
+                        <div class="alert-left">
+
+                            <span class="alert-dot"></span>
+
+                            <span>@a.Title</span>
+
+                        </div>
+
+                        <span class="alert-count">
+                            @a.Count
+                        </span>
+
+                    </div>
+                }
+
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="card">
+
+                <div class="card-header">
+                    <h4>Quick Actions</h4>
+                </div>
+
+                <div class="quick-actions">
+
+                    <button class="quick-btn"
+                            @onclick='() => Navigate("patients")'>
+                        Patient Management
+                    </button>
+
+                    <button class="quick-btn"
+                            @onclick='() => Navigate("providers")'>
+                        Provider Management
+                    </button>
+
+                    <button class="quick-btn"
+                            @onclick='() => Navigate("billing")'>
+                        Billing & Claims
+                    </button>
+
+                    <button class="quick-btn"
+                            @onclick='() => Navigate("appointment")'>
+                        Appointments
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    int ActivePatients = 1245;
+    int ActiveProviders = 86;
+    int TodayAppointments = 132;
+    decimal RevenueToday = 12430;
+
+    int PendingClaims = 27;
+    int CompletedVisits = 98;
+    int CancelledAppointments = 12;
+    int NewPatients = 34;
+
+    class AlertItem
+    {
+        public string Title { get; set; } = "";
+        public int Count { get; set; }
+    }
+
+    List<AlertItem> Alerts = new()
+    {
+        new() { Title = "Failed Claims", Count = 5 },
+        new() { Title = "Inactive Providers", Count = 3 },
+        new() { Title = "System Warnings", Count = 2 },
+        new() { Title = "RPM Device Offline", Count = 4 }
+    };
+
+    class Appointment
+    {
+        public string Time { get; set; } = "";
+        public string Patient { get; set; } = "";
+        public string Provider { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+
+    List<Appointment> TodaySchedule = new()
+    {
+        new() { Time="09:00 AM", Patient="John Doe", Provider="Dr. Smith", Status="Completed" },
+        new() { Time="10:30 AM", Patient="Emily Clark", Provider="Dr. Brown", Status="In Progress" },
+        new() { Time="11:15 AM", Patient="David Kim", Provider="Dr. Lee", Status="Pending" },
+        new() { Time="02:00 PM", Patient="Sarah Khan", Provider="Dr. Adams", Status="Scheduled" },
+        new() { Time="03:30 PM", Patient="Michael Jordan", Provider="Dr. Watson", Status="Completed" }
+    };
+
+    class Patient
+    {
+        public string Name { get; set; } = "";
+        public string Condition { get; set; } = "";
+        public string LastVisit { get; set; } = "";
+    }
+
+    List<Patient> RecentPatients = new()
+    {
+        new() { Name="John Doe", Condition="Diabetes", LastVisit="2 days ago" },
+        new() { Name="Jane Roe", Condition="Hypertension", LastVisit="1 week ago" },
+        new() { Name="Sam Wilson", Condition="Asthma", LastVisit="3 days ago" },
+        new() { Name="Ali Khan", Condition="Cardiac", LastVisit="Today" },
+        new() { Name="Emily Stone", Condition="COPD", LastVisit="Yesterday" }
+    };
+
+    void Navigate(string url)
+    {
+        Nav.NavigateTo($"/admin/{url}");
+    }
+
+    private string GetScheduleStatus(string status) => status switch
+    {
+        "Completed" => "status-completed",
+        "In Progress" => "status-progress",
+        "Pending" => "status-pending",
+        "Scheduled" => "status-scheduled",
+        _ => ""
+    };
+}

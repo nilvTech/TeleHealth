@@ -1,0 +1,296 @@
+@page "/provider/patientlist"
+@inject NavigationManager Nav
+
+<div class="patient-container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div>
+            <h2>Patients</h2>
+          
+        </div>
+
+        <button class="btn-add" @onclick="AddPatient">
+            + Add Patient
+        </button>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-card">
+
+        <input class="search-box"
+               placeholder="Search patient by name or MRN..."
+               @bind="searchText"
+               @bind:event="oninput" />
+
+        <select class="filter-select" @bind="selectedCondition">
+            <option value="">All Conditions</option>
+            <option>Diabetes</option>
+            <option>Hypertension</option>
+            <option>Asthma</option>
+            <option>Cardiac</option>
+            <option>Obesity</option>
+            <option>COPD</option>
+        </select>
+
+        <select class="filter-select" @bind="selectedRisk">
+            <option value="">All Risk</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+        </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <table class="patient-table">
+
+            <thead>
+                <tr>
+                    <th>MRN</th>
+                    <th>Patient</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Condition</th>
+                    <th>Risk</th>
+                    <th>Last Visit</th>
+                   
+                   
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var patient in FilteredPatients)
+                {
+                    <tr>
+
+                        <td>@patient.MRN</td>
+
+                        <td>
+                            <div class="patient-info">
+                               
+
+                                <div>
+                                    <div class="patient-name">@patient.Name</div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>@patient.Age</td>
+
+                        <td>@patient.Gender</td>
+
+                        <td>@patient.Condition</td>
+
+                        <td>
+                            <span class="risk @GetRiskClass(patient.Risk)">
+                                @patient.Risk
+                            </span>
+                        </td>
+
+                        <td>@patient.LastVisit</td>
+
+                    
+                        
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    // FILTERS
+    private string searchText = "";
+    private string selectedCondition = "";
+    private string selectedRisk = "";
+
+    // PATIENT DATA
+    private List<Patient> patients = new()
+    {
+        new Patient {
+            Id=1,
+            MRN="PT1001",
+            Name="Sarah Johnson",
+            Age=45,
+            Gender="Female",
+            Condition="Diabetes",
+            Risk="High",
+            LastVisit="12 Feb 2026",
+            Email="sarah.johnson@email.com"
+        },
+
+        new Patient {
+            Id=2,
+            MRN="PT1002",
+            Name="Michael Lee",
+            Age=58,
+            Gender="Male",
+            Condition="Hypertension",
+            Risk="Medium",
+            LastVisit="11 Feb 2026",
+            Email="michael.lee@email.com"
+        },
+
+        new Patient {
+            Id=3,
+            MRN="PT1003",
+            Name="Emily Davis",
+            Age=39,
+            Gender="Female",
+            Condition="Asthma",
+            Risk="Low",
+            LastVisit="10 Feb 2026",
+            Email="emily.davis@email.com"
+        },
+
+        new Patient {
+            Id=4,
+            MRN="PT1004",
+            Name="Robert Brown",
+            Age=63,
+            Gender="Male",
+            Condition="Cardiac",
+            Risk="High",
+            LastVisit="09 Feb 2026",
+            Email="robert.brown@email.com"
+        },
+
+        new Patient {
+            Id=5,
+            MRN="PT1005",
+            Name="Olivia White",
+            Age=29,
+            Gender="Female",
+            Condition="Diabetes",
+            Risk="Low",
+            LastVisit="08 Feb 2026",
+            Email="olivia.white@email.com"
+        },
+
+        new Patient {
+            Id=6,
+            MRN="PT1006",
+            Name="James Wilson",
+            Age=52,
+            Gender="Male",
+            Condition="COPD",
+            Risk="Medium",
+            LastVisit="07 Feb 2026",
+            Email="james.wilson@email.com"
+        },
+
+        new Patient {
+            Id=7,
+            MRN="PT1007",
+            Name="Sophia Martinez",
+            Age=41,
+            Gender="Female",
+            Condition="Obesity",
+            Risk="Medium",
+            LastVisit="06 Feb 2026",
+            Email="sophia@email.com"
+        },
+
+        new Patient {
+            Id=8,
+            MRN="PT1008",
+            Name="Daniel Kim",
+            Age=47,
+            Gender="Male",
+            Condition="Hypertension",
+            Risk="High",
+            LastVisit="05 Feb 2026",
+            Email="daniel.kim@email.com"
+        },
+
+        new Patient {
+            Id=9,
+            MRN="PT1009",
+            Name="Emma Clark",
+            Age=36,
+            Gender="Female",
+            Condition="Asthma",
+            Risk="Low",
+            LastVisit="04 Feb 2026",
+            Email="emma.clark@email.com"
+        },
+
+        new Patient {
+            Id=10,
+            MRN="PT1010",
+            Name="William Harris",
+            Age=66,
+            Gender="Male",
+            Condition="Cardiac",
+            Risk="High",
+            LastVisit="03 Feb 2026",
+            Email="william.harris@email.com"
+        }
+    };
+
+    // FILTERED LIST
+    private IEnumerable<Patient> FilteredPatients => patients
+        .Where(p =>
+            (string.IsNullOrWhiteSpace(searchText)
+                || p.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                || p.MRN.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            &&
+            (string.IsNullOrWhiteSpace(selectedCondition)
+                || p.Condition == selectedCondition)
+            &&
+            (string.IsNullOrWhiteSpace(selectedRisk)
+                || p.Risk == selectedRisk)
+        );
+
+    // RISK CLASS
+    private string GetRiskClass(string risk) => risk switch
+    {
+        "High" => "risk-high",
+        "Medium" => "risk-medium",
+        "Low" => "risk-low",
+        _ => ""
+    };
+
+    // NAVIGATION
+    private void ViewPatient(int id)
+    {
+        Nav.NavigateTo($"/provider/caremanagement/{id}");
+    }
+
+    private void AddPatient()
+    {
+        Nav.NavigateTo("/provider/addpatient");
+    }
+
+    // MODEL
+    public class Patient
+    {
+        public int Id { get; set; }
+
+        public string MRN { get; set; } = "";
+
+        public string Name { get; set; } = "";
+
+        public int Age { get; set; }
+
+        public string Gender { get; set; } = "";
+
+        public string Condition { get; set; } = "";
+
+        public string Risk { get; set; } = "";
+
+        public string LastVisit { get; set; } = "";
+
+        public string Email { get; set; } = "";
+    }
+}

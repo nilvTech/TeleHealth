@@ -1,0 +1,364 @@
+@page "/provider/orders"
+@layout ProviderLayout
+@inject NavigationManager Nav
+
+<div class="orders-container">
+
+    <!-- HEADER -->
+    <div class="orders-header">
+
+        <div>
+            <h2 class="page-title">Orders Management</h2>
+        </div>
+
+        <button class="btn-create"
+                @onclick="GoToCreate">
+            + Create Order
+        </button>
+
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-card">
+
+        <input class="search-box"
+               placeholder="Search order, patient or provider..."
+               @bind="searchText"
+               @bind:event="oninput" />
+
+        <select class="filter-select"
+                @bind="selectedType">
+
+            <option value="">All Types</option>
+            <option>Lab Test</option>
+            <option>Imaging</option>
+            <option>Referral</option>
+            <option>Prescription</option>
+
+        </select>
+
+        <select class="filter-select"
+                @bind="selectedStatus">
+
+            <option value="">All Status</option>
+            <option>Pending</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+            <option>Active</option>
+            <option>Rejected</option>
+            <option>Suspended</option>
+
+        </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <div class="table-header">
+            <h3>Orders List</h3>
+        </div>
+
+        <table class="orders-table">
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Patient</th>
+                    <th>Type</th>
+                    <th>Order Name</th>
+                    <th>Priority</th>
+                    <th>Provider</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var order in FilteredOrders)
+                {
+                    <tr>
+
+                        <td>@order.OrderId</td>
+
+                        <td>
+                            <div class="patient-cell">
+
+                                <div class="patient-name">
+                                    @order.PatientName
+                                </div>
+
+                                <div class="patient-mrn">
+                                    @order.MRN
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <td>@order.Type</td>
+
+                        <td>@order.Name</td>
+
+                        <td>
+                            <span class="priority @GetPriorityClass(order.Priority)">
+                                @order.Priority
+                            </span>
+                        </td>
+
+                        <td>@order.Provider</td>
+
+                        <td>
+                            <span class="status @GetStatusClass(order.Status)">
+                                @order.Status
+                            </span>
+                        </td>
+
+                        <td>@order.CreatedDate</td>
+
+                       <td class="action-cell">
+
+    <div class="action-menu"
+         @onclick:stopPropagation="true">
+
+        <button class="menu-btn"
+                @onclick="() => ToggleMenu(order.OrderId)">
+            ⋮
+        </button>
+
+        @if (openMenuId == order.OrderId)
+        {
+            <div class="menu-dropdown">
+
+                @if (order.Status != "Pending")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Pending"))'>
+                        <span>🕒</span>
+                        <span>Pending</span>
+                    </button>
+                }
+
+                @if (order.Status != "Completed")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Completed"))'>
+                        <span>✔</span>
+                        <span>Completed</span>
+                    </button>
+                }
+
+                @if (order.Status != "Cancelled")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Cancelled"))'>
+                        <span>✖</span>
+                        <span>Cancelled</span>
+                    </button>
+                }
+
+                @if (order.Status != "Active")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Active"))'>
+                        <span>🟢</span>
+                        <span>Active</span>
+                    </button>
+                }
+
+                @if (order.Status != "Rejected")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Rejected"))'>
+                        <span>🚫</span>
+                        <span>Rejected</span>
+                    </button>
+                }
+
+                @if (order.Status != "Suspended")
+                {
+                    <button class="menu-item"
+                            @onclick='() => HandleAction(() => UpdateOrderStatus(order, "Suspended"))'>
+                        <span>⏸</span>
+                        <span>Suspended</span>
+                    </button>
+                }
+
+                <div class="menu-divider"></div>
+
+                <button class="menu-item"
+                        @onclick="() => HandleAction(() => ViewOrder(order))">
+                    <span>👁</span>
+                    <span>View</span>
+                </button>
+
+                <button class="menu-item"
+                        @onclick="() => HandleAction(() => EditOrder(order))">
+                    <span>✏</span>
+                    <span>Edit</span>
+                </button>
+
+                <button class="menu-item danger-item"
+                        @onclick="() => HandleAction(() => DeleteOrder(order))">
+                    <span>🗑</span>
+                    <span>Delete</span>
+                </button>
+
+            </div>
+        }
+
+    </div>
+
+</td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string searchText = "";
+    private string selectedType = "";
+    private string selectedStatus = "";
+
+    string? openMenuId = null;
+   
+    private List<OrderModel> orders = new()
+    {
+        new()
+        {
+            OrderId = "ORD1001",
+            PatientName = "Sarah Johnson",
+            MRN = "PT1001",
+            Type = "Lab Test",
+            Name = "Complete Blood Count",
+            Priority = "Routine",
+            Status = "Pending",
+            Provider = "Dr. Emily Brown",
+            CreatedDate = "12 May 2026"
+        },
+
+        new()
+        {
+            OrderId = "ORD1002",
+            PatientName = "Michael Brown",
+            MRN = "PT1002",
+            Type = "Imaging",
+            Name = "Chest X-Ray",
+            Priority = "Urgent",
+            Status = "Pending",
+            Provider = "Dr. David Wilson",
+            CreatedDate = "11 May 2026"
+        },
+
+        new()
+        {
+            OrderId = "ORD1003",
+            PatientName = "Emily Davis",
+            MRN = "PT1003",
+            Type = "Lab Test",
+            Name = "HbA1c",
+            Priority = "Routine",
+            Status = "Completed",
+            Provider = "Dr. Emily Brown",
+            CreatedDate = "10 May 2026"
+        }
+    };
+
+    private IEnumerable<OrderModel> FilteredOrders => orders
+        .Where(x =>
+            string.IsNullOrWhiteSpace(searchText)
+            || x.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || x.PatientName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || x.Provider.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || x.OrderId.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+        .Where(x =>
+            string.IsNullOrWhiteSpace(selectedType)
+            || x.Type == selectedType)
+        .Where(x =>
+            string.IsNullOrWhiteSpace(selectedStatus)
+            || x.Status == selectedStatus);
+
+    private void GoToCreate()
+    {
+        Nav.NavigateTo("/provider/createorder");
+    }
+void UpdateOrderStatus(OrderModel order, string status)
+{
+    order.Status = status;
+}
+    void ToggleMenu(string id)
+    {
+        openMenuId = openMenuId == id ? null : id;
+    }
+
+    void HandleAction(Action action)
+    {
+        action.Invoke();
+        openMenuId = null;
+    }
+
+    private void DeleteOrder(OrderModel order)
+    {
+        orders.Remove(order);
+    }
+
+    private void EditOrder(OrderModel order)
+    {
+        Nav.NavigateTo($"/provider/editorder/{order.OrderId}");
+    }
+
+    private void ViewOrder(OrderModel order)
+    {
+        Nav.NavigateTo($"/provider/orderdetails/{order.OrderId}");
+    }
+
+    private string GetPriorityClass(string priority) => priority switch
+    {
+        "Routine" => "priority-routine",
+        "Urgent" => "priority-urgent",
+        "Stat" => "priority-stat",
+        _ => ""
+    };
+
+    private string GetStatusClass(string status) => status switch
+    {
+        "Pending" => "status-pending",
+        "Completed" => "status-completed",
+        "Cancelled" => "status-cancelled",
+        "Active" => "status-active",
+        "Rejected" => "status-rejected",
+        "Suspended" => "status-suspended",
+        _ => ""
+    };
+
+    
+    public class OrderModel
+    {
+        public string OrderId { get; set; } = "";
+
+        public string PatientName { get; set; } = "";
+
+        public string MRN { get; set; } = "";
+
+        public string Type { get; set; } = "";
+
+        public string Name { get; set; } = "";
+
+        public string Priority { get; set; } = "";
+
+        public string Status { get; set; } = "";
+
+        public string Provider { get; set; } = "";
+
+        public string CreatedDate { get; set; } = "";
+    }
+}

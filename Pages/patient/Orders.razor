@@ -1,0 +1,209 @@
+@page "/patient/orders"
+@layout PatientLayout
+@inject NavigationManager Nav
+<h2 class="page-title">Orders</h2>
+
+<div class="records-container">
+
+    <!-- 🔹 TABS -->
+    <div class="tabs">
+        <div class="@Tab("reports")" @onclick='() => ActiveTab = "reports"'>Reports</div>
+        <div class="@Tab("visits")" @onclick='() => ActiveTab = "visits"'>Visit Summaries</div>
+        <div class="@Tab("prescriptions")" @onclick='() => ActiveTab = "prescriptions"'>Prescriptions</div>
+    </div>
+
+    <!-- 🔹 REPORTS -->
+    @if (ActiveTab == "reports")
+    {
+        <div class="card">
+            <h4>Lab & Diagnostic Reports</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Report Type</th>
+                        <th>Provider</th>
+                        <th>Status</th>
+                        <th>File</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Reports)
+                    {
+                        <tr>
+                            <td>@r.Date.ToShortDateString()</td>
+                            <td>@r.Type</td>
+                            <td>@r.Provider</td>
+                            <td><span class="status completed">@r.Status</span></td>
+                            <td>@r.FileName</td>
+                            <td>
+                                <button class="btn-small"
+                                        @onclick='() => DownloadPdf("medical_reports_analytics.pdf")'>
+                                    Download
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 VISIT SUMMARIES -->
+    @if (ActiveTab == "visits")
+    {
+        <div class="card">
+            <h4>Visit Summaries</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doctor</th>
+                        <th>Specialty</th>
+                        <th>Diagnosis</th>
+                        <th>Notes</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Visits)
+                    {
+                        <tr>
+                            <td>@v.Date.ToShortDateString()</td>
+                            <td>@v.Doctor</td>
+                            <td>@v.Specialty</td>
+                            <td>@v.Diagnosis</td>
+                            <td>@v.Notes</td>
+                            <td>
+                                <button class="btn-small">Download</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <!-- 🔹 PRESCRIPTIONS -->
+    @if (ActiveTab == "prescriptions")
+    {
+        <div class="card">
+            <h4>Prescription & Pharmacy</h4>
+
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Prescribed By</th>
+                        <th>Status</th>
+                        <th>Refill</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Prescriptions)
+                    {
+                        <tr>
+                            <td>@p.Medication</td>
+                            <td>@p.Dosage</td>
+                            <td>@p.Frequency</td>
+                            <td>@p.Doctor</td>
+                            <td>
+                                <span class="status @p.Status.ToLower()">@p.Status</span>
+                            </td>
+                            <td>
+                                <button class="btn-primary" @onclick="() => RequestRefill(p)">
+                                    Request Refill
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+@code {
+
+    string ActiveTab = "reports";
+    string Tab(string t) => ActiveTab == t ? "tab active" : "tab";
+
+    // 🔹 MODELS
+    class Report
+    {
+        public DateTime Date { get; set; }
+        public string Type { get; set; }
+        public string Provider { get; set; }
+        public string Status { get; set; }
+        public string FileName { get; set; }
+    }
+
+    class VisitSummary
+    {
+        public DateTime Date { get; set; }
+        public string Doctor { get; set; }
+        public string Specialty { get; set; }
+        public string Diagnosis { get; set; }
+        public string Notes { get; set; }
+    }
+
+    class Prescription
+    {
+        public string Medication { get; set; }
+        public string Dosage { get; set; }
+        public string Frequency { get; set; }
+        public string Doctor { get; set; }
+        public string Status { get; set; }
+    }
+
+    // 🔹 REPORTS (7 RECORDS)
+    List<Report> Reports = new()
+    {
+        new() { Date=DateTime.Today.AddDays(-1), Type="Complete Blood Count (CBC)", Provider="Dr. John Smith", Status="Completed", FileName="cbc_report.pdf"},
+        new() { Date=DateTime.Today.AddDays(-3), Type="X-Ray Chest", Provider="Dr. Emily Brown", Status="Completed", FileName="xray_chest.pdf"},
+        new() { Date=DateTime.Today.AddDays(-5), Type="MRI Scan Brain", Provider="Dr. Michael Lee", Status="Completed", FileName="mri_brain.pdf"},
+        new() { Date=DateTime.Today.AddDays(-7), Type="Lipid Profile", Provider="Dr. Sarah Adams", Status="Completed", FileName="lipid_profile.pdf"},
+        new() { Date=DateTime.Today.AddDays(-10), Type="Blood Sugar Test", Provider="Dr. Robert Wilson", Status="Completed", FileName="sugar_test.pdf"},
+        new() { Date=DateTime.Today.AddDays(-12), Type="Thyroid Panel", Provider="Dr. Emma Davis", Status="Completed", FileName="thyroid.pdf"},
+        new() { Date=DateTime.Today.AddDays(-15), Type="Urine Analysis", Provider="Dr. Olivia Martinez", Status="Completed", FileName="urine_report.pdf"}
+    };
+
+    // 🔹 VISITS (7 RECORDS)
+    List<VisitSummary> Visits = new()
+    {
+        new() { Date=DateTime.Today.AddDays(-1), Doctor="Dr. Emily Brown", Specialty="Dermatology", Diagnosis="Skin Rash", Notes="Topical ointment prescribed. Avoid allergens."},
+        new() { Date=DateTime.Today.AddDays(-3), Doctor="Dr. John Smith", Specialty="General Medicine", Diagnosis="Fever & Cold", Notes="Paracetamol and hydration advised."},
+        new() { Date=DateTime.Today.AddDays(-7), Doctor="Dr. Michael Lee", Specialty="Neurology", Diagnosis="Migraine", Notes="Prescribed sumatriptan. Reduce screen exposure."},
+        new() { Date=DateTime.Today.AddDays(-10), Doctor="Dr. Sarah Adams", Specialty="Cardiology", Diagnosis="Hypertension", Notes="BP monitoring. Low sodium diet."},
+        new() { Date=DateTime.Today.AddDays(-14), Doctor="Dr. Robert Wilson", Specialty="Orthopedics", Diagnosis="Knee Pain", Notes="Physiotherapy recommended."},
+        new() { Date=DateTime.Today.AddDays(-20), Doctor="Dr. Emma Davis", Specialty="Endocrinology", Diagnosis="Thyroid Disorder", Notes="Continue medication. Follow-up in 1 month."},
+        new() { Date=DateTime.Today.AddDays(-30), Doctor="Dr. Olivia Martinez", Specialty="Urology", Diagnosis="UTI", Notes="Antibiotics prescribed for 5 days."}
+    };
+
+    // 🔹 PRESCRIPTIONS (7 RECORDS)
+    List<Prescription> Prescriptions = new()
+    {
+        new() { Medication="Amoxicillin", Dosage="500mg", Frequency="Twice daily", Doctor="Dr. Emily Brown", Status="Active"},
+        new() { Medication="Metformin", Dosage="850mg", Frequency="Once daily", Doctor="Dr. Sarah Adams", Status="Active"},
+        new() { Medication="Atorvastatin", Dosage="10mg", Frequency="Once at night", Doctor="Dr. John Smith", Status="Active"},
+        new() { Medication="Levothyroxine", Dosage="50mcg", Frequency="Morning before food", Doctor="Dr. Emma Davis", Status="Active"},
+        new() { Medication="Ibuprofen", Dosage="400mg", Frequency="As needed", Doctor="Dr. Robert Wilson", Status="Completed"},
+        new() { Medication="Sumatriptan", Dosage="50mg", Frequency="During migraine", Doctor="Dr. Michael Lee", Status="Active"},
+        new() { Medication="Ciprofloxacin", Dosage="250mg", Frequency="Twice daily", Doctor="Dr. Olivia Martinez", Status="Completed"}
+    };
+
+    void RequestRefill(Prescription p)
+    {
+        Console.WriteLine($"Refill requested for {p.Medication}");
+    }
+    void DownloadPdf(string fileName)
+{
+    Nav.NavigateTo($"/files/{fileName}", true);
+}
+}

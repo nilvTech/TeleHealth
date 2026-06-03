@@ -1,0 +1,182 @@
+@page "/admin/billing"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="billing-container">
+
+    <!-- 🔹 HEADER -->
+    <div class="header-row">
+        <h2 class="h2">Billing & Claims</h2>
+
+        <button class="btn-primary" @onclick="CreateClaim">
+            Create Claim
+        </button>
+    </div>
+
+    <!-- 🔹 SUMMARY PANEL -->
+    <div class="summary-panel">
+
+        <div class="summary-card">
+            <h6>Total Claims</h6>
+            <h4>@claimsList.Count</h4>
+        </div>
+
+        <div class="summary-card submitted">
+            <h6>Submitted</h6>
+            <h4>@claimsList.Count(c => c.Status == "Submitted")</h4>
+        </div>
+
+        <div class="summary-card paid">
+            <h6>Paid</h6>
+            <h4>@claimsList.Count(c => c.Status == "Paid")</h4>
+        </div>
+
+        <div class="summary-card rejected">
+            <h6>Rejected</h6>
+            <h4>@claimsList.Count(c => c.Status == "Rejected")</h4>
+        </div>
+
+        <div class="summary-card amount">
+            <h6>Total Revenue</h6>
+            <h4>$@claimsList.Sum(c => c.Amount)</h4>
+        </div>
+
+    </div>
+
+    <!-- 🔹 FILTER BAR -->
+    <div class="filter-bar">
+
+        <input class="search-box" placeholder="Search patient / CPT..." @bind="SearchText" />
+
+        <select @bind="SelectedStatus">
+            <option value="">All Status</option>
+            <option>Submitted</option>
+            <option>Paid</option>
+            <option>Rejected</option>
+        </select>
+
+    </div>
+
+    <!-- 🔹 CHARTS (FIXED SIZE) -->
+    <div class="charts-row">
+
+        <div class="chart-card">
+            <h4>Revenue Trend</h4>
+            <div class="chart-placeholder">📈 Chart Area</div>
+        </div>
+
+        <div class="chart-card">
+            <h4>Claim Status Distribution</h4>
+            <div class="chart-placeholder">📊 Chart Area</div>
+        </div>
+
+    </div>
+
+    <!-- 🔹 TABLE -->
+    <div class="table-card">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CPT</th>
+                    <th>Patient</th>
+                    <th>Provider</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Days</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var c in FilteredClaims)
+                {
+                    <tr>
+                        <td>#@c.Id</td>
+                        <td>@c.CPTCode</td>
+                        <td>@c.PatientName</td>
+                        <td>@c.ProviderName</td>
+                        <td>$@c.Amount</td>
+
+                        <td>
+                            <span class="status @c.Status.ToLower()">@c.Status</span>
+                        </td>
+
+                        <td>@(DateTime.Now.Subtract(c.DateOfService).Days)</td>
+
+                       
+                        <td>
+                            <div class="action-buttons">
+
+                                <button class="btn-primary" @onclick="() => ViewDetails(c)">
+                                    View
+                                </button>
+
+                                @if (c.Status == "Rejected")
+                                {
+                                    <button class="btn-secondary" @onclick="() => Resubmit(c)">
+                                        Resubmit
+                                    </button>
+                                }
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+
+    string SearchText = "";
+    string SelectedStatus = "";
+
+    public class Claim
+    {
+        public int Id { get; set; }
+        public string CPTCode { get; set; }
+        public string PatientName { get; set; }
+        public string ProviderName { get; set; }
+        public decimal Amount { get; set; }
+        public string Status { get; set; }
+        public DateTime DateOfService { get; set; }
+    }
+
+    List<Claim> claimsList = new()
+    {
+        new Claim { Id=101, CPTCode="99213", PatientName="John Doe", ProviderName="Dr. Smith", Amount=120, Status="Submitted",
+DateOfService=DateTime.Now.AddDays(-2)},
+        new Claim { Id=102, CPTCode="93000", PatientName="Jane Smith", ProviderName="Dr. Lee", Amount=200, Status="Paid",
+DateOfService=DateTime.Now.AddDays(-5)},
+        new Claim { Id=103, CPTCode="80050", PatientName="Sam Wilson", ProviderName="Dr. Ross", Amount=150, Status="Rejected",
+DateOfService=DateTime.Now.AddDays(-10)},
+        new Claim { Id=104, CPTCode="71020", PatientName="Emily Clark", ProviderName="Dr. Brown", Amount=180, Status="Paid",
+DateOfService=DateTime.Now.AddDays(-1)}
+    };
+
+    IEnumerable<Claim> FilteredClaims => claimsList
+        .Where(c =>
+            (string.IsNullOrEmpty(SearchText) ||
+             c.PatientName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+             c.CPTCode.Contains(SearchText)) &&
+            (string.IsNullOrEmpty(SelectedStatus) || c.Status == SelectedStatus)
+        );
+
+    void ViewDetails(Claim c)
+    {
+        Console.WriteLine($"Viewing claim {c.Id}");
+    }
+
+    void CreateClaim()
+    {
+        Nav.NavigateTo("/admin/claimform");
+    }
+
+    void Resubmit(Claim c)
+    {
+        c.Status = "Submitted";
+    }
+}

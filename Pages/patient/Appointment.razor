@@ -1,0 +1,267 @@
+@page "/patient/appointment"
+@layout PatientLayout
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager Nav
+
+<h2 class="page-title">Appointments</h2>
+
+<div class="appointment-container">
+
+    @if (ShowAlert)
+    {
+        <div class="success-alert">
+            ✅ Appointment confirmed successfully with
+            <b>@SelectedDoctor</b> on
+            <b>@SelectedDate.ToShortDateString()</b>
+            at
+            <b>@SelectedTime.ToString("hh\\:mm")</b>
+        </div>
+    }
+
+    <!-- BOOK SECTION -->
+    <div class="card">
+
+        <h4 class="section-title">Book Appointment</h4>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Specialty</label>
+
+                <select @bind="SelectedSpecialty" class="input">
+                    <option>Cardiology</option>
+                    <option>Dermatology</option>
+                    <option>General Physician</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Doctor</label>
+
+                <select @bind="SelectedDoctor" class="input">
+                    <option>Dr. John Smith (Cardiology)</option>
+                    <option>Dr. Emily Brown (Dermatology)</option>
+                    <option>Dr. Alex Carter (General Physician)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Date</label>
+
+                <input type="date"
+                       @bind="SelectedDate"
+                       class="input" />
+            </div>
+
+            <div class="form-group">
+                <label>Time</label>
+
+                <input type="time"
+                       @bind="SelectedTime"
+                       class="input" />
+            </div>
+
+            <div class="form-group full">
+                <label>Patient Notes</label>
+
+                <textarea @bind="PatientNotes"
+                          class="input textarea"
+                          placeholder="Describe symptoms, medical history, allergies, etc...">
+                </textarea>
+            </div>
+
+        </div>
+
+        <div class="btn-row">
+
+            <button class="btn-primary"
+                    @onclick="ConfirmAppointment">
+                Confirm Appointment
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- APPOINTMENT DETAILS -->
+    <div class="card">
+
+        <h4 class="section-title">Latest Appointment Details</h4>
+
+        <div class="details-grid">
+
+            <div>
+                <b>Doctor:</b>
+                @SelectedDoctor
+            </div>
+
+            <div>
+                <b>Specialty:</b>
+                @SelectedSpecialty
+            </div>
+
+            <div>
+                <b>Date:</b>
+                @SelectedDate.ToShortDateString()
+            </div>
+
+            <div>
+                <b>Time:</b>
+                @SelectedTime.ToString("hh\\:mm")
+            </div>
+
+        </div>
+
+        <div class="notes-box">
+            <b>Notes:</b>
+            <p>@PatientNotes</p>
+        </div>
+
+    </div>
+
+    <!-- MY APPOINTMENTS -->
+    <div class="card">
+
+        <h4 class="section-title">My Appointments</h4>
+
+        <table class="styled-table">
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Doctor</th>
+                    <th>Provider Group</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var a in MyAppointments)
+                {
+                    <tr>
+
+                        <td>@a.Date.ToShortDateString()</td>
+
+                        <td>@a.Time</td>
+
+                        <td>@a.Doctor</td>
+
+                        <td>@a.Group</td>
+
+                        <td>
+                            <span class="status @a.Status.ToLower()">
+                                @a.Status
+                            </span>
+                        </td>
+
+                        <td>
+
+                            @if (a.Status == "Upcoming")
+                            {
+                                <button class="btn-small"
+        @onclick='() => Nav.NavigateTo("/patient/videoconsultation")'>
+    Join
+</button>
+
+                                <button class="btn-small danger">
+                                    Cancel
+                                </button>
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    bool ShowAlert = false;
+
+    DateTime SelectedDate = DateTime.Today;
+
+    TimeOnly SelectedTime = TimeOnly.FromDateTime(DateTime.Now);
+
+    string SelectedDoctor = "Dr. John Smith (Cardiology)";
+
+    string SelectedSpecialty = "Cardiology";
+
+    string PatientNotes = "";
+
+    class AppointmentModel
+    {
+        public DateTime Date { get; set; }
+
+        public string Time { get; set; }
+
+        public string Doctor { get; set; }
+
+        public string Group { get; set; }
+
+        public string Status { get; set; }
+    }
+
+    List<AppointmentModel> MyAppointments = new()
+    {
+        new()
+        {
+            Date = DateTime.Today.AddDays(1),
+            Time = "10:00 AM",
+            Doctor = "Dr. John Smith",
+            Group = "Heart Care Group",
+            Status = "Upcoming"
+        },
+
+        new()
+        {
+            Date = DateTime.Today.AddDays(2),
+            Time = "12:30 PM",
+            Doctor = "Dr. Emily Brown",
+            Group = "Skin Clinic Group",
+            Status = "Upcoming"
+        },
+
+        new()
+        {
+            Date = DateTime.Today.AddDays(-2),
+            Time = "02:00 PM",
+            Doctor = "Dr. Alex Carter",
+            Group = "General Health Group",
+            Status = "Completed"
+        }
+    };
+
+    async Task ConfirmAppointment()
+    {
+        MyAppointments.Insert(0, new AppointmentModel
+        {
+            Date = SelectedDate,
+            Time = SelectedTime.ToString("hh\\:mm"),
+            Doctor = SelectedDoctor,
+            Group = "TeleHealth Medical Group",
+            Status = "Upcoming"
+        });
+
+        ShowAlert = true;
+
+        StateHasChanged();
+
+        await Task.Delay(3000);
+
+        ShowAlert = false;
+    }
+}

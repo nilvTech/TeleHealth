@@ -1,0 +1,261 @@
+@page "/provider/schedule"
+@inject NavigationManager Nav
+
+<div class="appointment-container">
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <div>
+            <h2>Schedule Appointment</h2>
+            <p class="sub-text">
+                Create and manage patient appointments
+            </p>
+        </div>
+
+        <button class="btn-back" @onclick="GoBack">
+            ← Back
+        </button>
+
+    </div>
+
+    
+
+    <!-- FORM -->
+    <div class="card">
+
+        <div class="section-title">
+            Appointment Information
+        </div>
+
+        <div class="form-grid">
+
+            <!-- Patient -->
+            <div>
+                <label>Patient</label>
+
+                <select @bind="appointment.Patient">
+                    <option value="">Select Patient</option>
+                    <option>Sarah Johnson</option>
+                    <option>John Smith</option>
+                    <option>Michael Lee</option>
+                    <option>Emily Davis</option>
+                    <option>Robert Brown</option>
+                    <option>Olivia White</option>
+                    <option>James Wilson</option>
+                </select>
+            </div>
+
+            <!-- MRN -->
+            <div>
+                <label>MRN</label>
+
+                <input placeholder="Patient MRN"
+                       @bind="appointment.MRN" />
+            </div>
+
+            <!-- Provider -->
+            <div>
+                <label>Provider</label>
+
+                <select @bind="appointment.Provider">
+                    <option>Dr. Emily Brown</option>
+                    <option>Dr. Michael Smith</option>
+                    <option>Dr. Rachel Lee</option>
+                    <option>Dr. John Wilson</option>
+                </select>
+            </div>
+
+            <!-- Date -->
+            <div>
+                <label>Date</label>
+
+                <input type="date"
+                       @bind="appointment.Date" />
+            </div>
+
+            <!-- Time -->
+            <div>
+                <label>Time</label>
+
+                <input type="time"
+                       @bind="appointment.Time" />
+            </div>
+
+            <!-- Duration -->
+            <div>
+                <label>Duration</label>
+
+                <select @bind="appointment.Duration">
+                    <option>15</option>
+                    <option>30</option>
+                    <option>45</option>
+                    <option>60</option>
+                </select>
+            </div>
+
+            <!-- Visit Type -->
+            <div>
+                <label>Visit Type</label>
+
+                <select @bind="appointment.Type">
+                    <option>Telehealth</option>
+                    <option>In-Person</option>
+                    <option>Home Visit</option>
+                    <option>Follow-Up</option>
+                </select>
+            </div>
+
+            <!-- Status -->
+            <div>
+                <label>Status</label>
+
+                <select @bind="appointment.Status">
+                    <option>Scheduled</option>
+                    <option>Pending</option>
+                    <option>Rescheduled</option>
+                    <option>Cancelled</option>
+                </select>
+            </div>
+
+            <!-- Priority -->
+            <div>
+                <label>Priority</label>
+
+                <select @bind="appointment.Priority">
+                    <option>Routine</option>
+                    <option>Urgent</option>
+                    <option>Emergency</option>
+                </select>
+            </div>
+
+            <!-- Insurance -->
+            <div>
+                <label>Insurance</label>
+
+                <input placeholder="Insurance Provider"
+                       @bind="appointment.Insurance" />
+            </div>
+
+            <!-- Department -->
+            <div>
+                <label>Department</label>
+
+                <select @bind="appointment.Department">
+                    <option>Primary Care</option>
+                    <option>Cardiology</option>
+                    <option>Endocrinology</option>
+                    <option>Pulmonology</option>
+                    <option>Neurology</option>
+                </select>
+            </div>
+
+            <!-- Room -->
+            <div>
+                <label>Room / Meeting Link</label>
+
+                <input placeholder="Room or Telehealth Link"
+                       @bind="appointment.Room" />
+            </div>
+
+            <!-- Symptoms -->
+            <div class="full-width">
+                <label>Symptoms / Chief Complaint</label>
+
+                <textarea @bind="appointment.Symptoms"
+                          placeholder="Enter symptoms or patient complaints...">
+                </textarea>
+            </div>
+
+            <!-- Reason -->
+            <div class="full-width">
+                <label>Reason for Visit</label>
+
+                <textarea @bind="appointment.Reason"
+                          placeholder="Enter visit reason and notes...">
+                </textarea>
+            </div>
+
+            <!-- Notes -->
+            <div class="full-width">
+                <label>Clinical Notes</label>
+
+                <textarea @bind="appointment.Notes"
+                          placeholder="Add provider notes...">
+                </textarea>
+            </div>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button class="btn-cancel"
+                    @onclick="GoBack">
+                Cancel
+            </button>
+
+            <button class="btn-save"
+                    @onclick="SaveAppointment">
+                Schedule Appointment
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private AppointmentModel appointment = new()
+    {
+        Date = DateOnly.FromDateTime(DateTime.Today),
+        Time = TimeOnly.FromDateTime(DateTime.Now)
+    };
+
+    private void SaveAppointment()
+    {
+        Console.WriteLine("Appointment Scheduled");
+
+        Nav.NavigateTo("/provider/appointment");
+    }
+
+    private void GoBack()
+    {
+        Nav.NavigateTo("/provider/appointment");
+    }
+
+    public class AppointmentModel
+    {
+        public string Patient { get; set; } = "";
+
+        public string MRN { get; set; } = "";
+
+        public string Provider { get; set; } = "Dr. Emily Brown";
+
+        public DateOnly Date { get; set; }
+
+        public TimeOnly Time { get; set; }
+
+        public string Duration { get; set; } = "30";
+
+        public string Type { get; set; } = "Telehealth";
+
+        public string Status { get; set; } = "Scheduled";
+
+        public string Priority { get; set; } = "Routine";
+
+        public string Insurance { get; set; } = "";
+
+        public string Department { get; set; } = "Primary Care";
+
+        public string Room { get; set; } = "";
+
+        public string Symptoms { get; set; } = "";
+
+        public string Reason { get; set; } = "";
+
+        public string Notes { get; set; } = "";
+    }
+}

@@ -1,0 +1,194 @@
+@page "/admin/patients"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="patient-container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div>
+            <h2>Patients Management</h2>
+            <p>Manage patient records, risk profiles, care plans and appointments</p>
+        </div>
+
+        <button class="btn-primary" @onclick="AddPatient">
+            + Add Patient
+        </button>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-card">
+
+        <input class="search-box"
+               placeholder="Search patient, MRN, phone..."
+               @bind="SearchText" />
+
+        <select @bind="SelectedCondition">
+            <option value="">Condition</option>
+            <option>Diabetes</option>
+            <option>Hypertension</option>
+            <option>Asthma</option>
+            <option>Cardiac</option>
+        </select>
+
+        <select @bind="SelectedRisk">
+            <option value="">Risk</option>
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+        </select>
+
+        <select @bind="SelectedInsurance">
+            <option value="">Insurance</option>
+            <option>Aetna</option>
+            <option>Blue Cross</option>
+            <option>United</option>
+            <option>Cigna</option>
+        </select>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>MRN</th>
+                    <th>Age</th>
+                    <th>Condition</th>
+                    <th>Risk</th>
+                    <th>Insurance</th>
+                    <th>Provider</th>
+                    <th>Last Visit</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var p in FilteredPatients)
+                {
+                    <tr>
+
+                        <td>
+                            <div class="patient-info">
+
+                                <div class="avatar">
+                                    @p.Name.Substring(0,1)
+                                </div>
+
+                                <div>
+                                    <div class="patient-name">@p.Name</div>
+                                    <div class="patient-email">@p.Email</div>
+                                </div>
+
+                            </div>
+                        </td>
+
+                        <td>@p.MRN</td>
+                        <td>@p.Age</td>
+                        <td>@p.Condition</td>
+
+                        <td>
+                            <span class="risk @p.Risk.ToLower()">
+                                @p.Risk
+                            </span>
+                        </td>
+
+                        <td>@p.Insurance</td>
+                        <td>@p.Provider</td>
+                        <td>@p.LastVisit</td>
+
+                        <td>
+                            <span class="status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="view-btn"
+                                    @onclick="() => ViewProfile(p.Id)">
+                                View Profile
+                            </button>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    string SearchText = "";
+    string SelectedCondition = "";
+    string SelectedRisk = "";
+    string SelectedInsurance = "";
+
+    public class Patient
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string MRN { get; set; } = "";
+        public int Age { get; set; }
+        public string Condition { get; set; } = "";
+        public string Risk { get; set; } = "";
+        public string Insurance { get; set; } = "";
+        public string Provider { get; set; } = "";
+        public string LastVisit { get; set; } = "";
+    }
+
+    List<Patient> patientList = new()
+    {
+        new() { Id=1, Name="Sarah Johnson", Email="sarah@test.com", MRN="MRN1001", Age=44, Condition="Diabetes", Risk="High", Insurance="Aetna", Provider="Dr. Michael Brown", LastVisit="Today" },
+
+        new() { Id=2, Name="John Carter", Email="john@test.com", MRN="MRN1002", Age=58, Condition="Hypertension", Risk="Medium", Insurance="Blue Cross", Provider="Dr. John Smith", LastVisit="2 days ago" },
+
+        new() { Id=3, Name="Emily Watson", Email="emily@test.com", MRN="MRN1003", Age=36, Condition="Asthma", Risk="Low", Insurance="United", Provider="Dr. Sarah Lee", LastVisit="1 week ago" },
+
+        new() { Id=4, Name="David Wilson", Email="david@test.com", MRN="MRN1004", Age=63, Condition="Cardiac", Risk="High", Insurance="Cigna", Provider="Dr. Michael Brown", LastVisit="Today" },
+
+        new() { Id=5, Name="Olivia Brown", Email="olivia@test.com", MRN="MRN1005", Age=42, Condition="Diabetes", Risk="Medium", Insurance="Aetna", Provider="Dr. Emily Clark", LastVisit="Yesterday" },
+
+        new() { Id=6, Name="James Taylor", Email="james@test.com", MRN="MRN1006", Age=50, Condition="Hypertension", Risk="High", Insurance="Blue Cross", Provider="Dr. John Smith", LastVisit="3 days ago" },
+
+        new() { Id=7, Name="Sophia Miller", Email="sophia@test.com", MRN="MRN1007", Age=29, Condition="Asthma", Risk="Low", Insurance="United", Provider="Dr. Sarah Lee", LastVisit="Today" },
+
+        new() { Id=8, Name="Daniel Thomas", Email="daniel@test.com", MRN="MRN1008", Age=67, Condition="Cardiac", Risk="High", Insurance="Cigna", Provider="Dr. Michael Brown", LastVisit="4 days ago" },
+
+        new() { Id=9, Name="Emma Anderson", Email="emma@test.com", MRN="MRN1009", Age=47, Condition="Diabetes", Risk="Medium", Insurance="Aetna", Provider="Dr. Emily Clark", LastVisit="2 weeks ago" },
+
+        new() { Id=10, Name="Michael Scott", Email="michael@test.com", MRN="MRN1010", Age=54, Condition="Hypertension", Risk="High", Insurance="Blue Cross", Provider="Dr. John Smith", LastVisit="Today" }
+    };
+
+    IEnumerable<Patient> FilteredPatients => patientList
+    .Where(p =>
+        (string.IsNullOrEmpty(SearchText) ||
+         p.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+         p.MRN.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) &&
+
+        (string.IsNullOrEmpty(SelectedCondition) || p.Condition == SelectedCondition) &&
+        (string.IsNullOrEmpty(SelectedRisk) || p.Risk == SelectedRisk) &&
+        (string.IsNullOrEmpty(SelectedInsurance) || p.Insurance == SelectedInsurance)
+    );
+
+    void ViewProfile(int id)
+    {
+        Nav.NavigateTo($"/admin/patientprofile/{id}");
+    }
+
+    void AddPatient()
+    {
+        Nav.NavigateTo("/admin/addpatient");
+    }
+}

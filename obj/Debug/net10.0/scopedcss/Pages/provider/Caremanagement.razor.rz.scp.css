@@ -1,0 +1,464 @@
+/* MAIN CONTAINER */
+.care-container[b-eo0cwba8ys] {
+    padding: 20px;
+    background: #f8fafc;
+    min-height: 100vh;
+    color: teal;
+    font-size: 14px;
+}
+
+/* HEADER */
+.header[b-eo0cwba8ys] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.header h2[b-eo0cwba8ys] {
+    margin: 0;
+    font-size: 22px;
+    color: teal;
+}
+
+/* HEADER ACTIONS */
+.header-actions[b-eo0cwba8ys] {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* DROPDOWN */
+.patient-select[b-eo0cwba8ys] {
+    min-width: 260px;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: white;
+    color: teal;
+    font-size: 14px;
+}
+
+/* BUTTONS */
+.btn-add[b-eo0cwba8ys],
+.btn-secondary[b-eo0cwba8ys],
+.btn-edit[b-eo0cwba8ys],
+.btn-save[b-eo0cwba8ys] {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-add[b-eo0cwba8ys] {
+    background: teal;
+    color: white;
+}
+
+.btn-add:hover[b-eo0cwba8ys] {
+    background: #0d9488;
+}
+
+.btn-secondary[b-eo0cwba8ys] {
+    background: #64748b;
+    color: white;
+}
+
+.btn-secondary:hover[b-eo0cwba8ys] {
+    background: #475569;
+}
+
+/* 🔥 EDIT BUTTON FIX */
+.btn-edit[b-eo0cwba8ys] {
+    background:teal;
+    color: white;
+    min-width: 90px;
+}
+
+.btn-edit:hover[b-eo0cwba8ys] {
+    background:teal;
+}
+
+/* SAVE BUTTON */
+.btn-save[b-eo0cwba8ys] {
+    background:teal;
+    color: white;
+    min-width: 90px;
+}
+
+.btn-save:hover[b-eo0cwba8ys] {
+    background: teal;
+}
+
+/* GRID */
+.care-grid[b-eo0cwba8ys] {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* PANELS */
+.left-panel[b-eo0cwba8ys],
+.right-panel[b-eo0cwba8ys] {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* CARD */
+.card[b-eo0cwba8ys] {
+    background: white;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+/* CARD HEADER */
+.card-header[b-eo0cwba8ys] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 10px;
+}
+
+.card-header h3[b-eo0cwba8ys] {
+    margin: 0;
+    color: teal;
+    font-size: 16px;
+}
+
+/* PROFILE GRID */
+.profile-grid[b-eo0cwba8ys] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* PROFILE ITEM */
+.profile-item[b-eo0cwba8ys] {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile-item label[b-eo0cwba8ys] {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.profile-item span[b-eo0cwba8ys] {
+    font-size: 14px;
+    color: teal;
+}
+
+/* EDIT FORM */
+.edit-grid[b-eo0cwba8ys] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.edit-group[b-eo0cwba8ys] {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.edit-group.full-width[b-eo0cwba8ys] {
+    grid-column: span 2;
+}
+
+.edit-group label[b-eo0cwba8ys] {
+    font-size: 13px;
+    color: teal;
+}
+
+/* INPUTS */
+.edit-group input[b-eo0cwba8ys],
+.edit-group select[b-eo0cwba8ys],
+.edit-group textarea[b-eo0cwba8ys],
+textarea[b-eo0cwba8ys],
+input[b-eo0cwba8ys],
+select[b-eo0cwba8ys] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: teal;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.edit-group textarea[b-eo0cwba8ys],
+textarea[b-eo0cwba8ys] {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* FOCUS */
+input:focus[b-eo0cwba8ys],
+select:focus[b-eo0cwba8ys],
+textarea:focus[b-eo0cwba8ys] {
+    outline: none;
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(13,148,136,0.15);
+}
+
+/* RISK */
+.risk[b-eo0cwba8ys] {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 12px;
+}
+
+/* DEVICE GRID */
+.device-grid[b-eo0cwba8ys] {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+/* DEVICE CARD */
+.device-card[b-eo0cwba8ys] {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    background: #f8fafc;
+}
+
+.device-name[b-eo0cwba8ys] {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.device-value[b-eo0cwba8ys] {
+    font-size: 18px;
+    color: teal;
+    margin-bottom: 5px;
+}
+
+.trend[b-eo0cwba8ys] {
+    font-size: 13px;
+}
+
+.trend.normal[b-eo0cwba8ys] {
+    color: #16a34a;
+}
+
+.trend.critical[b-eo0cwba8ys] {
+    color: #dc2626;
+}
+
+/* ALERTS */
+.alert[b-eo0cwba8ys] {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.alert.warning[b-eo0cwba8ys] {
+    background: #fef2f2;
+    color: #dc2626;
+    border-left: 4px solid #dc2626;
+}
+
+.alert.info[b-eo0cwba8ys] {
+    background: #ecfeff;
+    color: teal;
+    border-left: 4px solid teal;
+}
+
+/* CARE PLAN */
+.care-section[b-eo0cwba8ys] {
+    margin-bottom: 20px;
+}
+
+.care-section-title[b-eo0cwba8ys] {
+    font-size: 14px;
+    color: teal;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.care-list[b-eo0cwba8ys] {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.care-list li[b-eo0cwba8ys] {
+    margin-bottom: 8px;
+    color: teal;
+    line-height: 1.5;
+}
+
+/* VITALS */
+.vitals-grid[b-eo0cwba8ys] {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 12px;
+}
+
+.vital-box[b-eo0cwba8ys] {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.vital-label[b-eo0cwba8ys] {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.vital-value[b-eo0cwba8ys] {
+    font-size: 18px;
+    color: teal;
+}
+
+/* GOALS */
+.goal-card[b-eo0cwba8ys] {
+    margin-bottom: 14px;
+}
+
+.goal-top[b-eo0cwba8ys] {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.goal-title[b-eo0cwba8ys] {
+    color: teal;
+    font-size: 14px;
+}
+
+.goal-status[b-eo0cwba8ys] {
+    font-size: 12px;
+    color: #16a34a;
+}
+
+/* PROGRESS */
+.progress-bar[b-eo0cwba8ys] {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress[b-eo0cwba8ys] {
+    height: 100%;
+    background: teal;
+}
+
+/* TABLE */
+.table[b-eo0cwba8ys] {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th[b-eo0cwba8ys] {
+    background: #f1f5f9;
+    color: teal;
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+}
+
+.table td[b-eo0cwba8ys] {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: teal;
+    font-size: 13px;
+}
+
+/* PROVIDER REVIEW */
+.provider-review[b-eo0cwba8ys] {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.review-row[b-eo0cwba8ys] {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.review-label[b-eo0cwba8ys] {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.review-value[b-eo0cwba8ys] {
+    color: teal;
+    font-size: 13px;
+}
+
+/* EMPTY MESSAGE */
+.empty-state[b-eo0cwba8ys] {
+    padding: 40px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    color: #64748b;
+    border: 1px dashed #cbd5e1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+
+    .care-grid[b-eo0cwba8ys] {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-grid[b-eo0cwba8ys],
+    .edit-grid[b-eo0cwba8ys],
+    .device-grid[b-eo0cwba8ys],
+    .vitals-grid[b-eo0cwba8ys] {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-group.full-width[b-eo0cwba8ys] {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .header[b-eo0cwba8ys] {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-actions[b-eo0cwba8ys] {
+        width: 100%;
+    }
+
+    .patient-select[b-eo0cwba8ys] {
+        width: 100%;
+    }
+
+    .btn-add[b-eo0cwba8ys],
+    .btn-edit[b-eo0cwba8ys],
+    .btn-save[b-eo0cwba8ys],
+    .btn-secondary[b-eo0cwba8ys] {
+        width: 100%;
+    }
+}

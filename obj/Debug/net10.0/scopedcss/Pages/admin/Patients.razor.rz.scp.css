@@ -1,0 +1,328 @@
+/* =========================================
+   PAGE
+========================================= */
+
+.patient-container[b-aoz9xuff22] {
+    padding: 24px;
+    background: #f5f9fb;
+    min-height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    color: teal;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header[b-aoz9xuff22] {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 20px;
+}
+
+.page-header h2[b-aoz9xuff22] {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: teal;
+}
+
+.page-header p[b-aoz9xuff22] {
+    margin-top: 6px;
+    color: #7b8f8f;
+    font-size: 14px;
+}
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn-primary[b-aoz9xuff22] {
+    background: teal;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-primary:hover[b-aoz9xuff22] {
+    background: #0f766e;
+}
+
+/* =========================================
+   FILTER BAR
+========================================= */
+
+.filter-card[b-aoz9xuff22] {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.search-box[b-aoz9xuff22],
+.filter-card select[b-aoz9xuff22] {
+    height: 46px;
+    border: 1px solid #d6ebeb;
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 14px;
+    background: white;
+    color: teal;
+    outline: none;
+}
+
+.search-box[b-aoz9xuff22] {
+    width: 280px;
+}
+
+.search-box:focus[b-aoz9xuff22],
+.filter-card select:focus[b-aoz9xuff22] {
+    border-color: teal;
+    box-shadow: 0 0 0 3px rgba(0,128,128,0.12);
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-card[b-aoz9xuff22] {
+    background: white;
+    border: 1px solid #dceeee;
+    border-radius: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+/* IMPORTANT */
+
+table[b-aoz9xuff22] {
+    width: 100%;
+    min-width: 1450px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* HEADER */
+
+thead[b-aoz9xuff22] {
+    background: #f7fbfb;
+}
+
+th[b-aoz9xuff22] {
+    padding: 18px 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b8b8b;
+    border-bottom: 1px solid #dceeee;
+    white-space: nowrap;
+}
+
+/* BODY */
+
+td[b-aoz9xuff22] {
+    padding: 18px 16px;
+    border-bottom: 1px solid #edf7f7;
+    font-size: 14px;
+    color: teal;
+    vertical-align: middle;
+}
+
+/* ROW HOVER */
+
+tbody tr[b-aoz9xuff22] {
+    transition: 0.2s;
+}
+
+tbody tr:hover[b-aoz9xuff22] {
+    background: #f9fdfd;
+}
+
+/* =========================================
+   COLUMN WIDTHS
+========================================= */
+
+th:nth-child(1)[b-aoz9xuff22],
+td:nth-child(1)[b-aoz9xuff22] {
+    width: 280px;
+}
+
+th:nth-child(2)[b-aoz9xuff22],
+td:nth-child(2)[b-aoz9xuff22] {
+    width: 120px;
+}
+
+th:nth-child(3)[b-aoz9xuff22],
+td:nth-child(3)[b-aoz9xuff22] {
+    width: 80px;
+}
+
+th:nth-child(4)[b-aoz9xuff22],
+td:nth-child(4)[b-aoz9xuff22] {
+    width: 160px;
+}
+
+th:nth-child(5)[b-aoz9xuff22],
+td:nth-child(5)[b-aoz9xuff22] {
+    width: 120px;
+}
+
+th:nth-child(6)[b-aoz9xuff22],
+td:nth-child(6)[b-aoz9xuff22] {
+    width: 150px;
+}
+
+th:nth-child(7)[b-aoz9xuff22],
+td:nth-child(7)[b-aoz9xuff22] {
+    width: 190px;
+}
+
+th:nth-child(8)[b-aoz9xuff22],
+td:nth-child(8)[b-aoz9xuff22] {
+    width: 140px;
+}
+
+th:nth-child(9)[b-aoz9xuff22],
+td:nth-child(9)[b-aoz9xuff22] {
+    width: 120px;
+}
+
+th:nth-child(10)[b-aoz9xuff22],
+td:nth-child(10)[b-aoz9xuff22] {
+    width: 160px;
+}
+
+/* =========================================
+   PATIENT CELL
+========================================= */
+
+.patient-info[b-aoz9xuff22] {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar[b-aoz9xuff22] {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    border-radius: 50%;
+    background: teal;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.patient-name[b-aoz9xuff22] {
+    font-size: 14px;
+    font-weight: 700;
+    color: teal;
+    line-height: 1.2;
+}
+
+.patient-email[b-aoz9xuff22] {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #7f9a9a;
+    word-break: break-word;
+}
+
+/* =========================================
+   BADGES
+========================================= */
+
+.risk[b-aoz9xuff22],
+.status[b-aoz9xuff22] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    min-width: 90px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0 14px;
+}
+
+/* RISK */
+
+.risk.high[b-aoz9xuff22] {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.risk.medium[b-aoz9xuff22] {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.risk.low[b-aoz9xuff22] {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* STATUS */
+
+.status.active[b-aoz9xuff22] {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* =========================================
+   ACTION BUTTON
+========================================= */
+
+.view-btn[b-aoz9xuff22] {
+    height: 40px;
+    border: 1px solid #cfe7e7;
+    background: #f2fbfb;
+    color: teal;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;
+}
+
+.view-btn:hover[b-aoz9xuff22] {
+    background: teal;
+    color: white;
+    border-color: teal;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px) {
+
+    .page-header[b-aoz9xuff22] {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .filter-card[b-aoz9xuff22] {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box[b-aoz9xuff22],
+    .filter-card select[b-aoz9xuff22],
+    .btn-primary[b-aoz9xuff22] {
+        width: 100%;
+    }
+}

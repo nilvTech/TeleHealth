@@ -1,0 +1,780 @@
+@page "/admin/providerprofile/{Id:int}"
+@layout AdminLayout
+@inject NavigationManager Nav
+
+<div class="profile-container">
+
+    <!-- HEADER -->
+    <div class="profile-header">
+
+        <div class="header-left">
+
+            <div class="avatar-lg">
+                @Provider.Name.Substring(0,2).ToUpper()
+            </div>
+
+            <div>
+                <h2>@Provider.Name</h2>
+
+                <div class="provider-meta">
+                    <span>@Provider.Specialty</span>
+                    <span>•</span>
+                    <span>@Provider.ExperienceYears Years Experience</span>
+                    <span>•</span>
+                    <span>@Provider.Location</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            @if (!IsEditMode)
+            {
+                <button class="btn-primary"
+                        @onclick="EnableEdit">
+                    Edit Profile
+                </button>
+            }
+            else
+            {
+                <button class="btn-success"
+                        @onclick="SaveProfile">
+                    Save
+                </button>
+
+                <button class="btn-secondary"
+                        @onclick="CancelEdit">
+                    Cancel
+                </button>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+
+        <div class="kpi-card">
+            <span>Total Patients</span>
+            <h3>@Provider.TotalPatients</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>Appointments</span>
+            <h3>@Provider.TotalAppointments</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>Consultation Fee</span>
+            <h3>$@Provider.ConsultationFee</h3>
+        </div>
+
+        <div class="kpi-card">
+            <span>Rating</span>
+            <h3>@Provider.Rating ⭐</h3>
+        </div>
+
+    </div>
+
+    <!-- PROFILE DETAILS -->
+    <div class="profile-grid">
+
+        <!-- LEFT -->
+        <div class="card">
+
+            <h3>Provider Information</h3>
+
+            <div class="details-grid">
+
+                <div class="field">
+                    <label>Full Name</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="Provider.Name" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Name</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Email</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="Provider.Email" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Email</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Phone</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="Provider.Phone" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Phone</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Specialty</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="Provider.Specialty" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Specialty</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Experience</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input type="number"
+                               @bind="Provider.ExperienceYears" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.ExperienceYears Years</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>License Status</label>
+
+                    @if (IsEditMode)
+                    {
+                        <select @bind="Provider.LicenseStatus">
+                            <option>Verified</option>
+                            <option>Pending</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.LicenseStatus</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Status</label>
+
+                    @if (IsEditMode)
+                    {
+                        <select @bind="Provider.Status">
+                            <option>Active</option>
+                            <option>Pending</option>
+                            <option>Suspended</option>
+                            <option>Rejected</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Status</div>
+                    }
+                </div>
+
+                <div class="field">
+                    <label>Timezone</label>
+
+                    @if (IsEditMode)
+                    {
+                        <input @bind="Provider.Timezone" />
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Timezone</div>
+                    }
+                </div>
+
+                <div class="field full-width">
+                    <label>Bio</label>
+
+                    @if (IsEditMode)
+                    {
+                        <textarea rows="4"
+                                  @bind="Provider.Bio"></textarea>
+                    }
+                    else
+                    {
+                        <div class="value">@Provider.Bio</div>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right-section">
+
+            <!-- ADDRESS -->
+            <div class="card">
+
+                <h3>Address Information</h3>
+
+                <div class="details-grid">
+
+                    <div class="field">
+                        <label>Address 1</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.Address1" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.Address1</div>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label>Address 2</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.Address2" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.Address2</div>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label>City</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.City" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.City</div>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label>State</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.State" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.State</div>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label>ZIP</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.Zip" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.Zip</div>
+                        }
+                    </div>
+
+                    <div class="field">
+                        <label>Country</label>
+
+                        @if (IsEditMode)
+                        {
+                            <input @bind="Provider.Country" />
+                        }
+                        else
+                        {
+                            <div class="value">@Provider.Country</div>
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EXTRA -->
+            <div class="card">
+
+                <h3>Professional Details</h3>
+
+                <div class="info-row">
+                    <span>Provider Group</span>
+                    <b>@Provider.GroupName</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Website</span>
+                    <b>@Provider.Website</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Primary Specialty</span>
+                    <b>@Provider.Specialty1</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Secondary Specialty</span>
+                    <b>@Provider.Specialty2</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Total Revenue</span>
+                    <b>$@Provider.TotalRevenue</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Completed Visits</span>
+                    <b>@Provider.CompletedVisits</b>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    bool IsEditMode = false;
+
+    ProviderModel Provider = new();
+
+    List<ProviderModel> Providers = new()
+    {
+        new() {
+            Id=1,
+            Name="Dr. John Smith",
+            Email="john@test.com",
+            Phone="(212) 555-1101",
+            Specialty="Cardiology",
+            Specialty1="Cardiology",
+            Specialty2="Internal Medicine",
+            ExperienceYears=10,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=100,
+            Location="New York",
+            Timezone="EST",
+            Address1="12 Madison Ave",
+            Address2="Suite 101",
+            City="New York",
+            State="NY",
+            Zip="10001",
+            Country="USA",
+            GroupName="Heart Care Group",
+            Website="www.johnsmithmd.com",
+            Bio="Experienced cardiologist focused on preventive cardiac care.",
+            Rating=4.8m,
+            TotalPatients=450,
+            TotalAppointments=1200,
+            CompletedVisits=980,
+            TotalRevenue=120000
+        },
+
+        new() {
+            Id=2,
+            Name="Dr. Sarah Lee",
+            Email="sarah@test.com",
+            Phone="(415) 555-2202",
+            Specialty="Dermatology",
+            Specialty1="Dermatology",
+            Specialty2="Cosmetic Dermatology",
+            ExperienceYears=6,
+            LicenseStatus="Pending",
+            Status="Pending",
+            ConsultationFee=80,
+            Location="California",
+            Timezone="PST",
+            Address1="450 Sunset Blvd",
+            Address2="Floor 2",
+            City="Los Angeles",
+            State="CA",
+            Zip="90001",
+            Country="USA",
+            GroupName="Skin Health Clinic",
+            Website="www.sarahleeclinic.com",
+            Bio="Specialized in skin care and cosmetic dermatology.",
+            Rating=4.5m,
+            TotalPatients=300,
+            TotalAppointments=760,
+            CompletedVisits=610,
+            TotalRevenue=86000
+        },
+
+        new() {
+            Id=3,
+            Name="Dr. Mike Ross",
+            Email="mike@test.com",
+            Phone="(214) 555-3303",
+            Specialty="General Medicine",
+            Specialty1="General Medicine",
+            Specialty2="Family Medicine",
+            ExperienceYears=8,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=90,
+            Location="Texas",
+            Timezone="CST",
+            Address1="78 Lake Road",
+            Address2="Building B",
+            City="Dallas",
+            State="TX",
+            Zip="75001",
+            Country="USA",
+            GroupName="Texas Care",
+            Website="www.mikerossmd.com",
+            Bio="Primary care physician focused on chronic care.",
+            Rating=4.7m,
+            TotalPatients=520,
+            TotalAppointments=1400,
+            CompletedVisits=1100,
+            TotalRevenue=145000
+        },
+
+        new() {
+            Id=4,
+            Name="Dr. Emily Clark",
+            Email="emily@test.com",
+            Phone="(212) 555-4404",
+            Specialty="Orthopedic",
+            Specialty1="Orthopedic",
+            Specialty2="Sports Medicine",
+            ExperienceYears=12,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=120,
+            Location="New York",
+            Timezone="EST",
+            Address1="220 Broadway",
+            Address2="Suite 6",
+            City="New York",
+            State="NY",
+            Zip="10002",
+            Country="USA",
+            GroupName="Bone & Joint Center",
+            Website="www.emilyclarkortho.com",
+            Bio="Orthopedic surgeon with sports injury expertise.",
+            Rating=4.9m,
+            TotalPatients=600,
+            TotalAppointments=1600,
+            CompletedVisits=1450,
+            TotalRevenue=185000
+        },
+
+        new() {
+            Id=5,
+            Name="Dr. David Kim",
+            Email="david@test.com",
+            Phone="(415) 555-5505",
+            Specialty="Cardiology",
+            Specialty1="Cardiology",
+            Specialty2="Cardiac Imaging",
+            ExperienceYears=5,
+            LicenseStatus="Pending",
+            Status="Pending",
+            ConsultationFee=85,
+            Location="California",
+            Timezone="PST",
+            Address1="900 Elm Street",
+            Address2="Floor 3",
+            City="San Diego",
+            State="CA",
+            Zip="92093",
+            Country="USA",
+            GroupName="Pacific Heart",
+            Website="www.davidkimheart.com",
+            Bio="Young cardiologist specializing in imaging diagnostics.",
+            Rating=4.3m,
+            TotalPatients=240,
+            TotalAppointments=620,
+            CompletedVisits=500,
+            TotalRevenue=70000
+        },
+
+        new() {
+            Id=6,
+            Name="Dr. Anna White",
+            Email="anna@test.com",
+            Phone="(713) 555-6606",
+            Specialty="Dermatology",
+            Specialty1="Dermatology",
+            Specialty2="Pediatric Dermatology",
+            ExperienceYears=7,
+            LicenseStatus="Verified",
+            Status="Suspended",
+            ConsultationFee=70,
+            Location="Texas",
+            Timezone="CST",
+            Address1="55 River Park",
+            Address2="",
+            City="Houston",
+            State="TX",
+            Zip="77001",
+            Country="USA",
+            GroupName="Skin Experts",
+            Website="www.annawhitederm.com",
+            Bio="Pediatric dermatology and skin allergy specialist.",
+            Rating=4.1m,
+            TotalPatients=310,
+            TotalAppointments=840,
+            CompletedVisits=700,
+            TotalRevenue=76000
+        },
+
+        new() {
+            Id=7,
+            Name="Dr. James Brown",
+            Email="james@test.com",
+            Phone="(917) 555-7707",
+            Specialty="General Medicine",
+            Specialty1="General Medicine",
+            Specialty2="Preventive Care",
+            ExperienceYears=9,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=95,
+            Location="New York",
+            Timezone="EST",
+            Address1="100 Fifth Ave",
+            Address2="Suite 5A",
+            City="New York",
+            State="NY",
+            Zip="10011",
+            Country="USA",
+            GroupName="Wellness Care",
+            Website="www.jamesbrownmd.com",
+            Bio="Focused on preventive and family medicine.",
+            Rating=4.6m,
+            TotalPatients=480,
+            TotalAppointments=1320,
+            CompletedVisits=1040,
+            TotalRevenue=128000
+        },
+
+        new() {
+            Id=8,
+            Name="Dr. Olivia Green",
+            Email="olivia@test.com",
+            Phone="(310) 555-8808",
+            Specialty="Orthopedic",
+            Specialty1="Orthopedic",
+            Specialty2="Joint Replacement",
+            ExperienceYears=11,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=110,
+            Location="California",
+            Timezone="PST",
+            Address1="890 Ocean Ave",
+            Address2="",
+            City="Los Angeles",
+            State="CA",
+            Zip="90012",
+            Country="USA",
+            GroupName="Advanced Ortho",
+            Website="www.oliviagreenortho.com",
+            Bio="Joint replacement and orthopedic care specialist.",
+            Rating=4.8m,
+            TotalPatients=560,
+            TotalAppointments=1500,
+            CompletedVisits=1380,
+            TotalRevenue=172000
+        },
+
+        new() {
+            Id=9,
+            Name="Dr. Robert King",
+            Email="robert@test.com",
+            Phone="(214) 555-9909",
+            Specialty="Cardiology",
+            Specialty1="Cardiology",
+            Specialty2="Heart Failure",
+            ExperienceYears=15,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=130,
+            Location="Texas",
+            Timezone="CST",
+            Address1="66 Heart Lane",
+            Address2="Suite 10",
+            City="Austin",
+            State="TX",
+            Zip="73301",
+            Country="USA",
+            GroupName="Advanced Heart Institute",
+            Website="www.robertkingheart.com",
+            Bio="Senior cardiologist with advanced heart failure expertise.",
+            Rating=4.9m,
+            TotalPatients=720,
+            TotalAppointments=2100,
+            CompletedVisits=1800,
+            TotalRevenue=245000
+        },
+
+        new() {
+            Id=10,
+            Name="Dr. Sophia Adams",
+            Email="sophia@test.com",
+            Phone="(917) 555-1010",
+            Specialty="Dermatology",
+            Specialty1="Dermatology",
+            Specialty2="Clinical Dermatology",
+            ExperienceYears=4,
+            LicenseStatus="Pending",
+            Status="Pending",
+            ConsultationFee=75,
+            Location="New York",
+            Timezone="EST",
+            Address1="12 Central Park",
+            Address2="",
+            City="New York",
+            State="NY",
+            Zip="10019",
+            Country="USA",
+            GroupName="NY Skin Care",
+            Website="www.sophiaadamsderm.com",
+            Bio="Clinical dermatologist focused on acne and eczema.",
+            Rating=4.2m,
+            TotalPatients=220,
+            TotalAppointments=500,
+            CompletedVisits=430,
+            TotalRevenue=62000
+        },
+
+        new() {
+            Id=11,
+            Name="Dr. Michael Brown",
+            Email="michaelbrown@test.com",
+            Phone="(646) 555-2020",
+            Specialty="Internal Medicine",
+            Specialty1="Internal Medicine",
+            Specialty2="Chronic Care",
+            ExperienceYears=14,
+            LicenseStatus="Verified",
+            Status="Active",
+            ConsultationFee=140,
+            Location="New York",
+            Timezone="EST",
+            Address1="88 Lexington Ave",
+            Address2="Suite 9",
+            City="New York",
+            State="NY",
+            Zip="10016",
+            Country="USA",
+            GroupName="Prime Internal Care",
+            Website="www.michaelbrownmd.com",
+            Bio="Senior physician focused on chronic disease management and telehealth.",
+            Rating=4.9m,
+            TotalPatients=810,
+            TotalAppointments=2400,
+            CompletedVisits=2050,
+            TotalRevenue=295000
+        }
+    };
+
+    protected override void OnInitialized()
+    {
+        var data = Providers.FirstOrDefault(x => x.Id == Id);
+
+        if (data != null)
+        {
+            Provider = data;
+        }
+    }
+
+    void EnableEdit()
+    {
+        IsEditMode = true;
+    }
+
+    void SaveProfile()
+    {
+        IsEditMode = false;
+    }
+
+    void CancelEdit()
+    {
+        IsEditMode = false;
+    }
+
+    public class ProviderModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; } = "";
+
+        public string Email { get; set; } = "";
+
+        public string Phone { get; set; } = "";
+
+        public string Website { get; set; } = "";
+
+        public string Bio { get; set; } = "";
+
+        public string GroupName { get; set; } = "";
+
+        public string Specialty { get; set; } = "";
+
+        public string Specialty1 { get; set; } = "";
+
+        public string Specialty2 { get; set; } = "";
+
+        public int ExperienceYears { get; set; }
+
+        public string LicenseStatus { get; set; } = "";
+
+        public string Status { get; set; } = "";
+
+        public decimal ConsultationFee { get; set; }
+
+        public string Timezone { get; set; } = "";
+
+        public string Address1 { get; set; } = "";
+
+        public string Address2 { get; set; } = "";
+
+        public string City { get; set; } = "";
+
+        public string State { get; set; } = "";
+
+        public string Zip { get; set; } = "";
+
+        public string Country { get; set; } = "";
+
+        public string Location { get; set; } = "";
+
+        public decimal Rating { get; set; }
+
+        public int TotalPatients { get; set; }
+
+        public int TotalAppointments { get; set; }
+
+        public int CompletedVisits { get; set; }
+
+        public decimal TotalRevenue { get; set; }
+    }
+}

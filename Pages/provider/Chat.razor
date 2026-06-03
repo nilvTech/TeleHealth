@@ -1,0 +1,501 @@
+@* ProviderMessages.razor *@
+@page "/provider/chat"
+@layout ProviderLayout
+
+<h2 class="page-title">Provider Communication Center</h2>
+
+<div class="message-container">
+
+    <!-- HEADER -->
+    <div class="message-header">
+
+        <div>
+            <h3>Messages</h3>
+        </div>
+
+        <button class="btn-compose" @onclick="OpenCompose">
+            + New Message
+        </button>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+
+        <div class="stat-card">
+            <h5>Total Messages</h5>
+            <h3>@FilteredMessages.Count()</h3>
+        </div>
+
+        <div class="stat-card">
+            <h5>Unread</h5>
+            <h3>@Messages.Count(x => !x.IsRead)</h3>
+        </div>
+
+        <div class="stat-card">
+            <h5>Archived</h5>
+            <h3>@Messages.Count(x => x.Type == "Archived")</h3>
+        </div>
+
+        <div class="stat-card">
+            <h5>Sent</h5>
+            <h3>@Messages.Count(x => x.Type == "Sent")</h3>
+        </div>
+
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="message-grid">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar-card">
+
+            <div class="@GetSidebarClass("Inbox")"
+                 @onclick='() => ChangeFolder("Inbox")'>
+                Inbox
+                <span>@Messages.Count(x => x.Type=="Inbox")</span>
+            </div>
+
+            <div class="@GetSidebarClass("Sent")"
+                 @onclick='() => ChangeFolder("Sent")'>
+                Sent
+                <span>@Messages.Count(x => x.Type=="Sent")</span>
+            </div>
+
+            <div class="@GetSidebarClass("Draft")"
+                 @onclick='() => ChangeFolder("Draft")'>
+                Drafts
+                <span>@Messages.Count(x => x.Type=="Draft")</span>
+            </div>
+
+            <div class="@GetSidebarClass("Archived")"
+                 @onclick='() => ChangeFolder("Archived")'>
+                Archived
+                <span>@Messages.Count(x => x.Type=="Archived")</span>
+            </div>
+
+        </div>
+
+        <!-- MESSAGE LIST -->
+        <div class="messages-card">
+
+            <div class="toolbar">
+
+                <input class="search-box"
+                       placeholder="Search messages..."
+                       @bind="SearchText" />
+
+                <select class="filter-select"
+                        @bind="SelectedFilter">
+
+                    <option value="All">All Messages</option>
+                    <option value="Unread">Unread</option>
+                    <option value="Read">Read</option>
+
+                </select>
+
+            </div>
+
+            <div class="message-list">
+
+                @foreach (var msg in FilteredMessages)
+                {
+                    <div class="message-item @(SelectedMessage == msg ? "selected" : "")"
+                         @onclick="() => OpenMessage(msg)">
+
+                        <div class="message-role @GetRoleClass(msg.Category)">
+                            @msg.Category
+                        </div>
+
+                        <div class="message-top">
+
+                            <div>
+                                <h4>@msg.Sender</h4>
+                                <p>@msg.Subject</p>
+                            </div>
+
+                            <div class="message-right">
+
+                                <span class="time">@msg.Time</span>
+
+                                @if (!msg.IsRead)
+                                {
+                                    <span class="unread-dot"></span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                        <div class="message-preview">
+                            @msg.Preview
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <!-- DETAILS -->
+        <div class="details-card">
+
+            @if (IsCompose)
+            {
+                <div>
+
+                    <h3 class="compose-title">Compose Message</h3>
+
+                    <div class="compose-form">
+
+                        <input class="compose-input"
+                               placeholder="Recipient Name"
+                               @bind="ComposeReceiver" />
+<br>
+                        <select class="filter-select"
+                                @bind="ComposeCategory">
+
+                            <option>Provider</option>
+                            <option>Patient</option>
+                            <option>Admin</option>
+
+                        </select>
+<br>
+                        <input class="compose-input"
+                               placeholder="Subject"
+                               @bind="ComposeSubject" />
+
+                        <textarea class="reply-box"
+                                  placeholder="Type your message..."
+                                  @bind="ComposeBody"></textarea>
+
+                        <div class="reply-actions">
+
+                            <button class="btn-secondary"
+                                    @onclick="CancelCompose">
+                                Cancel
+                            </button>
+
+                            <button class="btn-primary"
+                                    @onclick="SendNewMessage">
+                                Send Message
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+            else if (SelectedMessage != null)
+            {
+                <div>
+
+                    <div class="details-header">
+
+                        <div>
+                            <h3>@SelectedMessage.Subject</h3>
+                            <p>@SelectedMessage.Sender</p>
+                        </div>
+
+                        <span class="message-date">
+                            @SelectedMessage.Date
+                        </span>
+
+                    </div>
+
+                    <div class="message-body">
+                        @SelectedMessage.Content
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="message-actions">
+
+                        <button class="btn-secondary"
+                                @onclick="ToggleRead">
+
+                            @(SelectedMessage.IsRead ? "Mark Unread" : "Mark Read")
+
+                        </button>
+
+                        <button class="btn-secondary"
+                                @onclick="ArchiveMessage">
+                            Archive
+                        </button>
+
+                        <button class="btn-secondary"
+                                @onclick="DeleteMessage">
+                            Delete
+                        </button>
+
+                    </div>
+
+                    <!-- REPLY -->
+                    <div class="reply-section">
+
+                        <textarea class="reply-box"
+                                  placeholder="Type reply..."
+                                  @bind="ReplyText"></textarea>
+
+                        <div class="reply-actions">
+
+                            <button class="btn-primary"
+                                    @onclick="SendReply">
+                                Send Reply
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-state">
+                    No Message Selected
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    string CurrentFolder = "Inbox";
+
+    string SearchText = "";
+
+    string SelectedFilter = "All";
+
+    bool IsCompose = false;
+
+    string ComposeReceiver = "";
+
+    string ComposeCategory = "Provider";
+
+    string ComposeSubject = "";
+
+    string ComposeBody = "";
+
+    string ReplyText = "";
+
+    MessageModel? SelectedMessage;
+
+    class MessageModel
+    {
+        public string Sender { get; set; } = "";
+        public string Category { get; set; } = "";
+        public string Subject { get; set; } = "";
+        public string Preview { get; set; } = "";
+        public string Content { get; set; } = "";
+        public string Time { get; set; } = "";
+        public string Date { get; set; } = "";
+        public bool IsRead { get; set; }
+        public string Type { get; set; } = "";
+    }
+
+    List<MessageModel> Messages = new()
+    {
+        new()
+        {
+            Sender="Admin Team",
+            Category="Admin",
+            Subject="System Maintenance Notice",
+            Preview="Portal maintenance scheduled tonight...",
+            Content="The provider portal will undergo maintenance tonight from 11 PM to 1 AM.",
+            Time="09:30 AM",
+            Date="Today",
+            IsRead=false,
+            Type="Inbox"
+        },
+
+        new()
+        {
+            Sender="Dr. Emily Brown",
+            Category="Provider",
+            Subject="Cardiology Referral",
+            Preview="Please review patient referral...",
+            Content="Can you review the cardiology referral for Sarah Johnson before tomorrow?",
+            Time="Yesterday",
+            Date="May 10",
+            IsRead=true,
+            Type="Inbox"
+        },
+
+        new()
+        {
+            Sender="Sarah Johnson",
+            Category="Patient",
+            Subject="Medication Question",
+            Preview="Can I continue my medication...",
+            Content="Doctor, should I continue my BP medication after the latest readings?",
+            Time="May 9",
+            Date="May 9",
+            IsRead=false,
+            Type="Inbox"
+        },
+
+        new()
+        {
+            Sender="Michael Brown",
+            Category="Patient",
+            Subject="Appointment Reschedule",
+            Preview="Need to reschedule my appointment...",
+            Content="I would like to reschedule my follow-up appointment to next week.",
+            Time="May 8",
+            Date="May 8",
+            IsRead=true,
+            Type="Archived"
+        },
+
+        new()
+        {
+            Sender="Dr. Robert Wilson",
+            Category="Provider",
+            Subject="Lab Results Discussion",
+            Preview="Let's discuss the recent reports...",
+            Content="Please check the uploaded reports before today's meeting.",
+            Time="May 7",
+            Date="May 7",
+            IsRead=true,
+            Type="Sent"
+        },
+
+        new()
+        {
+            Sender="Admin Billing",
+            Category="Admin",
+            Subject="Pending Claim Approval",
+            Preview="Claims require provider review...",
+            Content="Please review the pending RPM billing claims before Friday.",
+            Time="11:20 AM",
+            Date="Today",
+            IsRead=false,
+            Type="Inbox"
+        }
+    };
+
+    IEnumerable<MessageModel> FilteredMessages =>
+        Messages
+        .Where(x => x.Type == CurrentFolder)
+        .Where(x =>
+            string.IsNullOrWhiteSpace(SearchText) ||
+            x.Subject.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+            x.Sender.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+        .Where(x =>
+            SelectedFilter == "All" ||
+            (SelectedFilter == "Unread" && !x.IsRead) ||
+            (SelectedFilter == "Read" && x.IsRead));
+
+    protected override void OnInitialized()
+    {
+        SelectedMessage = Messages.FirstOrDefault();
+    }
+
+    void OpenMessage(MessageModel msg)
+    {
+        IsCompose = false;
+        SelectedMessage = msg;
+        msg.IsRead = true;
+    }
+
+    void ChangeFolder(string folder)
+    {
+        CurrentFolder = folder;
+        SelectedMessage = FilteredMessages.FirstOrDefault();
+    }
+
+    string GetSidebarClass(string folder)
+    {
+        return CurrentFolder == folder
+            ? "sidebar-menu active"
+            : "sidebar-menu";
+    }
+
+    string GetRoleClass(string role)
+    {
+        return role switch
+        {
+            "Admin" => "admin-role",
+            "Provider" => "provider-role",
+            "Patient" => "patient-role",
+            _ => ""
+        };
+    }
+
+    void OpenCompose()
+    {
+        IsCompose = true;
+        SelectedMessage = null;
+    }
+
+    void CancelCompose()
+    {
+        IsCompose = false;
+    }
+
+    void SendNewMessage()
+    {
+        Messages.Insert(0, new MessageModel
+        {
+            Sender = ComposeReceiver,
+            Category = ComposeCategory,
+            Subject = ComposeSubject,
+            Preview = ComposeBody.Length > 50
+                ? ComposeBody.Substring(0, 50) + "..."
+                : ComposeBody,
+            Content = ComposeBody,
+            Time = DateTime.Now.ToShortTimeString(),
+            Date = DateTime.Today.ToShortDateString(),
+            IsRead = true,
+            Type = "Sent"
+        });
+
+        ComposeReceiver = "";
+        ComposeSubject = "";
+        ComposeBody = "";
+
+        IsCompose = false;
+
+        CurrentFolder = "Sent";
+    }
+
+    void SendReply()
+    {
+        if (!string.IsNullOrWhiteSpace(ReplyText))
+        {
+            ReplyText = "";
+        }
+    }
+
+    void ToggleRead()
+    {
+        if (SelectedMessage != null)
+        {
+            SelectedMessage.IsRead = !SelectedMessage.IsRead;
+        }
+    }
+
+    void ArchiveMessage()
+    {
+        if (SelectedMessage != null)
+        {
+            SelectedMessage.Type = "Archived";
+            SelectedMessage = null;
+        }
+    }
+
+    void DeleteMessage()
+    {
+        if (SelectedMessage != null)
+        {
+            Messages.Remove(SelectedMessage);
+            SelectedMessage = null;
+        }
+    }
+}
