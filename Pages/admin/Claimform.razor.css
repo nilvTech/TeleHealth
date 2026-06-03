@@ -1,79 +1,241 @@
+/* =========================================
+   PAGE
+========================================= */
+
 .claim-container {
-    color: white;
+    padding: 24px;
+    background: #f5f9fb;
+    min-height: 100%;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* Cards */
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.page-header h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    color: teal;
+}
+
+.page-header p {
+    margin-top: 6px;
+    color: #7b8f8f;
+    font-size: 14px;
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
+    border: 1px solid #dceeee;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 22px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: teal;
     margin-bottom: 20px;
-    color:teal;
 }
 
-/* Grid */
-.grid {
+/* =========================================
+   FORM
+========================================= */
+
+.form-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
 }
 
-.full {
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #6b8b8b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.full-width {
     grid-column: span 3;
 }
 
-/* Inputs */
-input, select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid teal;
+.form-group input,
+.form-group select {
+    height: 46px;
+    border: 1px solid #d6ebeb;
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 14px;
 }
 
-/* Table */
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: teal;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
 }
 
-th, td {
-    border: 1px solid #1f3b5a;
-    padding: 8px;
-    white-space: nowrap;
+thead {
+    background: #f7fbfb;
 }
 
-/* Buttons */
+th {
+    padding: 16px;
+    text-align: left;
+    color: #6b8b8b;
+    font-size: 13px;
+    font-weight: 700;
+    border-bottom: 1px solid #dceeee;
+}
+
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #edf7f7;
+}
+
+td input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #d6ebeb;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+/* =========================================
+   TOTAL
+========================================= */
+
+.total-card {
+    background: #f9fdfd;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-row span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #6b8b8b;
+}
+
+.total-row strong {
+    font-size: 28px;
+    color: teal;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
 .btn-primary {
-    background: #18978F;
+    background: teal;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #0f766e;
 }
 
 .btn-secondary {
+    background: #f2fbfb;
+    color: teal;
+    border: 1px solid #cfe7e7;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
     background: teal;
     color: white;
-    padding: 6px 12px;
-    margin-top: 10px;
-    border: none;
-    cursor: pointer;
-    margin-right: auto;
-
 }
 
-/* Total */
-.total {
-    text-align: right;
-    font-size: 18px;
-}
+/* =========================================
+   ACTIONS
+========================================= */
 
-/* Actions */
 .actions {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
 }
-.h2{
-    color:teal;
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px) {
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
 }

@@ -1,12 +1,11 @@
 @page "/admin/devices"
 @layout AdminLayout
+@inject NavigationManager Nav
 
 <h2 class="page-title">Devices</h2>
 
 <div class="devices-container">
 
-    <!-- SUMMARY -->
-   
     <!-- FILTERS -->
     <div class="filter-card">
 
@@ -26,6 +25,7 @@
                     <option>Glucose Monitor</option>
                     <option>Pulse Oximeter</option>
                     <option>Weight Scale</option>
+                    <option>Temperature Monitor</option>
                 </select>
             </div>
 
@@ -62,8 +62,8 @@
                     Export
                 </button>
 
-                <button class="btn-primary">
-                    Add Device
+                <button class="btn-primary" @onclick="AddDevices">
+                     Add Device
                 </button>
 
             </div>
@@ -76,7 +76,8 @@
 
                 <tr>
                     <th>Device ID</th>
-                    <th>Device</th>
+                    <th>Device Name</th>
+                    <th>Device Type</th>
                     <th>Assigned Patient</th>
                     <th>Provider Group</th>
                     <th>Battery</th>
@@ -97,21 +98,10 @@
                         <td>@d.DeviceId</td>
 
                         <td>
-
-                            <div class="device-info">
-
-                                <div class="device-icon">
-                                    @d.Icon
-                                </div>
-
-                                <div>
-                                    <strong>@d.DeviceName</strong>
-                                    <span>@d.Type</span>
-                                </div>
-
-                            </div>
-
+                            <strong>@d.DeviceName</strong>
                         </td>
+
+                        <td>@d.Type</td>
 
                         <td>@d.Patient</td>
 
@@ -124,11 +114,9 @@
                         <td>@d.LastSync</td>
 
                         <td>
-
                             <span class="status @d.StatusClass">
                                 @d.Status
                             </span>
-
                         </td>
 
                         <td>
@@ -198,31 +186,30 @@
 
     class DeviceModel
     {
-        public string DeviceId { get; set; }
-        public string Icon { get; set; }
-        public string DeviceName { get; set; }
-        public string Type { get; set; }
-        public string Patient { get; set; }
-        public string ProviderGroup { get; set; }
-        public string Battery { get; set; }
-        public string Signal { get; set; }
-        public string LastSync { get; set; }
-        public string Status { get; set; }
-        public string StatusClass { get; set; }
+        public string DeviceId { get; set; } = "";
+        public string DeviceName { get; set; } = "";
+        public string Type { get; set; } = "";
+        public string Patient { get; set; } = "";
+        public string ProviderGroup { get; set; } = "";
+        public string Battery { get; set; } = "";
+        public string Signal { get; set; } = "";
+        public string LastSync { get; set; } = "";
+        public string Status { get; set; } = "";
+        public string StatusClass { get; set; } = "";
     }
 
     class AlertModel
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Priority { get; set; }
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Priority { get; set; } = "";
     }
 
     List<DeviceModel> Device = new()
     {
-        new() {
+        new()
+        {
             DeviceId="DEV-1001",
-            Icon="🩺",
             DeviceName="BP Monitor X2",
             Type="Blood Pressure Monitor",
             Patient="Sarah Johnson",
@@ -234,9 +221,9 @@
             StatusClass="connected"
         },
 
-        new() {
+        new()
+        {
             DeviceId="DEV-1002",
-            Icon="🩸",
             DeviceName="GlucoTrack Pro",
             Type="Glucose Monitor",
             Patient="Michael Brown",
@@ -248,9 +235,9 @@
             StatusClass="warning"
         },
 
-        new() {
+        new()
+        {
             DeviceId="DEV-1003",
-            Icon="❤️",
             DeviceName="PulseCare Sensor",
             Type="Pulse Oximeter",
             Patient="Emily Davis",
@@ -262,9 +249,9 @@
             StatusClass="offline"
         },
 
-        new() {
+        new()
+        {
             DeviceId="DEV-1004",
-            Icon="⚖️",
             DeviceName="Smart Scale Max",
             Type="Weight Scale",
             Patient="Robert Wilson",
@@ -276,9 +263,9 @@
             StatusClass="connected"
         },
 
-        new() {
+        new()
+        {
             DeviceId="DEV-1005",
-            Icon="🌡️",
             DeviceName="TempCare Plus",
             Type="Temperature Monitor",
             Patient="Lisa Anderson",
@@ -293,22 +280,29 @@
 
     List<AlertModel> Alerts = new()
     {
-        new() {
+        new()
+        {
             Title="Low Battery Warning",
             Description="12 glucose monitors are below 15% battery.",
             Priority="High"
         },
 
-        new() {
+        new()
+        {
             Title="Device Offline",
             Description="PulseCare Sensor DEV-1003 lost connection.",
             Priority="Critical"
         },
 
-        new() {
+        new()
+        {
             Title="Firmware Update Available",
             Description="86 RPM devices require software updates.",
             Priority="Medium"
         }
     };
+    void AddDevices()
+    {
+        Nav.NavigateTo("/admin/adddevice");
+    }
 }

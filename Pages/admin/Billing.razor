@@ -4,49 +4,27 @@
 
 <div class="billing-container">
 
-    <!-- 🔹 HEADER -->
+    <!-- HEADER -->
     <div class="header-row">
+
         <h2 class="h2">Billing & Claims</h2>
 
-        <button class="btn-primary" @onclick="CreateClaim">
-            Create Claim
+        <button class="btn-primary"
+                @onclick="CreateClaim">
+            + Create Claim
         </button>
-    </div>
-
-    <!-- 🔹 SUMMARY PANEL -->
-    <div class="summary-panel">
-
-        <div class="summary-card">
-            <h6>Total Claims</h6>
-            <h4>@claimsList.Count</h4>
-        </div>
-
-        <div class="summary-card submitted">
-            <h6>Submitted</h6>
-            <h4>@claimsList.Count(c => c.Status == "Submitted")</h4>
-        </div>
-
-        <div class="summary-card paid">
-            <h6>Paid</h6>
-            <h4>@claimsList.Count(c => c.Status == "Paid")</h4>
-        </div>
-
-        <div class="summary-card rejected">
-            <h6>Rejected</h6>
-            <h4>@claimsList.Count(c => c.Status == "Rejected")</h4>
-        </div>
-
-        <div class="summary-card amount">
-            <h6>Total Revenue</h6>
-            <h4>$@claimsList.Sum(c => c.Amount)</h4>
-        </div>
 
     </div>
 
-    <!-- 🔹 FILTER BAR -->
+    
+
+    <!-- FILTERS -->
+
     <div class="filter-bar">
 
-        <input class="search-box" placeholder="Search patient / CPT..." @bind="SearchText" />
+        <input class="search-box"
+               placeholder="Search Patient, MRN, CPT..."
+               @bind="SearchText" />
 
         <select @bind="SelectedStatus">
             <option value="">All Status</option>
@@ -55,76 +33,98 @@
             <option>Rejected</option>
         </select>
 
-    </div>
-
-    <!-- 🔹 CHARTS (FIXED SIZE) -->
-    <div class="charts-row">
-
-        <div class="chart-card">
-            <h4>Revenue Trend</h4>
-            <div class="chart-placeholder">📈 Chart Area</div>
-        </div>
-
-        <div class="chart-card">
-            <h4>Claim Status Distribution</h4>
-            <div class="chart-placeholder">📊 Chart Area</div>
-        </div>
+        <select @bind="SelectedPayer">
+            <option value="">All Payers</option>
+            <option>Aetna</option>
+            <option>Blue Cross</option>
+            <option>Cigna</option>
+            <option>United Healthcare</option>
+        </select>
 
     </div>
 
-    <!-- 🔹 TABLE -->
+    <!-- TABLE -->
+
     <div class="table-card">
+
         <table>
+
             <thead>
+
                 <tr>
-                    <th>ID</th>
-                    <th>CPT</th>
+                    <th>Claim ID</th>
                     <th>Patient</th>
+                    <th>MRN</th>
+                    <th>CPT</th>
+                    <th>ICD-10</th>
                     <th>Provider</th>
+                    <th>Payer</th>
+                    <th>DOS</th>
                     <th>Amount</th>
                     <th>Status</th>
-                    <th>Days</th>
-                    <th>Action</th>
+                    <th>Actions</th>
                 </tr>
+
             </thead>
 
             <tbody>
+
                 @foreach (var c in FilteredClaims)
                 {
                     <tr>
+
                         <td>#@c.Id</td>
-                        <td>@c.CPTCode</td>
+
                         <td>@c.PatientName</td>
+
+                        <td>@c.MRN</td>
+
+                        <td>@c.CPTCode</td>
+
+                        <td>@c.ICD10</td>
+
                         <td>@c.ProviderName</td>
+
+                        <td>@c.Payer</td>
+
+                        <td>@c.DateOfService.ToString("MM/dd/yyyy")</td>
+
                         <td>$@c.Amount</td>
 
                         <td>
-                            <span class="status @c.Status.ToLower()">@c.Status</span>
+                            <span class="status @c.Status.ToLower()">
+                                @c.Status
+                            </span>
                         </td>
 
-                        <td>@(DateTime.Now.Subtract(c.DateOfService).Days)</td>
-
-                       
                         <td>
+
                             <div class="action-buttons">
 
-                                <button class="btn-primary" @onclick="() => ViewDetails(c)">
+                                <button class="btn-primary"
+                                        @onclick="() => ViewDetails(c)">
                                     View
                                 </button>
 
                                 @if (c.Status == "Rejected")
                                 {
-                                    <button class="btn-secondary" @onclick="() => Resubmit(c)">
+                                    <button class="btn-secondary"
+                                            @onclick="() => Resubmit(c)">
                                         Resubmit
                                     </button>
                                 }
 
                             </div>
+
                         </td>
+
                     </tr>
                 }
+
             </tbody>
+
         </table>
+
     </div>
 
 </div>
@@ -133,46 +133,201 @@
 
     string SearchText = "";
     string SelectedStatus = "";
+    string SelectedPayer = "";
 
     public class Claim
     {
         public int Id { get; set; }
-        public string CPTCode { get; set; }
-        public string PatientName { get; set; }
-        public string ProviderName { get; set; }
+
+        public string PatientName { get; set; } = "";
+
+        public string MRN { get; set; } = "";
+
+        public string CPTCode { get; set; } = "";
+
+        public string ICD10 { get; set; } = "";
+
+        public string ProviderName { get; set; } = "";
+
+        public string Payer { get; set; } = "";
+
         public decimal Amount { get; set; }
-        public string Status { get; set; }
+
+        public string Status { get; set; } = "";
+
         public DateTime DateOfService { get; set; }
     }
 
     List<Claim> claimsList = new()
     {
-        new Claim { Id=101, CPTCode="99213", PatientName="John Doe", ProviderName="Dr. Smith", Amount=120, Status="Submitted",
-DateOfService=DateTime.Now.AddDays(-2)},
-        new Claim { Id=102, CPTCode="93000", PatientName="Jane Smith", ProviderName="Dr. Lee", Amount=200, Status="Paid",
-DateOfService=DateTime.Now.AddDays(-5)},
-        new Claim { Id=103, CPTCode="80050", PatientName="Sam Wilson", ProviderName="Dr. Ross", Amount=150, Status="Rejected",
-DateOfService=DateTime.Now.AddDays(-10)},
-        new Claim { Id=104, CPTCode="71020", PatientName="Emily Clark", ProviderName="Dr. Brown", Amount=180, Status="Paid",
-DateOfService=DateTime.Now.AddDays(-1)}
+        new()
+        {
+            Id=101,
+            PatientName="John Doe",
+            MRN="MRN1001",
+            CPTCode="99213",
+            ICD10="I10",
+            ProviderName="Dr. Michael Brown",
+            Payer="Aetna",
+            Amount=120,
+            Status="Submitted",
+            DateOfService=DateTime.Now.AddDays(-2)
+        },
+
+        new()
+        {
+            Id=102,
+            PatientName="Jane Smith",
+            MRN="MRN1002",
+            CPTCode="93000",
+            ICD10="R07.9",
+            ProviderName="Dr. Sarah Lee",
+            Payer="United Healthcare",
+            Amount=220,
+            Status="Paid",
+            DateOfService=DateTime.Now.AddDays(-4)
+        },
+
+        new()
+        {
+            Id=103,
+            PatientName="Sam Wilson",
+            MRN="MRN1003",
+            CPTCode="80050",
+            ICD10="E11.9",
+            ProviderName="Dr. John Smith",
+            Payer="Blue Cross",
+            Amount=310,
+            Status="Rejected",
+            DateOfService=DateTime.Now.AddDays(-10)
+        },
+
+        new()
+        {
+            Id=104,
+            PatientName="Emily Clark",
+            MRN="MRN1004",
+            CPTCode="71020",
+            ICD10="J45.909",
+            ProviderName="Dr. Michael Brown",
+            Payer="Cigna",
+            Amount=180,
+            Status="Paid",
+            DateOfService=DateTime.Now.AddDays(-1)
+        },
+
+        new()
+        {
+            Id=105,
+            PatientName="David Wilson",
+            MRN="MRN1005",
+            CPTCode="99457",
+            ICD10="I11.9",
+            ProviderName="Dr. Sarah Lee",
+            Payer="Aetna",
+            Amount=165,
+            Status="Submitted",
+            DateOfService=DateTime.Now.AddDays(-6)
+        },
+
+        new()
+        {
+            Id=106,
+            PatientName="Olivia Brown",
+            MRN="MRN1006",
+            CPTCode="99458",
+            ICD10="E78.5",
+            ProviderName="Dr. John Smith",
+            Payer="Blue Cross",
+            Amount=140,
+            Status="Paid",
+            DateOfService=DateTime.Now.AddDays(-8)
+        },
+
+        new()
+        {
+            Id=107,
+            PatientName="Sophia Miller",
+            MRN="MRN1007",
+            CPTCode="99490",
+            ICD10="J44.9",
+            ProviderName="Dr. Michael Brown",
+            Payer="United Healthcare",
+            Amount=250,
+            Status="Submitted",
+            DateOfService=DateTime.Now.AddDays(-3)
+        },
+
+        new()
+        {
+            Id=108,
+            PatientName="Robert Taylor",
+            MRN="MRN1008",
+            CPTCode="99439",
+            ICD10="N18.3",
+            ProviderName="Dr. Sarah Lee",
+            Payer="Cigna",
+            Amount=190,
+            Status="Rejected",
+            DateOfService=DateTime.Now.AddDays(-12)
+        },
+
+        new()
+        {
+            Id=109,
+            PatientName="Emma Anderson",
+            MRN="MRN1009",
+            CPTCode="G0511",
+            ICD10="I25.10",
+            ProviderName="Dr. John Smith",
+            Payer="Aetna",
+            Amount=285,
+            Status="Paid",
+            DateOfService=DateTime.Now.AddDays(-5)
+        },
+
+        new()
+        {
+            Id=110,
+            PatientName="Michael Scott",
+            MRN="MRN1010",
+            CPTCode="99214",
+            ICD10="E66.9",
+            ProviderName="Dr. Michael Brown",
+            Payer="Blue Cross",
+            Amount=175,
+            Status="Submitted",
+            DateOfService=DateTime.Now.AddDays(-7)
+        }
     };
 
-    IEnumerable<Claim> FilteredClaims => claimsList
-        .Where(c =>
-            (string.IsNullOrEmpty(SearchText) ||
-             c.PatientName.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-             c.CPTCode.Contains(SearchText)) &&
-            (string.IsNullOrEmpty(SelectedStatus) || c.Status == SelectedStatus)
-        );
+    IEnumerable<Claim> FilteredClaims =>
+        claimsList.Where(c =>
 
-    void ViewDetails(Claim c)
-    {
-        Console.WriteLine($"Viewing claim {c.Id}");
-    }
+            (string.IsNullOrEmpty(SearchText)
+            || c.PatientName.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+            || c.MRN.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+            || c.CPTCode.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+
+            &&
+
+            (string.IsNullOrEmpty(SelectedStatus)
+            || c.Status == SelectedStatus)
+
+            &&
+
+            (string.IsNullOrEmpty(SelectedPayer)
+            || c.Payer == SelectedPayer)
+
+        );
 
     void CreateClaim()
     {
         Nav.NavigateTo("/admin/claimform");
+    }
+
+    void ViewDetails(Claim c)
+    {
     }
 
     void Resubmit(Claim c)
