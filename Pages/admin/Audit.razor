@@ -8,14 +8,46 @@
 
     <!-- 🔹 ACTION BAR -->
     <div class="actions-bar">
-        <button class="btn-export" @onclick="ExportLogs">
-            ⬇ Export Logs
+        <button class="btn-export" @onclick="ExportExcel">
+            ⬇ Export Excel
         </button>
+
+        <button class="btn-export" @onclick="ExportPdf">
+            ⬇ Export PDF
+        </button>
+    </div>
+
+    <!-- 🔹 SUMMARY CARDS -->
+    <div class="summary-bar">
+
+        <div class="summary-card">
+            <h6>Total Logs</h6>
+            <h4>@Logs.Count</h4>
+        </div>
+
+        <div class="summary-card success">
+            <h6>Success</h6>
+            <h4>@Logs.Count(l => l.Status == "Success")</h4>
+        </div>
+
+        <div class="summary-card warning">
+            <h6>Warnings</h6>
+            <h4>@Logs.Count(l => l.Status == "Warning")</h4>
+        </div>
+
+        <div class="summary-card error">
+            <h6>Errors</h6>
+            <h4>@Logs.Count(l => l.Status == "Error")</h4>
+        </div>
+
     </div>
 
     <!-- 🔹 FILTER BAR -->
     <div class="filter-bar">
-        <input class="search-box" placeholder="Search user / action..." @bind="SearchText" />
+
+        <input class="search-box"
+               placeholder="Search user / action..."
+               @bind="SearchText" />
 
         <select @bind="SelectedModule">
             <option value="">All Modules</option>
@@ -24,11 +56,14 @@
             <option>Providers</option>
             <option>Appointments</option>
             <option>Auth</option>
+            <option>System</option>
         </select>
+
     </div>
 
     <!-- 🔹 TABLE -->
-    <div class="table-card">
+    <div class="table-card" id="auditTable">
+
         <table>
             <thead>
                 <tr>
@@ -52,7 +87,6 @@
                         <td>@log.Module</td>
                         <td>@log.Timestamp.ToString("dd MMM yyyy HH:mm")</td>
                         <td>@log.IP</td>
-
                         <td>
                             <span class="status @log.Status.ToLower()">
                                 @log.Status
@@ -62,6 +96,7 @@
                 }
             </tbody>
         </table>
+
     </div>
 
 </div>
@@ -71,7 +106,6 @@
     string SearchText = "";
     string SelectedModule = "";
 
-    // 🔹 MODEL
     class AuditLog
     {
         public string User { get; set; }
@@ -83,22 +117,20 @@
         public string Status { get; set; }
     }
 
-    // 🔹 SAMPLE REALISTIC DATA (10 ENTRIES)
     List<AuditLog> Logs = new()
     {
         new() { User="admin@hospital.com", Role="Admin", Action="Login Success", Module="Auth", Timestamp=DateTime.Now.AddMinutes(-10), IP="192.168.1.10", Status="Success" },
         new() { User="dr.smith@clinic.com", Role="Provider", Action="Updated Availability", Module="Providers", Timestamp=DateTime.Now.AddMinutes(-30), IP="192.168.1.12", Status="Success" },
         new() { User="billing@hospital.com", Role="Biller", Action="Submitted Claim", Module="Billing", Timestamp=DateTime.Now.AddHours(-1), IP="192.168.1.15", Status="Success" },
         new() { User="admin@hospital.com", Role="Admin", Action="Suspended Provider", Module="Providers", Timestamp=DateTime.Now.AddHours(-2), IP="192.168.1.10", Status="Warning" },
-        new() { User="nurse.jane@clinic.com", Role="Staff", Action="Viewed Patient Record", Module="Patients", Timestamp=DateTime.Now.AddHours(-3), IP="192.168.1.22", Status="Success" },
-        new() { User="system", Role="System", Action="Auto Logout (Timeout)", Module="Auth", Timestamp=DateTime.Now.AddHours(-4), IP="N/A", Status="Info" },
-        new() { User="admin@hospital.com", Role="Admin", Action="Changed Settings", Module="System", Timestamp=DateTime.Now.AddHours(-5), IP="192.168.1.10", Status="Success" },
+        new() { User="nurse.jane@clinic.com", Role="Staff", Action="Viewed Patient", Module="Patients", Timestamp=DateTime.Now.AddHours(-3), IP="192.168.1.22", Status="Success" },
+        new() { User="system", Role="System", Action="Auto Logout", Module="Auth", Timestamp=DateTime.Now.AddHours(-4), IP="N/A", Status="Info" },
+        new() { User="admin@hospital.com", Role="Admin", Action="Settings Updated", Module="System", Timestamp=DateTime.Now.AddHours(-5), IP="192.168.1.10", Status="Success" },
         new() { User="dr.lee@clinic.com", Role="Provider", Action="Cancelled Appointment", Module="Appointments", Timestamp=DateTime.Now.AddHours(-6), IP="192.168.1.18", Status="Warning" },
         new() { User="billing@hospital.com", Role="Biller", Action="Claim Rejected", Module="Billing", Timestamp=DateTime.Now.AddHours(-7), IP="192.168.1.15", Status="Error" },
         new() { User="admin@hospital.com", Role="Admin", Action="User Created", Module="Auth", Timestamp=DateTime.Now.AddHours(-8), IP="192.168.1.10", Status="Success" }
     };
 
-    // 🔹 FILTER
     IEnumerable<AuditLog> FilteredLogs => Logs
         .Where(l =>
             (string.IsNullOrEmpty(SearchText) ||
@@ -107,18 +139,21 @@
             (string.IsNullOrEmpty(SelectedModule) || l.Module == SelectedModule)
         );
 
-    // 🔹 EXPORT FUNCTION
-    async Task ExportLogs()
+    async Task ExportExcel()
     {
         var csv = "User,Role,Action,Module,Timestamp,IP,Status\n";
 
-        foreach (var l in Logs)
+        foreach (var l in FilteredLogs)
         {
             csv += $"{l.User},{l.Role},{l.Action},{l.Module},{l.Timestamp},{l.IP},{l.Status}\n";
         }
 
         var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
-
         await JS.InvokeVoidAsync("downloadFile", "audit_logs.csv", "text/csv", bytes);
+    }
+
+    async Task ExportPdf()
+    {
+        await JS.InvokeVoidAsync("printAuditTable", "auditTable");
     }
 }

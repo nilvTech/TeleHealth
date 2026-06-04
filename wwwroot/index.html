@@ -23,3 +23,23 @@
     <script src="_framework/blazor.webassembly.js"></script>
 
 </html>
+
+<script>
+    function downloadFile(filename, type, bytesBase64) {
+        const blob = new Blob([new Uint8Array(bytesBase64)], { type: type });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+    }
+
+    function printAuditTable(id) {
+        var content = document.getElementById(id).innerHTML;
+        var win = window.open('', '', 'width=900,height=700');
+        win.document.write('<html><head><title>Audit Report</title></head><body>');
+        win.document.write(content);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.print();
+    }
+</script>

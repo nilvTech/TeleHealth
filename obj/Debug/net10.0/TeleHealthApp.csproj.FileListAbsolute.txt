@@ -2532,6 +2532,12 @@ D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\dotnet.runtime.js.map
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat
+<<<<<<< Updated upstream
+=======
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\TeleHealthApp.cnjiqysk17.wasm
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\TeleHealthApp.honduprqoz.pdb
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\dotnet.4qp3afsvko.js
+>>>>>>> Stashed changes
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\blazor.webassembly.66stpp682q.js.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.1l4onz0xjo.wasm.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\Microsoft.AspNetCore.Components.nyb7ae3bsc.wasm.gz
@@ -2740,6 +2746,9 @@ D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\dotnet.runtime.js.map.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_CJK.tjcz0u77k5.dat.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_EFIGS.tptq2av103.dat.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\icudt_no_CJK.lfu7j35m59.dat.gz
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\TeleHealthApp.cnjiqysk17.wasm.gz
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\TeleHealthApp.honduprqoz.pdb.gz
+D:\TeleHealth-Dev\bin\Debug\net10.0\wwwroot\_framework\dotnet.4qp3afsvko.js.gz
 D:\TeleHealth-Dev\bin\Debug\net10.0\TeleHealthApp.staticwebassets.runtime.json
 D:\TeleHealth-Dev\bin\Debug\net10.0\TeleHealthApp.staticwebassets.endpoints.json
 D:\TeleHealth-Dev\bin\Debug\net10.0\TeleHealthApp.dll
@@ -3271,6 +3280,8 @@ D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\qqe8hezkn1-{0}-4d85u1mtcx-4d85u1m
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\5e43tgvr2d-{0}-bup4gfkhon-bup4gfkhon.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\4fgyn8nhs3-{0}-iag0ou56lh-iag0ou56lh.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\mdpv8u2ml0-{0}-66stpp682q-66stpp682q.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\q7jxme8x5n-{0}-qufpvzisxh-qufpvzisxh.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\tq61cctdgk-{0}-qufpvzisxh-qufpvzisxh.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\ljuw2uy6wk-{0}-1l4onz0xjo-1l4onz0xjo.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\6mhaw5krat-{0}-nyb7ae3bsc-nyb7ae3bsc.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\eyj92ttwwg-{0}-ij454jqrom-ij454jqrom.gz
@@ -3478,6 +3489,10 @@ D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\d830apaqe6-{0}-mt6vzsvx1b-mt6vzsv
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\xt38gk3wb8-{0}-tjcz0u77k5-tjcz0u77k5.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\0o762mbumw-{0}-tptq2av103-tptq2av103.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\40ref0rvpu-{0}-lfu7j35m59-lfu7j35m59.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\4ybzljspbn-{0}-cnjiqysk17-cnjiqysk17.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\7f3h59ntju-{0}-honduprqoz-honduprqoz.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\rvnjogzjmj-{0}-4qp3afsvko-4qp3afsvko.gz
+D:\TeleHealth-Dev\obj\Debug\net10.0\compressed\ffktavrjky-{0}-li4o6haiej-li4o6haiej.gz
 D:\TeleHealth-Dev\obj\Debug\net10.0\staticwebassets.build.json
 D:\TeleHealth-Dev\obj\Debug\net10.0\staticwebassets.build.json.cache
 D:\TeleHealth-Dev\obj\Debug\net10.0\staticwebassets.development.json
