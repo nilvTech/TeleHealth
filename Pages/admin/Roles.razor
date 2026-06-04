@@ -10,13 +10,9 @@
 
         <h2 class="h2">Role & Access Management</h2>
 
-        <div class="header-actions">
-
-            <button class="btn-primary" @onclick="AddRole">
-                + Add Role
-            </button>
-
-        </div>
+        <button class="btn-primary" @onclick="AddRole">
+            + Add Role
+        </button>
 
     </div>
 
@@ -39,6 +35,7 @@
             </thead>
 
             <tbody>
+
                 @foreach (var r in Role)
                 {
                     <tr>
@@ -47,34 +44,31 @@
                         <td>@r.UserCount</td>
                         <td>@r.CreatedOn</td>
                         <td>@r.UpdatedOn</td>
-
-                        <td>
-                            <span class="status">@r.Status</span>
-                        </td>
-
+                        <td><span class="status">@r.Status</span></td>
                         <td>@r.AccessLevel</td>
 
                         <td>
-                            <div class="action-buttons">
-                                <button class="btn-secondary" @onclick="() => EditRole(r)">
-                                    Edit
-                                </button>
-                            </div>
+                            <button class="btn-secondary"
+                                    @onclick="() => ToggleMatrix(r)">
+                                Edit
+                            </button>
                         </td>
                     </tr>
                 }
+
             </tbody>
 
         </table>
 
     </div>
 
-    <!-- PERMISSION MATRIX -->
-    @if (SelectedRole != null)
+    <!-- MATRIX -->
+    @if (OpenRole != null)
     {
-        <div class="matrix-card">
+        <div class="matrix-card dropdown-panel"
+             id="permissionMatrix">
 
-            <h4>Permissions - @SelectedRole.Name</h4>
+            <h4>Permissions & Privileges - @OpenRole.Name</h4>
 
             <table class="matrix-table">
 
@@ -110,9 +104,17 @@
             </table>
 
             <div class="save-bar">
-                <button class="btn-primary" @onclick="SavePermissions">
+
+                <button class="btn-primary"
+                        @onclick="() => SavePermissions(OpenRole)">
                     Save Changes
                 </button>
+
+                <button class="btn-secondary"
+                        @onclick="Close">
+                    Close
+                </button>
+
             </div>
 
         </div>
@@ -122,7 +124,36 @@
 
 @code {
 
-    RoleModel? SelectedRole;
+    RoleModel? OpenRole;
+
+    void AddRole()
+    {
+        Nav.NavigateTo("/admin/addrole");
+    }
+
+    async Task ToggleMatrix(RoleModel r)
+    {
+        OpenRole = (OpenRole == r) ? null : r;
+
+        StateHasChanged();
+
+        await Task.Delay(100);
+        await JS.InvokeVoidAsync("scrollToMatrix");
+    }
+
+    void Close()
+    {
+        OpenRole = null;
+    }
+
+    void SavePermissions(RoleModel r)
+    {
+        r.UpdatedOn = DateTime.Now.ToString("dd-MMM-yyyy");
+
+        Console.WriteLine($"Saved permissions for {r.Name}");
+
+        OpenRole = null;
+    }
 
     class RoleModel
     {
@@ -147,22 +178,6 @@
         public bool CanAudit { get; set; }
     }
 
-    void AddRole()
-    {
-        Nav.NavigateTo("/admin/addrole");
-    }
-
-    void EditRole(RoleModel r)
-    {
-        SelectedRole = r;
-    }
-
-    void SavePermissions()
-    {
-        Console.WriteLine("Permissions Updated");
-    }
-
-    
     List<RoleModel> Role = new()
     {
         new() { Name="Super Admin", Description="Full system control", UserCount=2, Status="Active", CreatedOn="01-Jan-2025", UpdatedOn="10-Apr-2026", AccessLevel="Full" },
@@ -175,13 +190,13 @@
 
     List<PermissionModel> Permissions = new()
     {
-        new() { Module="Dashboard", CanView=true, CanExport=true },
-        new() { Module="Patients", CanView=true, CanCreate=true, CanEdit=true, CanDelete=true },
-        new() { Module="Providers", CanView=true, CanEdit=true, CanApprove=true },
-        new() { Module="Appointments", CanView=true, CanCreate=true, CanEdit=true },
-        new() { Module="Billing & Claims", CanView=true, CanCreate=true, CanEdit=true, CanExport=true },
+        new() { Module="Dashboard", CanView=true, CanCreate=false, CanEdit=false, CanDelete=false, CanExport=true, CanApprove=false, CanAudit=false },
+        new() { Module="Patients", CanView=true, CanCreate=true, CanEdit=true, CanDelete=true, CanExport=true, CanApprove=true, CanAudit=false },
+        new() { Module="Providers", CanView=true, CanEdit=true, CanApprove=true, CanExport=true },
+        new() { Module="Appointments", CanView=true, CanCreate=true, CanEdit=true, CanDelete=false, CanExport=true, CanApprove=false, CanAudit=false },
+        new() { Module="Billing & Claims", CanView=true, CanCreate=true, CanEdit=true, CanExport=true, CanDelete=true, CanApprove=true, CanAudit=true },
         new() { Module="Analytics", CanView=true, CanExport=true },
-        new() { Module="Audit Logs", CanView=true, CanAudit=true },
-        new() { Module="Settings", CanView=true, CanEdit=true }
+        new() { Module="Audit Logs", CanView=true, CanAudit=true, CanExport=true },
+        new() { Module="Settings", CanView=true, CanEdit=true, CanExport=false }
     };
 }
