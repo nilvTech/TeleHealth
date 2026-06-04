@@ -5,3 +5,5 @@
 /bin/Debug/net10.0/wwwroot/_framework
 /.vs
 /obj
+bin/
+obj/
