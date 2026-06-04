@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeleHealthApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c88f4c0d3471b825c5f53a79f199dfcfe589ea54")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+848d735555eb334ec9678734296c08f0ac6e86c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeleHealthApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeleHealthApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

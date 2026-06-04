@@ -65,3 +65,12 @@
         win.print();
     };
 </script>
+
+<script>
+    window.scrollToMatrix = function () {
+        const el = document.getElementById("permissionMatrix");
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }
+</script>
