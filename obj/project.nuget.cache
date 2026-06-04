@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XC8S3bIiFfM=",
+  "dgSpecHash": "ruY3mpxetnk=",
   "success": true,
-  "projectFilePath": "D:\\TeleHealth-Dev\\TeleHealthApp.csproj",
+  "projectFilePath": "D:\\TeleHealth\\TeleHealthApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MRP\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.7\\microsoft.aspnetcore.app.internal.assets.10.0.7.nupkg.sha512",
     "C:\\Users\\MRP\\.nuget\\packages\\microsoft.aspnetcore.authorization\\10.0.2\\microsoft.aspnetcore.authorization.10.0.2.nupkg.sha512",

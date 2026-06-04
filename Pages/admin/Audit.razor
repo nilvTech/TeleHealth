@@ -2,51 +2,32 @@
 @layout AdminLayout
 @inject IJSRuntime JS
 
-<h2 class="h2">Compliance & Audit Logs</h2>
-
 <div class="audit-container">
 
-    <!-- 🔹 ACTION BAR -->
-    <div class="actions-bar">
-        <button class="btn-export" @onclick="ExportExcel">
-            ⬇ Export Excel
-        </button>
+    <!-- HEADER -->
+    <div class="header-row">
 
-        <button class="btn-export" @onclick="ExportPdf">
-            ⬇ Export PDF
-        </button>
-    </div>
+        <h2 class="h2">Compliance & Audit Logs</h2>
 
-    <!-- 🔹 SUMMARY CARDS -->
-    <div class="summary-bar">
+        <div class="action-buttons">
 
-        <div class="summary-card">
-            <h6>Total Logs</h6>
-            <h4>@Logs.Count</h4>
-        </div>
+            <button class="btn-primary" @onclick="ExportCSV">
+                ⬇ Export CSV
+            </button>
 
-        <div class="summary-card success">
-            <h6>Success</h6>
-            <h4>@Logs.Count(l => l.Status == "Success")</h4>
-        </div>
+            <button class="btn-secondary" @onclick="ExportPDF">
+                ⬇ Export PDF
+            </button>
 
-        <div class="summary-card warning">
-            <h6>Warnings</h6>
-            <h4>@Logs.Count(l => l.Status == "Warning")</h4>
-        </div>
-
-        <div class="summary-card error">
-            <h6>Errors</h6>
-            <h4>@Logs.Count(l => l.Status == "Error")</h4>
         </div>
 
     </div>
 
-    <!-- 🔹 FILTER BAR -->
+    <!-- FILTERS -->
     <div class="filter-bar">
 
         <input class="search-box"
-               placeholder="Search user / action..."
+               placeholder="Search user, action, IP..."
                @bind="SearchText" />
 
         <select @bind="SelectedModule">
@@ -61,10 +42,11 @@
 
     </div>
 
-    <!-- 🔹 TABLE -->
-    <div class="table-card" id="auditTable">
+    <!-- TABLE -->
+    <div class="table-card">
 
         <table>
+
             <thead>
                 <tr>
                     <th>User</th>
@@ -85,7 +67,7 @@
                         <td>@log.Role</td>
                         <td>@log.Action</td>
                         <td>@log.Module</td>
-                        <td>@log.Timestamp.ToString("dd MMM yyyy HH:mm")</td>
+                        <td>@log.Timestamp.ToString("MM/dd/yyyy HH:mm")</td>
                         <td>@log.IP</td>
                         <td>
                             <span class="status @log.Status.ToLower()">
@@ -95,6 +77,7 @@
                     </tr>
                 }
             </tbody>
+
         </table>
 
     </div>
@@ -123,23 +106,26 @@
         new() { User="dr.smith@clinic.com", Role="Provider", Action="Updated Availability", Module="Providers", Timestamp=DateTime.Now.AddMinutes(-30), IP="192.168.1.12", Status="Success" },
         new() { User="billing@hospital.com", Role="Biller", Action="Submitted Claim", Module="Billing", Timestamp=DateTime.Now.AddHours(-1), IP="192.168.1.15", Status="Success" },
         new() { User="admin@hospital.com", Role="Admin", Action="Suspended Provider", Module="Providers", Timestamp=DateTime.Now.AddHours(-2), IP="192.168.1.10", Status="Warning" },
-        new() { User="nurse.jane@clinic.com", Role="Staff", Action="Viewed Patient", Module="Patients", Timestamp=DateTime.Now.AddHours(-3), IP="192.168.1.22", Status="Success" },
+        new() { User="nurse.jane@clinic.com", Role="Staff", Action="Viewed Patient Record", Module="Patients", Timestamp=DateTime.Now.AddHours(-3), IP="192.168.1.22", Status="Success" },
         new() { User="system", Role="System", Action="Auto Logout", Module="Auth", Timestamp=DateTime.Now.AddHours(-4), IP="N/A", Status="Info" },
-        new() { User="admin@hospital.com", Role="Admin", Action="Settings Updated", Module="System", Timestamp=DateTime.Now.AddHours(-5), IP="192.168.1.10", Status="Success" },
-        new() { User="dr.lee@clinic.com", Role="Provider", Action="Cancelled Appointment", Module="Appointments", Timestamp=DateTime.Now.AddHours(-6), IP="192.168.1.18", Status="Warning" },
-        new() { User="billing@hospital.com", Role="Biller", Action="Claim Rejected", Module="Billing", Timestamp=DateTime.Now.AddHours(-7), IP="192.168.1.15", Status="Error" },
-        new() { User="admin@hospital.com", Role="Admin", Action="User Created", Module="Auth", Timestamp=DateTime.Now.AddHours(-8), IP="192.168.1.10", Status="Success" }
+        new() { User="admin@hospital.com", Role="Admin", Action="Changed Settings", Module="System", Timestamp=DateTime.Now.AddHours(-5), IP="192.168.1.10", Status="Success" }
     };
 
-    IEnumerable<AuditLog> FilteredLogs => Logs
-        .Where(l =>
-            (string.IsNullOrEmpty(SearchText) ||
-             l.User.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-             l.Action.Contains(SearchText, StringComparison.OrdinalIgnoreCase)) &&
-            (string.IsNullOrEmpty(SelectedModule) || l.Module == SelectedModule)
+    IEnumerable<AuditLog> FilteredLogs =>
+        Logs.Where(l =>
+            (string.IsNullOrEmpty(SearchText)
+            || l.User.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+            || l.Action.Contains(SearchText, StringComparison.OrdinalIgnoreCase)
+            || l.IP.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
+            &&
+            (string.IsNullOrEmpty(SelectedModule)
+            || l.Module == SelectedModule)
         );
 
-    async Task ExportExcel()
+    /* =========================
+       EXPORT CSV
+    ========================= */
+    async Task ExportCSV()
     {
         var csv = "User,Role,Action,Module,Timestamp,IP,Status\n";
 
@@ -149,11 +135,20 @@
         }
 
         var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
-        await JS.InvokeVoidAsync("downloadFile", "audit_logs.csv", "text/csv", bytes);
+
+        await JS.InvokeVoidAsync(
+            "downloadFile",
+            "audit_logs.csv",
+            "text/csv",
+            bytes
+        );
     }
 
-    async Task ExportPdf()
+    /* =========================
+       EXPORT PDF (simple browser print PDF)
+    ========================= */
+    async Task ExportPDF()
     {
-        await JS.InvokeVoidAsync("printAuditTable", "auditTable");
+        await JS.InvokeVoidAsync("printAuditTable");
     }
 }
