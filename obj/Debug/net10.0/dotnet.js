@@ -5,11 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "TeleHealthApp",
   "applicationEnvironment": "Development",
   "resources": {
-<<<<<<< Updated upstream
-    "hash": "sha256-JfoAb0uMKNzu4Jsc8Yi+D8zQ6/vpWm9E76ug2GNm78w=",
-=======
-    "hash": "sha256-csEflG4thcLKfX0+M5cQQFYJ96zTXWW2J69OSDhVHxM=",
->>>>>>> Stashed changes
+    "hash": "sha256-Eg4RxMzLU+SYHo9YAe0vntPbg6O5Cl2F89DnN0QwVog=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.mx9wzm9o5h.js"
@@ -1246,26 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "TeleHealthApp.wasm",
-<<<<<<< Updated upstream
-        "name": "TeleHealthApp.r5kgnfffq0.wasm",
-        "integrity": "sha256-8XJVCyNNk22LUsm/VgJsdagOJ78Yah7XsQjPDQUOPbk=",
-=======
-        "name": "TeleHealthApp.cnjiqysk17.wasm",
-        "integrity": "sha256-+BVRD6IfVbcpwskxYTIzjQsgTrI3BToObM+EwKjvwN4=",
->>>>>>> Stashed changes
+        "name": "TeleHealthApp.rf1ywn6yrs.wasm",
+        "integrity": "sha256-x/fKvDCmY6dhFEAW8nV9TlQDTssWtMgthDYmOpqvE2E=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "TeleHealthApp.pdb",
-<<<<<<< Updated upstream
-        "name": "TeleHealthApp.v9dmekpadw.pdb",
-        "integrity": "sha256-s5rfu0haOBQBr9JJHBVM60+BwI9vqccQXzfYDWOOJug=",
-=======
-        "name": "TeleHealthApp.honduprqoz.pdb",
-        "integrity": "sha256-IcuRGJfqBpR1U4sGHEXoV4Qy7YjlFGpA/KQkEwRyb4w=",
->>>>>>> Stashed changes
+        "name": "TeleHealthApp.2m7jdynwd4.pdb",
+        "integrity": "sha256-tu3788YhTx2IFnovgKpbf9NVYfECzliNGpqX6zAFoAA=",
         "cache": "force-cache"
       }
     ],

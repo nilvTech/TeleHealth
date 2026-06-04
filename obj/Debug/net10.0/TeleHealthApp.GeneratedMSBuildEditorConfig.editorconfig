@@ -17,237 +17,237 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = TeleHealthApp
 build_property.RootNamespace = TeleHealthApp
-build_property.ProjectDir = D:\TeleHealth-Dev\
+build_property.ProjectDir = D:\TeleHealth\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = false
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\TeleHealth-Dev
+build_property.MSBuildProjectDirectory = D:\TeleHealth
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/TeleHealth-Dev/App.razor]
+[D:/TeleHealth/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TeleHealth-Dev/Pages/admin/_Imports.razor]
+[D:/TeleHealth/Pages/admin/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cX0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TeleHealth-Dev/Pages/auth/_Imports.razor]
+[D:/TeleHealth/Pages/auth/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYXV0aFxfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TeleHealth-Dev/Pages/provider/_Imports.razor]
+[D:/TeleHealth/Pages/provider/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcX0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TeleHealth-Dev/_Imports.razor]
+[D:/TeleHealth/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/TeleHealth-Dev/Layout/AdminLayout.razor]
+[D:/TeleHealth/Layout/AdminLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XEFkbWluTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-3ivzwzxwor
 
-[D:/TeleHealth-Dev/Layout/LoginLayout.razor]
+[D:/TeleHealth/Layout/LoginLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XExvZ2luTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-6oovm09vnb
 
-[D:/TeleHealth-Dev/Layout/PatientLayout.razor]
+[D:/TeleHealth/Layout/PatientLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFBhdGllbnRMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-hf5ahct7ug
 
-[D:/TeleHealth-Dev/Layout/ProviderLayout.razor]
+[D:/TeleHealth/Layout/ProviderLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XFByb3ZpZGVyTGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-oz83hm4rr7
 
-[D:/TeleHealth-Dev/Pages/admin/Adddevice.razor]
+[D:/TeleHealth/Pages/admin/Adddevice.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQWRkZGV2aWNlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-nqylw7jnk4
 
-[D:/TeleHealth-Dev/Pages/admin/Addpatient.razor]
+[D:/TeleHealth/Pages/admin/Addpatient.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQWRkcGF0aWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-bp38tzsazk
 
-[D:/TeleHealth-Dev/Pages/admin/AddProvider.razor]
+[D:/TeleHealth/Pages/admin/AddProvider.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQWRkUHJvdmlkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-6i2wfeia94
 
-[D:/TeleHealth-Dev/Pages/admin/Addrole.razor]
+[D:/TeleHealth/Pages/admin/Addrole.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQWRkcm9sZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-4c6znuefd4
 
-[D:/TeleHealth-Dev/Pages/admin/Analytics.razor]
+[D:/TeleHealth/Pages/admin/Analytics.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQW5hbHl0aWNzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-81ec4dbu6k
 
-[D:/TeleHealth-Dev/Pages/admin/Audit.razor]
+[D:/TeleHealth/Pages/admin/Audit.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQXVkaXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-v9gv2nkvfq
 
-[D:/TeleHealth-Dev/Pages/admin/Billing.razor]
+[D:/TeleHealth/Pages/admin/Billing.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQmlsbGluZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-esomka1l4t
 
-[D:/TeleHealth-Dev/Pages/admin/Claimform.razor]
+[D:/TeleHealth/Pages/admin/Claimform.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cQ2xhaW1mb3JtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-ae91wfw7h7
 
-[D:/TeleHealth-Dev/Pages/admin/Dashboard.razor]
+[D:/TeleHealth/Pages/admin/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-r9ox1j4koc
 
-[D:/TeleHealth-Dev/Pages/admin/Devices.razor]
+[D:/TeleHealth/Pages/admin/Devices.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cRGV2aWNlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-czq03vi8xf
 
-[D:/TeleHealth-Dev/Pages/admin/Patientprofile.razor]
+[D:/TeleHealth/Pages/admin/Patientprofile.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUGF0aWVudHByb2ZpbGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-l6hxb8jgjc
 
-[D:/TeleHealth-Dev/Pages/admin/Patients.razor]
+[D:/TeleHealth/Pages/admin/Patients.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUGF0aWVudHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-aoz9xuff22
 
-[D:/TeleHealth-Dev/Pages/admin/Providerprofile.razor]
+[D:/TeleHealth/Pages/admin/Providerprofile.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUHJvdmlkZXJwcm9maWxlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-3jo9avs39r
 
-[D:/TeleHealth-Dev/Pages/admin/Providers.razor]
+[D:/TeleHealth/Pages/admin/Providers.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUHJvdmlkZXJzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-dplz099sfp
 
-[D:/TeleHealth-Dev/Pages/admin/Roles.razor]
+[D:/TeleHealth/Pages/admin/Roles.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUm9sZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-9928t75s4p
 
-[D:/TeleHealth-Dev/Pages/admin/Rpm.razor]
+[D:/TeleHealth/Pages/admin/Rpm.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cUnBtLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-rcaj3icv6a
 
-[D:/TeleHealth-Dev/Pages/admin/Settings.razor]
+[D:/TeleHealth/Pages/admin/Settings.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYWRtaW5cU2V0dGluZ3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ptul0274q5
 
-[D:/TeleHealth-Dev/Pages/auth/Login.razor]
+[D:/TeleHealth/Pages/auth/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcYXV0aFxMb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-pilvy6q31j
 
-[D:/TeleHealth-Dev/Pages/patient/Appointment.razor]
+[D:/TeleHealth/Pages/patient/Appointment.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxBcHBvaW50bWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-bycv3ns7q8
 
-[D:/TeleHealth-Dev/Pages/patient/Billing.razor]
+[D:/TeleHealth/Pages/patient/Billing.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxCaWxsaW5nLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-k6hc8v87vg
 
-[D:/TeleHealth-Dev/Pages/patient/Caremanagement.razor]
+[D:/TeleHealth/Pages/patient/Caremanagement.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxDYXJlbWFuYWdlbWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-4b7sgwpgx5
 
-[D:/TeleHealth-Dev/Pages/patient/Dashboard.razor]
+[D:/TeleHealth/Pages/patient/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxEYXNoYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-l3jrxrgrs2
 
-[D:/TeleHealth-Dev/Pages/patient/Message.razor]
+[D:/TeleHealth/Pages/patient/Message.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxNZXNzYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-xpqmkik0ub
 
-[D:/TeleHealth-Dev/Pages/patient/Orders.razor]
+[D:/TeleHealth/Pages/patient/Orders.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxPcmRlcnMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ltmdje2s85
 
-[D:/TeleHealth-Dev/Pages/patient/Profile.razor]
+[D:/TeleHealth/Pages/patient/Profile.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxQcm9maWxlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-tetipjyyy2
 
-[D:/TeleHealth-Dev/Pages/patient/Rpm.razor]
+[D:/TeleHealth/Pages/patient/Rpm.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxScG0ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-9gdw5ucrab
 
-[D:/TeleHealth-Dev/Pages/patient/Settings.razor]
+[D:/TeleHealth/Pages/patient/Settings.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxTZXR0aW5ncy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-i8pip5sfxh
 
-[D:/TeleHealth-Dev/Pages/patient/Videoconsultation.razor]
+[D:/TeleHealth/Pages/patient/Videoconsultation.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccGF0aWVudFxWaWRlb2NvbnN1bHRhdGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-riqe64dd9c
 
-[D:/TeleHealth-Dev/Pages/provider/Addclaim.razor]
+[D:/TeleHealth/Pages/provider/Addclaim.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQWRkY2xhaW0ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-gj5ogrugxl
 
-[D:/TeleHealth-Dev/Pages/provider/Addpatient.razor]
+[D:/TeleHealth/Pages/provider/Addpatient.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQWRkcGF0aWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-aqd9rek6xv
 
-[D:/TeleHealth-Dev/Pages/provider/Addtask.razor]
+[D:/TeleHealth/Pages/provider/Addtask.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQWRkdGFzay5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-ggyihqj4kv
 
-[D:/TeleHealth-Dev/Pages/provider/Appointment.razor]
+[D:/TeleHealth/Pages/provider/Appointment.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQXBwb2ludG1lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-hm6nre3bh7
 
-[D:/TeleHealth-Dev/Pages/provider/Billing.razor]
+[D:/TeleHealth/Pages/provider/Billing.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQmlsbGluZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-qbx6kfpdd5
 
-[D:/TeleHealth-Dev/Pages/provider/Carehome.razor]
+[D:/TeleHealth/Pages/provider/Carehome.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQ2FyZWhvbWUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-efj22ds8f7
 
-[D:/TeleHealth-Dev/Pages/provider/Caremanagement.razor]
+[D:/TeleHealth/Pages/provider/Caremanagement.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQ2FyZW1hbmFnZW1lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-eo0cwba8ys
 
-[D:/TeleHealth-Dev/Pages/provider/Chat.razor]
+[D:/TeleHealth/Pages/provider/Chat.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQ2hhdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-6suxvydyop
 
-[D:/TeleHealth-Dev/Pages/provider/Claimdetails.razor]
+[D:/TeleHealth/Pages/provider/Claimdetails.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQ2xhaW1kZXRhaWxzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-oia65fgvkw
 
-[D:/TeleHealth-Dev/Pages/provider/Createorder.razor]
+[D:/TeleHealth/Pages/provider/Createorder.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcQ3JlYXRlb3JkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ype802aed8
 
-[D:/TeleHealth-Dev/Pages/provider/Dashboard.razor]
+[D:/TeleHealth/Pages/provider/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-z1fdjfzhj9
 
-[D:/TeleHealth-Dev/Pages/provider/Orders.razor]
+[D:/TeleHealth/Pages/provider/Orders.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcT3JkZXJzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-ld69qb0ymp
 
-[D:/TeleHealth-Dev/Pages/provider/Patientlist.razor]
+[D:/TeleHealth/Pages/provider/Patientlist.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcUGF0aWVudGxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-t3g43f4rfv
 
-[D:/TeleHealth-Dev/Pages/provider/Patientprofile.razor]
+[D:/TeleHealth/Pages/provider/Patientprofile.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcUGF0aWVudHByb2ZpbGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-pifh4qofpp
 
-[D:/TeleHealth-Dev/Pages/provider/Schedule.razor]
+[D:/TeleHealth/Pages/provider/Schedule.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcU2NoZWR1bGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-n3chr8m51p
 
-[D:/TeleHealth-Dev/Pages/provider/Settings.razor]
+[D:/TeleHealth/Pages/provider/Settings.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcU2V0dGluZ3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-g2bkzv9n44
 
-[D:/TeleHealth-Dev/Pages/provider/Soapnotes.razor]
+[D:/TeleHealth/Pages/provider/Soapnotes.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcU29hcG5vdGVzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-w0dpjrojqt
 
-[D:/TeleHealth-Dev/Pages/provider/Tasks.razor]
+[D:/TeleHealth/Pages/provider/Tasks.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcVGFza3MucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ok7073eiad
 
-[D:/TeleHealth-Dev/Pages/provider/Videoconsult.razor]
+[D:/TeleHealth/Pages/provider/Videoconsult.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNccHJvdmlkZXJcVmlkZW9jb25zdWx0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-cjtdck3ad3
