@@ -1,57 +1,31 @@
-.patient-dashboard {
-    padding: 20px;
-    color: teal;
-}
-
-/* HEADER */
-.dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.avatar {
-    background: teal;
-    color: white;
-    padding: 10px;
-    border-radius: 50%;
-}
-
-.notification {
-    font-size: 18px;
-}
-
-/* GRID */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 20px;
+    gap: 18px;
 }
 
 /* CARD */
 .card {
     background: white;
-    border: 1px solid teal;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    color:teal
+    border: 1px solid #d7eeee;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
 }
 
+/* HEADINGS */
 .card h4 {
-    margin-bottom: 10px;
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: teal;
 }
 
-/* HIGHLIGHT CARD */
-.highlight {
-    background: #f5fdfc;
+/* INFO BLOCK (FIXES BLACK TEXT ISSUE) */
+.info-block p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: teal;   /* FIX: removed black/dark gray */
 }
 
 /* HEALTH GRID */
@@ -61,25 +35,25 @@
     gap: 10px;
 }
 
-.health-grid div {
-    background: #e6f7f6;
+.health-box {
+    border: 1px solid #e6f7f7;
     padding: 10px;
-    border-radius: 6px;
-    text-align: center;
+    border-radius: 10px;
+    background: #f7ffff;
 }
 
-/* TABLE */
-table {
-    width: 100%;
-    border-collapse: collapse;
+.label {
+    font-size: 13px;
+    color: #6a8f8f;
 }
 
-th, td {
-    padding: 8px;
-    border-bottom: 1px solid teal;
+.value {
+    font-size: 15px;
+    font-weight: 700;
+    color: teal;
 }
 
-/* QUICK LINKS (UPDATED SMALL LINKS) */
+/* QUICK LINKS (RESTORED ORIGINAL STYLE) */
 .quick-links {
     display: flex;
     flex-direction: column;
@@ -90,32 +64,36 @@ th, td {
     text-decoration: none;
     color: teal;
     font-size: 14px;
-    padding: 5px 0;
-    border-bottom: 1px dashed #ccc;
+    padding: 8px 0;
+    border-bottom: 1px dashed #d7eeee;
 }
 
 .quick-links a:hover {
-    color: #0f7f7a;
+    color: #067777;
 }
 
 /* NOTIFICATIONS */
-.notification-list {
-    list-style: none;
-    padding: 0;
-}
-
-.notification-list li {
-    margin-bottom: 8px;
+.notification-list div {
+    padding: 8px 0;
+    border-bottom: 1px solid #edf7f7;
+    font-size: 14px;
+    color: teal;
 }
 
 /* BUTTON */
-.btn-primary {
+.btn-add {
+    border: none;
     background: teal;
     color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 16px;
+}
+
+.btn-add:hover {
+    background: #067777;
 }
 
 /* LINK */
@@ -123,4 +101,53 @@ th, td {
     color: teal;
     font-size: 14px;
     text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* TABLE */
+.table-card {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid #d7eeee;
+    overflow-x: auto;
+}
+
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patient-table thead {
+    background: teal;
+    color: white;
+}
+
+.patient-table th {
+    padding: 14px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.patient-table td {
+    padding: 14px;
+    border-bottom: 1px solid #edf7f7;
+    font-size: 15px;
+    color: teal;
+}
+
+.patient-table tbody tr:hover {
+    background: #f7ffff;
+}
+.h2 {
+    color: teal;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }
