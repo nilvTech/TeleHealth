@@ -3,22 +3,19 @@
 @using Microsoft.AspNetCore.Components
 @inject NavigationManager Nav
 
-<h2 class="page-title">Appointments</h2>
+<div class="patient-container">
 
-<div class="appointment-container">
+    <!-- HEADER -->
+    <div class="header">
 
-    @if (ShowAlert)
-    {
-        <div class="success-alert">
-            ✅ Appointment confirmed successfully with
-            <b>@SelectedDoctor</b> on
-            <b>@SelectedDate.ToShortDateString()</b>
-            at
-            <b>@SelectedTime.ToString("hh\\:mm")</b>
+        <div>
+            <h2>Appointments</h2>
+            <div class="sub-text">Book and manage your consultations</div>
         </div>
-    }
 
-    <!-- BOOK SECTION -->
+    </div>
+
+    <!-- BOOK APPOINTMENT -->
     <div class="card">
 
         <h4 class="section-title">Book Appointment</h4>
@@ -27,7 +24,6 @@
 
             <div class="form-group">
                 <label>Specialty</label>
-
                 <select @bind="SelectedSpecialty" class="input">
                     <option>Cardiology</option>
                     <option>Dermatology</option>
@@ -37,7 +33,6 @@
 
             <div class="form-group">
                 <label>Doctor</label>
-
                 <select @bind="SelectedDoctor" class="input">
                     <option>Dr. John Smith (Cardiology)</option>
                     <option>Dr. Emily Brown (Dermatology)</option>
@@ -47,84 +42,73 @@
 
             <div class="form-group">
                 <label>Date</label>
-
-                <input type="date"
-                       @bind="SelectedDate"
-                       class="input" />
+                <input type="date" @bind="SelectedDate" class="input" />
             </div>
 
             <div class="form-group">
                 <label>Time</label>
-
-                <input type="time"
-                       @bind="SelectedTime"
-                       class="input" />
+                <input type="time" @bind="SelectedTime" class="input" />
             </div>
 
             <div class="form-group full">
                 <label>Patient Notes</label>
-
-                <textarea @bind="PatientNotes"
-                          class="input textarea"
-                          placeholder="Describe symptoms, medical history, allergies, etc...">
-                </textarea>
+                <textarea class="input textarea"
+                          @bind="PatientNotes"
+                          placeholder="Describe symptoms, allergies, history..."></textarea>
             </div>
 
         </div>
-
+<br>
         <div class="btn-row">
-
-            <button class="btn-primary"
-                    @onclick="ConfirmAppointment">
+            <button class="btn-primary" @onclick="OpenConfirmModal">
                 Confirm Appointment
             </button>
-
         </div>
 
     </div>
 
-    <!-- APPOINTMENT DETAILS -->
+    <!-- LATEST APPOINTMENT -->
     <div class="card">
 
         <h4 class="section-title">Latest Appointment Details</h4>
 
         <div class="details-grid">
 
-            <div>
-                <b>Doctor:</b>
-                @SelectedDoctor
+            <div class="detail-item">
+                <span class="label">Doctor</span>
+                <span class="value">@SelectedDoctor</span>
             </div>
 
-            <div>
-                <b>Specialty:</b>
-                @SelectedSpecialty
+            <div class="detail-item">
+                <span class="label">Specialty</span>
+                <span class="value">@SelectedSpecialty</span>
             </div>
 
-            <div>
-                <b>Date:</b>
-                @SelectedDate.ToShortDateString()
+            <div class="detail-item">
+                <span class="label">Date</span>
+                <span class="value">@SelectedDate.ToString("dd MMM yyyy")</span>
             </div>
 
-            <div>
-                <b>Time:</b>
-                @SelectedTime.ToString("hh\\:mm")
+            <div class="detail-item">
+                <span class="label">Time</span>
+                <span class="value">@SelectedTime.ToString("hh\\:mm")</span>
             </div>
 
         </div>
 
         <div class="notes-box">
-            <b>Notes:</b>
+            <span class="label">Notes</span>
             <p>@PatientNotes</p>
         </div>
 
     </div>
 
     <!-- MY APPOINTMENTS -->
-    <div class="card">
+    <div class="table-card">
 
         <h4 class="section-title">My Appointments</h4>
 
-        <table class="styled-table">
+        <table class="patient-table">
 
             <thead>
                 <tr>
@@ -138,48 +122,46 @@
             </thead>
 
             <tbody>
-
                 @foreach (var a in MyAppointments)
                 {
                     <tr>
 
-                        <td>@a.Date.ToShortDateString()</td>
-
+                        <td>@a.Date.ToString("dd MMM yyyy")</td>
                         <td>@a.Time</td>
-
-                        <td>@a.Doctor</td>
-
+                        <td class="patient-name">@a.Doctor</td>
                         <td>@a.Group</td>
 
                         <td>
-                            <span class="status @a.Status.ToLower()">
+                            <span class="status-badge @a.Status.ToLower()">
                                 @a.Status
                             </span>
                         </td>
 
                         <td>
+                            <div class="action-cell">
 
-                            @if (a.Status == "Upcoming")
-                            {
-                                <button class="btn-small"
-        @onclick='() => Nav.NavigateTo("/patient/videoconsultation")'>
-    Join
-</button>
+                                @if (a.Status == "Upcoming")
+                                {
+                                    <button class="btn-join"
+                                            @onclick="() => JoinConsult(a)">
+                                        Join
+                                    </button>
 
-                                <button class="btn-small danger">
-                                    Cancel
-                                </button>
-                            }
-                            else
-                            {
-                                <span>-</span>
-                            }
+                                    <button class="btn-cancel"
+                                            @onclick="() => CancelAppointment(a)">
+                                        Cancel
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="action-empty">-</span>
+                                }
 
+                            </div>
                         </td>
 
                     </tr>
                 }
-
             </tbody>
 
         </table>
@@ -188,30 +170,81 @@
 
 </div>
 
+<!-- MODAL -->
+@if (ShowConfirmModal)
+{
+    <div class="modal-overlay">
+
+        <div class="modal-box">
+
+            @if (!ShowSuccess)
+            {
+                <h3>Confirm Appointment</h3>
+
+                <div class="modal-content">
+
+                    <p><b>Doctor:</b> @PendingAppointment?.Doctor</p>
+                    <p><b>Specialty:</b> @SelectedSpecialty</p>
+                    <p><b>Date:</b> @PendingAppointment?.Date.ToString("dd MMM yyyy")</p>
+                    <p><b>Time:</b> @PendingAppointment?.Time</p>
+                    <p><b>Group:</b> @PendingAppointment?.Group</p>
+
+                </div>
+
+                <div class="modal-actions">
+
+                    <button class="btn-cancel" @onclick="CloseModal">
+                        Cancel
+                    </button>
+
+                    <button class="btn-join" @onclick="ConfirmFromModal">
+                        Confirm
+                    </button>
+
+                </div>
+            }
+            else
+            {
+                <div class="modal-success">
+
+                    <div class="success-icon">✅</div>
+
+                    <h3>Appointment Confirmed</h3>
+
+                    <p>
+                        Your appointment with
+                        <b>@PendingAppointment?.Doctor</b>
+                        has been booked successfully.
+                    </p>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+}
+
 @code {
 
-    bool ShowAlert = false;
+    bool ShowConfirmModal = false;
+    bool ShowSuccess = false;
+
+    AppointmentModel PendingAppointment;
 
     DateTime SelectedDate = DateTime.Today;
-
     TimeOnly SelectedTime = TimeOnly.FromDateTime(DateTime.Now);
 
     string SelectedDoctor = "Dr. John Smith (Cardiology)";
-
     string SelectedSpecialty = "Cardiology";
-
     string PatientNotes = "";
 
     class AppointmentModel
     {
         public DateTime Date { get; set; }
-
         public string Time { get; set; }
-
         public string Doctor { get; set; }
-
         public string Group { get; set; }
-
         public string Status { get; set; }
     }
 
@@ -225,7 +258,6 @@
             Group = "Heart Care Group",
             Status = "Upcoming"
         },
-
         new()
         {
             Date = DateTime.Today.AddDays(2),
@@ -234,7 +266,6 @@
             Group = "Skin Clinic Group",
             Status = "Upcoming"
         },
-
         new()
         {
             Date = DateTime.Today.AddDays(-2),
@@ -245,23 +276,50 @@
         }
     };
 
-    async Task ConfirmAppointment()
+    void OpenConfirmModal()
     {
-        MyAppointments.Insert(0, new AppointmentModel
+        PendingAppointment = new AppointmentModel
         {
             Date = SelectedDate,
             Time = SelectedTime.ToString("hh\\:mm"),
             Doctor = SelectedDoctor,
             Group = "TeleHealth Medical Group",
             Status = "Upcoming"
-        });
+        };
 
-        ShowAlert = true;
+        ShowConfirmModal = true;
+        ShowSuccess = false;
+    }
+
+    async Task ConfirmFromModal()
+    {
+        MyAppointments.Insert(0, PendingAppointment);
+
+        ShowSuccess = true;
 
         StateHasChanged();
 
-        await Task.Delay(3000);
+        await Task.Delay(1500);
 
-        ShowAlert = false;
+        ShowConfirmModal = false;
+        ShowSuccess = false;
+        PendingAppointment = null;
+    }
+
+    void CloseModal()
+    {
+        ShowConfirmModal = false;
+        ShowSuccess = false;
+        PendingAppointment = null;
+    }
+
+    private void JoinConsult(AppointmentModel a)
+    {
+        Nav.NavigateTo("/patient/videoconsultation");
+    }
+
+    private void CancelAppointment(AppointmentModel a)
+    {
+        a.Status = "Cancelled";
     }
 }

@@ -1,61 +1,66 @@
 @page "/patient/dashboard"
 @layout PatientLayout
 
-<div class="patient-dashboard">
+<div class="patient-container">
 
-    <!-- 🔹 HEADER -->
-    <div class="dashboard-header">
-        <h2>Welcome, Sarah Johnson 👋</h2>
+    <!-- HEADER -->
+    <div class="header">
+            <div class="h2">Welcome back, Sarah Johnson</div>
     </div>
 
-    <!-- 🔹 MAIN GRID -->
+    <!-- GRID -->
     <div class="dashboard-grid">
 
-        <!-- LEFT SIDE -->
-        <div class="left-panel">
+        <!-- LEFT -->
+        <div>
 
-            <!-- 🔹 UPCOMING APPOINTMENT -->
-            <div class="card highlight">
+            <!-- UPCOMING APPOINTMENT -->
+            <div class="card">
                 <h4>Upcoming Appointment</h4>
 
-                <p><b>Doctor:</b> Dr. Michael Smith (Cardiology)</p>
-                <p><b>Date:</b> 10 May 2026</p>
-                <p><b>Time:</b> 10:30 AM</p>
-                <p><b>Type:</b> Teleconsultation</p>
-                <p><b>Status:</b> Confirmed</p>
+                <div class="info-block">
+                    <p><b>Doctor:</b> Dr. Michael Smith (Cardiology)</p>
+                    <p><b>Date:</b> 10 May 2026</p>
+                    <p><b>Time:</b> 10:30 AM</p>
+                    <p><b>Type:</b> Teleconsultation</p>
+                    <p><b>Status:</b> Confirmed</p>
+                </div>
 
-                <button class="btn-primary">Join Call</button>
+                <button class="btn-add">Join Call</button>
             </div>
 
-            <!-- 🔹 HEALTH SUMMARY -->
+            <!-- HEALTH SUMMARY -->
             <div class="card">
                 <h4>Health Summary</h4>
 
                 <div class="health-grid">
-                    <div>
-                        <span>Blood Pressure</span>
-                        <strong>130/85</strong>
+
+                    <div class="health-box">
+                        <div class="label">Blood Pressure</div>
+                        <div class="value">130/85</div>
                     </div>
-                    <div>
-                        <span>Heart Rate</span>
-                        <strong>78 bpm</strong>
+
+                    <div class="health-box">
+                        <div class="label">Heart Rate</div>
+                        <div class="value">78 bpm</div>
                     </div>
-                    <div>
-                        <span>Blood Sugar</span>
-                        <strong>140 mg/dL</strong>
+
+                    <div class="health-box">
+                        <div class="label">Blood Sugar</div>
+                        <div class="value">140 mg/dL</div>
                     </div>
-                    <div>
-                        <span>BMI</span>
-                        <strong>24.5</strong>
+
+                    <div class="health-box">
+                        <div class="label">BMI</div>
+                        <div class="value">24.5</div>
                     </div>
+
                 </div>
             </div>
 
-            <!-- 🔹 RECENT VISITS -->
-            <div class="card">
-                <h4>Recent Visits</h4>
-
-                <table>
+            <!-- RECENT VISITS -->
+            <div class="table-card">
+                <table class="patient-table">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -70,7 +75,7 @@
                         {
                             <tr>
                                 <td>@v.Date</td>
-                                <td>@v.Doctor</td>
+                                <td class="patient-name">@v.Doctor</td>
                                 <td>@v.Type</td>
                                 <td>@v.Status</td>
                             </tr>
@@ -81,48 +86,48 @@
 
         </div>
 
-        <!-- RIGHT SIDE -->
-        <div class="right-panel">
+        <!-- RIGHT -->
+        <div>
 
-            <!-- 🔹 QUICK LINKS (UPDATED) -->
+            <!-- QUICK ACTIONS (RESTORED LINK STYLE) -->
             <div class="card">
                 <h4>Quick Actions</h4>
 
                 <div class="quick-links">
                     <a href="patient/appointment">+ Book Appointment</a>
-                    <a href="patient/orders?tab=prescriptions">📄 View Medical Records</a>
+                    <a href="patient/orders?tab=records">📄 View Medical Records</a>
                     <a href="patient/orders?tab=prescriptions">💊 Order Medication</a>
                     <a href="patient/billing">💳 View Billing</a>
-                    <a href="patient/appointment">📅 Appointment History</a>
                 </div>
             </div>
 
-            <!-- 🔹 NOTIFICATIONS -->
+            <!-- NOTIFICATIONS -->
             <div class="card">
                 <h4>Notifications</h4>
 
-                <ul class="notification-list">
-                    <li>🔔 Appointment confirmed for 10 May</li>
-                    <li>💊 Prescription ready for pickup</li>
-                    <li>📄 Lab report uploaded</li>
-                </ul>
+                <div class="notification-list">
+                    <div>🔔 Appointment confirmed for 10 May</div>
+                    <div>💊 Prescription ready for pickup</div>
+                    <div>📄 Lab report uploaded</div>
+                </div>
             </div>
 
-            <!-- 🔹 BILLING SUMMARY -->
+            <!-- BILLING -->
             <div class="card">
                 <h4>Billing Summary</h4>
 
-                <p><b>Total Due:</b> $120</p>
-                <p><b>Last Payment:</b> $80 (Paid)</p>
-                <p><b>Insurance:</b> Aetna</p>
+                <div class="info-block">
+                    <p><b>Total Due:</b> $120</p>
+                    <p><b>Last Payment:</b> $80 (Paid)</p>
+                    <p><b>Insurance:</b> Aetna</p>
+                </div>
 
-                <a href="#" class="link">View Details →</a>
+                <a class="link" href="#">View Details →</a>
             </div>
 
         </div>
 
     </div>
-
 </div>
 
 @code {
@@ -141,5 +146,4 @@
         new Visit { Date="28 Apr", Doctor="Dr. Brown", Type="In-person", Status="Completed" },
         new Visit { Date="20 Apr", Doctor="Dr. Smith", Type="Tele", Status="Completed" }
     };
-    
 }
