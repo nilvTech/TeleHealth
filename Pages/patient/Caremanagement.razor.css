@@ -1,33 +1,65 @@
-.care-container {
-    padding: 20px;
+.patient-container {
+    padding: 18px;
+    width: 100%;
+    box-sizing: border-box;
     color: teal;
+}
+
+/* HEADER */
+.header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.sub-text {
+    font-size: 13px;
+    color: #6a8f8f;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border: 1px solid #d7eeee;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
 }
 
 /* SUMMARY */
 .summary-card {
-    background: #e0f7f5;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    background: #f2fbfb;
 }
 
-.risk.high {
-    color: red;
-    font-weight: bold;
+.risk-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.risk-badge.high {
+    background: #ffe5e5;
+    color: #d11a2a;
 }
 
 /* TABS */
 .tabs {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 
 .tab {
-    padding: 10px 15px;
-    background: #e0f7f5;
+    padding: 8px 14px;
+    background: #eaf7f7;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: teal;
 }
 
 .tab.active {
@@ -35,63 +67,92 @@
     color: white;
 }
 
-/* CARD */
-.card {
-    background: white;
-    border: 1px solid teal;
-    padding: 20px;
-    border-radius: 10px;
-    color:teal;
-}
-
 /* TABLE */
-.styled-table {
+.patient-table {
     width: 100%;
     border-collapse: collapse;
-    color:teal
 }
 
-.styled-table th {
-    background: #e0f7f5;
-    padding: 10px;
+.patient-table th {
+    background: teal;
+    color: white;
+    padding: 12px;
+    font-size: 13px;
+    text-align: left;
 }
 
-.styled-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+.patient-table td {
+    padding: 12px;
+    border-bottom: 1px solid #edf7f7;
+    font-size: 13px;
 }
 
-/* STATUS */
-.status {
-    padding: 4px 8px;
-    border-radius: 6px;
+/* STATUS SYSTEM (FIXED ALL TYPES) */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.status.active { background: #cce5ff; }
-.status.pending { background: #fff3cd; }
-.status.completed { background: #d4edda; }
-.status.high { background: #f8d7da; }
+.active { background: #d6f5f5; color: teal; }
+.pending { background: #fff4d6; color: #b57b00; }
+.completed { background: #d9f7e6; color: #1a7f3c; }
+.high { background: #ffe5e5; color: #d11a2a; }
+.warning { background: #fff4d6; color: #b57b00; }
+.critical { background: #ffd6d6; color: #a10000; }
+.monitoring { background: #e6f0ff; color: #1d4ed8; }
 
+/* ALERTS */
+/* ALERTS LIST */
+.alerts-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* BASE ALERT ITEM */
+.alerts-list li {
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+
+    /* 🔥 FIX FONT CONSISTENCY */
+    font-size: 13px;
+    font-weight: 500;
+    color: #0f4f4f;
+    line-height: 1.4;
+}
+
+/* HIGH */
+.alerts-list li.high {
+    background: #ffe5e5;
+    color: #a10000;
+}
+
+/* MEDIUM */
+.alerts-list li.medium {
+    background: #fff4d6;
+    color: #8a5a00;
+}
+
+/* LOW */
+.alerts-list li.low {
+    background: #e6f7e6;
+    color: #1d6b2d;
+}
+
+/* ALERT TITLE EMPHASIS */
+.alerts-list li b {
+    font-weight: 700;
+    font-size: 13px;
+}
 /* BUTTON */
 .btn-primary {
     background: teal;
     color: white;
+    border: none;
     padding: 6px 10px;
     border-radius: 6px;
-    border: none;
-}
-
-/* ALERTS */
-.alerts-list li {
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-}
-
-.alerts-list li.high { background: #f8d7da; }
-.alerts-list li.medium { background: #fff3cd; }
-.alerts-list li.low { background: #defabe; }
-
-.page-title{
-    color:teal;
+    font-size: 12px;
 }

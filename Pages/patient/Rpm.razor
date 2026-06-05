@@ -1,9 +1,19 @@
 @page "/patient/rpm"
 @layout PatientLayout
 
-<h2 class="page-title">Remote Patient Monitoring</h2>
-
 <div class="rpm-container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Remote Patient Monitoring</h2>
+            <p class="page-subtitle">Live health tracking, device sync, and care insights</p>
+        </div>
+
+        <button class="btn-primary">
+            Sync Devices
+        </button>
+    </div>
 
     <!-- SUMMARY -->
     <div class="summary-grid">
@@ -27,137 +37,85 @@
         </div>
 
         <div class="summary-card">
-            <h5>Care Team Alerts</h5>
+            <h5>Care Alerts</h5>
             <h2>2</h2>
             <span>Pending Review</span>
         </div>
 
     </div>
 
-    <!-- DEVICE READINGS -->
+    <!-- LIVE READINGS -->
     <div class="card">
 
         <div class="card-header">
             <h3>Live Device Readings</h3>
-
-            <button class="btn-primary">
-                Sync Devices
-            </button>
         </div>
 
         <table class="styled-table">
-
             <thead>
                 <tr>
                     <th>Device</th>
                     <th>Reading</th>
-                    <th>Normal Range</th>
+                    <th>Range</th>
                     <th>Status</th>
-                    <th>Last Updated</th>
+                    <th>Updated</th>
                 </tr>
             </thead>
 
             <tbody>
-
                 @foreach (var d in Readings)
                 {
                     <tr>
-
                         <td>
-                            <div class="device-info">
-
-                                <div class="device-icon">
-                                    @d.Icon
-                                </div>
-
+                            <div class="device-cell">
+                                <div class="device-icon">@d.Icon</div>
                                 <div>
-                                    <strong>@d.Device</strong>
-                                    <span>@d.Type</span>
+                                    <div class="device-name">@d.Device</div>
+                                    <div class="device-type">@d.Type</div>
                                 </div>
-
                             </div>
                         </td>
 
-                        <td>
-                            <strong>@d.Reading</strong>
-                        </td>
-
+                        <td class="strong">@d.Reading</td>
                         <td>@d.Range</td>
 
                         <td>
-                            <span class="status @d.Status.ToLower()">
-                                @d.Status
-                            </span>
+                            <span class="status @d.Status.ToLower()">@d.Status</span>
                         </td>
 
                         <td>@d.Updated</td>
-
                     </tr>
                 }
-
             </tbody>
-
         </table>
 
     </div>
 
-    <!-- DAILY METRICS -->
+    <!-- METRICS -->
     <div class="metrics-grid">
 
         <div class="metric-card">
-
             <h4>Blood Pressure</h4>
-
-            <div class="metric-value">
-                124/82
-            </div>
-
-            <span class="metric-good">
-                Stable
-            </span>
-
+            <div class="metric-value">124/82</div>
+            <span class="metric-badge good">Stable</span>
         </div>
 
         <div class="metric-card">
-
             <h4>Heart Rate</h4>
-
-            <div class="metric-value">
-                78 bpm
-            </div>
-
-            <span class="metric-good">
-                Normal
-            </span>
-
+            <div class="metric-value">78 bpm</div>
+            <span class="metric-badge good">Normal</span>
         </div>
 
         <div class="metric-card">
-
             <h4>Blood Sugar</h4>
-
-            <div class="metric-value">
-                108 mg/dL
-            </div>
-
-            <span class="metric-good">
-                Controlled
-            </span>
-
+            <div class="metric-value">108 mg/dL</div>
+            <span class="metric-badge good">Controlled</span>
         </div>
 
         <div class="metric-card">
-
             <h4>Weight</h4>
-
-            <div class="metric-value">
-                72 kg
-            </div>
-
-            <span class="metric-good">
-                Healthy
-            </span>
-
+            <div class="metric-value">72 kg</div>
+            <span class="metric-badge good">Healthy</span>
         </div>
 
     </div>
@@ -176,11 +134,8 @@
                 <div class="alert-item">
 
                     <div>
-
                         <h5>@a.Title</h5>
-
                         <p>@a.Message</p>
-
                     </div>
 
                     <span class="priority @a.Priority.ToLower()">
@@ -198,7 +153,7 @@
     <div class="card">
 
         <div class="card-header">
-            <h3>Connected RPM Devices</h3>
+            <h3>Connected Devices</h3>
         </div>
 
         <div class="device-grid">
@@ -208,23 +163,14 @@
                 <div class="device-card">
 
                     <div class="device-top">
-
-                        <div class="device-big-icon">
-                            @d.Icon
-                        </div>
-
-                        <span class="status @d.Status.ToLower()">
-                            @d.Status
-                        </span>
-
+                        <div class="device-big-icon">@d.Icon</div>
+                        <span class="status @d.Status.ToLower()">@d.Status</span>
                     </div>
 
                     <h4>@d.Name</h4>
-
                     <p>@d.Type</p>
 
-                    <div class="device-stats">
-
+                    <div class="device-meta">
                         <div>
                             <label>Battery</label>
                             <strong>@d.Battery</strong>
@@ -234,13 +180,9 @@
                             <label>Sync</label>
                             <strong>@d.Sync</strong>
                         </div>
-
                     </div>
 
-                    <button class="btn-secondary full-btn">
-                        Manage Device
-                    </button>
-
+                   
                 </div>
             }
 
@@ -282,104 +224,24 @@
 
     List<ReadingModel> Readings = new()
     {
-        new() {
-            Icon="🩺",
-            Device="Blood Pressure Monitor",
-            Type="BP Device",
-            Reading="124/82 mmHg",
-            Range="90/60 - 130/85",
-            Status="Normal",
-            Updated="2 mins ago"
-        },
-
-        new() {
-            Icon="❤️",
-            Device="Heart Rate Monitor",
-            Type="Pulse Sensor",
-            Reading="78 bpm",
-            Range="60 - 100 bpm",
-            Status="Normal",
-            Updated="1 min ago"
-        },
-
-        new() {
-            Icon="🩸",
-            Device="Glucose Monitor",
-            Type="Sugar Device",
-            Reading="108 mg/dL",
-            Range="80 - 140 mg/dL",
-            Status="Normal",
-            Updated="5 mins ago"
-        },
-
-        new() {
-            Icon="⚖️",
-            Device="Weight Scale",
-            Type="Body Weight",
-            Reading="72 kg",
-            Range="Healthy",
-            Status="Stable",
-            Updated="10 mins ago"
-        }
+        new() { Icon="🩺", Device="BP Monitor", Type="Blood Pressure", Reading="124/82", Range="90/60 - 130/85", Status="Normal", Updated="2 mins ago" },
+        new() { Icon="❤️", Device="Heart Monitor", Type="Pulse", Reading="78 bpm", Range="60 - 100", Status="Normal", Updated="1 min ago" },
+        new() { Icon="🩸", Device="Glucose Monitor", Type="Sugar", Reading="108 mg/dL", Range="80 - 140", Status="Normal", Updated="5 mins ago" },
+        new() { Icon="⚖️", Device="Weight Scale", Type="Weight", Reading="72 kg", Range="Healthy", Status="Stable", Updated="10 mins ago" }
     };
 
     List<AlertModel> Alerts = new()
     {
-        new() {
-            Title="Care Team Follow-up",
-            Message="Your provider reviewed your BP readings and recommended continuing current medication.",
-            Priority="Normal"
-        },
-
-        new() {
-            Title="Medication Reminder",
-            Message="Please record your evening glucose reading before 9 PM.",
-            Priority="Medium"
-        },
-
-        new() {
-            Title="Device Battery Low",
-            Message="Your pulse oximeter battery is below 20%.",
-            Priority="High"
-        }
+        new() { Title="Medication Reminder", Message="Take evening glucose reading", Priority="Medium" },
+        new() { Title="Battery Alert", Message="Device battery low", Priority="High" },
+        new() { Title="Follow-up", Message="Doctor review pending", Priority="Normal" }
     };
 
     List<DeviceModel> Devices = new()
     {
-        new() {
-            Icon="🩺",
-            Name="BP Monitor X2",
-            Type="Blood Pressure",
-            Battery="84%",
-            Sync="Online",
-            Status="Connected"
-        },
-
-        new() {
-            Icon="❤️",
-            Name="PulseCare Sensor",
-            Type="Heart Rate",
-            Battery="68%",
-            Sync="Online",
-            Status="Connected"
-        },
-
-        new() {
-            Icon="🩸",
-            Name="GlucoTrack",
-            Type="Glucose",
-            Battery="45%",
-            Sync="Online",
-            Status="Connected"
-        },
-
-        new() {
-            Icon="⚖️",
-            Name="Smart Weight Scale",
-            Type="Weight Device",
-            Battery="18%",
-            Sync="Offline",
-            Status="Warning"
-        }
+        new() { Icon="🩺", Name="BP Monitor X", Type="BP", Battery="84%", Sync="Online", Status="Connected" },
+        new() { Icon="❤️", Name="Pulse Sensor", Type="Heart Rate", Battery="68%", Sync="Online", Status="Connected" },
+        new() { Icon="🩸", Name="Gluco Device", Type="Glucose", Battery="45%", Sync="Online", Status="Connected" },
+        new() { Icon="⚖️", Name="Weight Scale", Type="Weight", Battery="18%", Sync="Offline", Status="Warning" }
     };
 }

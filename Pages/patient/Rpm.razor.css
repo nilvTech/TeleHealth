@@ -1,327 +1,364 @@
-.page-title {
-    font-size: 34px;
-    font-weight: 700;
-    color: teal;
-    margin-bottom: 24px;
-}
-
-/* MAIN */
 .rpm-container {
+    padding: 18px;
     width: 100%;
-    padding: 20px;
     box-sizing: border-box;
+    background: #f7ffff;
+    color: teal;
 }
 
-/* SUMMARY */
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
-    margin-bottom: 28px;
-}
-
-.summary-card {
-    background: linear-gradient(135deg, teal, #0b9e9e);
-    color: white;
-    padding: 24px;
-    border-radius: 22px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.summary-card h5 {
-    margin-bottom: 12px;
-    font-size: 15px;
-}
-
-.summary-card h2 {
-    font-size: 36px;
-    margin-bottom: 8px;
-}
-
-.summary-card span {
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-/* CARD */
-.card {
-    background: white;
-    border-radius: 22px;
-    padding: 24px;
-    margin-bottom: 28px;
-    border: 1px solid #d8eeee;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-}
-
-/* HEADER */
-.card-header {
+/* =========================
+   HEADER
+========================= */
+.page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 18px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: teal;
+    margin: 0;
+}
+
+.page-subtitle {
+    font-size: 13px;
+    color: #6a8f8f;
+    margin-top: 4px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn-primary {
+    background: teal;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #067777;
+}
+
+.btn-secondary {
+    background: #e8f7f7;
+    color: teal;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: white;
+    border: 1px solid #d7eeee;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.summary-card h5 {
+    font-size: 12px;
+    color: #7a9898;
+}
+
+.summary-card h2 {
+    font-size: 22px;
+    color: teal;
+}
+
+.summary-card span {
+    font-size: 12px;
+    color: #6a8f8f;
+}
+
+/* =========================
+   CARD
+========================= */
+.card {
+    background: white;
+    border: 1px solid #d7eeee;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
 }
 
 .card-header h3 {
+    font-size: 16px;
     color: teal;
-    font-size: 26px;
 }
 
-/* TABLE */
+/* =========================
+   TABLE
+========================= */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.styled-table thead {
-    background: #effcfc;
-}
-
 .styled-table th {
-    padding: 16px;
-    text-align: left;
+    background: #f5fbfb;
     color: teal;
-    border-bottom: 1px solid #d8eeee;
+    font-size: 12px;
+    padding: 10px;
+    text-align: left;
 }
 
 .styled-table td {
-    padding: 16px;
+    padding: 12px;
     border-bottom: 1px solid #edf7f7;
-    color: #215f5f;
+    font-size: 13px;
+    color: #426666;
 }
 
-.styled-table tr:hover {
-    background: #f9ffff;
-}
-
-/* DEVICE */
-.device-info {
+/* =========================
+   DEVICE IN TABLE (FIXED)
+========================= */
+.device-cell {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
 }
 
 .device-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    background: #e7f9f9;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #e8f7f7;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 16px;
 }
 
-.device-info span {
-    color: #789696;
+.device-name {
     font-size: 13px;
+    font-weight: 600;
+    color: teal;
 }
 
-/* STATUS */
+.device-type {
+    font-size: 11px;
+    color: #7a9898;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
 .status {
-    padding: 8px 14px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .status.normal,
 .status.connected,
 .status.stable {
-    background: #dff8ea;
-    color: #168a55;
+    background: #e5f8ec;
+    color: #14853d;
 }
 
 .status.warning {
-    background: #fff4d8;
-    color: #c98b00;
+    background: #fff3cd;
+    color: #b58105;
 }
 
-/* METRICS */
+/* =========================
+   METRICS
+========================= */
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
-    margin-bottom: 28px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
 }
 
 .metric-card {
     background: white;
     border: 1px solid #d7eeee;
-    border-radius: 20px;
-    padding: 24px;
+    border-radius: 14px;
+    padding: 14px;
     text-align: center;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.04);
 }
 
 .metric-card h4 {
-    color: teal;
-    margin-bottom: 18px;
+    font-size: 13px;
+    color: #6a8f8f;
 }
 
 .metric-value {
-    font-size: 34px;
+    font-size: 18px;
     font-weight: 700;
-    color: #155959;
-    margin-bottom: 12px;
+    color: teal;
+    margin: 6px 0;
 }
 
-.metric-good {
+.metric-badge.good {
     background: #e5f8ec;
-    color: #168a55;
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 13px;
-    font-weight: 700;
+    color: #14853d;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
 }
 
-/* ALERTS */
+/* =========================
+   ALERTS (FIXED: CIRCULAR BADGES)
+========================= */
 .alert-list {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 10px;
 }
 
 .alert-item {
-    background: #f8ffff;
-    border: 1px solid #d9eeee;
-    border-radius: 18px;
-    padding: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 12px;
+    border: 1px solid #d7eeee;
+    border-radius: 12px;
+    background: #f9ffff;
 }
 
 .alert-item h5 {
+    font-size: 14px;
     color: teal;
-    margin-bottom: 8px;
-    font-size: 18px;
+    margin: 0;
 }
 
 .alert-item p {
-    color: #6e8f8f;
+    font-size: 12px;
+    color: #6a8f8f;
+    margin: 4px 0 0 0;
 }
 
+/* 🔥 FIXED PRIORITY BADGES (CIRCLES STYLE) */
 .priority {
-    padding: 8px 14px;
-    border-radius: 30px;
-    font-size: 13px;
+    min-width: 72px;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 999px;   /* FULL PILL */
+    font-size: 11px;
     font-weight: 700;
 }
 
-.priority.normal {
-    background: #e5f8ec;
-    color: #168a55;
-}
-
-.priority.medium {
-    background: #fff2d8;
-    color: #c98b00;
-}
-
+/* HIGH */
 .priority.high {
     background: #ffe3e3;
     color: #cf2d2d;
 }
 
-/* DEVICES */
+/* MEDIUM */
+.priority.medium {
+    background: #fff3cd;
+    color: #b58105;
+}
+
+/* NORMAL */
+.priority.normal {
+    background: #e5f8ec;
+    color: #14853d;
+}
+
+/* =========================
+   CONNECTED DEVICES (FIXED PRO UI)
+========================= */
 .device-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
 }
 
 .device-card {
-    background: #fbffff;
-    border: 1px solid #d8eeee;
-    border-radius: 20px;
-    padding: 22px;
+    background: white;
+    border: 1px solid #d7eeee;
+    border-radius: 14px;
+    padding: 14px;
+    transition: 0.2s ease;
 }
 
-.device-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
+.device-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06);
 }
 
 .device-big-icon {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #e8f8f8;
+    width: 42px;
+    height: 42px;
+    background: #e8f7f7;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .device-card h4 {
+    font-size: 14px;
     color: teal;
-    margin-bottom: 8px;
+    margin: 0 0 4px 0;
 }
 
 .device-card p {
-    color: #789696;
-    margin-bottom: 20px;
+    font-size: 12px;
+    color: #7a9898;
+    margin-bottom: 10px;
 }
 
-.device-stats {
+/* DEVICE STATS */
+.device-meta {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin: 10px 0;
 }
 
-.device-stats label {
-    display: block;
-    font-size: 13px;
-    color: #7e9d9d;
-    margin-bottom: 5px;
+.device-meta label {
+    font-size: 11px;
+    color: #7a9898;
 }
 
-.device-stats strong {
+.device-meta strong {
+    font-size: 12px;
     color: teal;
 }
 
-/* BUTTONS */
-.btn-primary {
-    border: none;
-    background: teal;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-primary:hover {
-    background: #087878;
-}
-
-.btn-secondary {
-    border: none;
-    background: #e8f7f7;
-    color: teal;
-    padding: 12px 18px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.full-btn {
-    width: 100%;
-}
-
-/* RESPONSIVE */
-@media(max-width:1200px) {
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width: 1100px) {
 
     .summary-grid,
     .metrics-grid,
     .device-grid {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media(max-width:768px) {
+@media(max-width: 700px) {
 
     .summary-grid,
     .metrics-grid,
@@ -329,20 +366,15 @@
         grid-template-columns: 1fr;
     }
 
-    .styled-table {
-        display: block;
-        overflow-x: auto;
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
     }
 
     .alert-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 14px;
-    }
-
-    .card-header {
-        flex-direction: column;
-        gap: 16px;
-        align-items: flex-start;
+        gap: 10px;
     }
 }
