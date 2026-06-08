@@ -1,7 +1,7 @@
 @page "/patient/billing"
 @layout PatientLayout
 
-<h2 class="page-title">Billing & Payments</h2>
+<h4>Billing & Payments</h4>
 
 <div class="billing-container">
 
@@ -63,15 +63,17 @@
                         <td>
                             <span class="status @inv.Status.ToLower()">@inv.Status</span>
                         </td>
+
                         <td>
-                            <button class="btn-primary" @onclick="() => ToggleEOB(inv)">
+                            <button class="btn-secondary" @onclick="() => ToggleEOB(inv)">
                                 View
                             </button>
                         </td>
+
                         <td>
                             @if (inv.Status != "Paid")
                             {
-                                <button class="btn-primary" @onclick="() => PayInvoice(inv)">
+                                <button class="btn-primary" @onclick="() => OpenPayModal(inv)">
                                     Pay
                                 </button>
                             }
@@ -82,7 +84,6 @@
                         </td>
                     </tr>
 
-                    <!-- 🔹 EOB DETAILS -->
                     @if (inv.ShowEOB)
                     {
                         <tr class="eob-row">
@@ -101,12 +102,35 @@
             </tbody>
         </table>
     </div>
-
 </div>
+
+<!-- 🔴 PAY MODAL -->
+@if (ShowPayModal && SelectedInvoice != null)
+{
+    <div class="modal-overlay">
+        <div class="modal-box">
+
+            <h3>Confirm Payment</h3>
+
+            <p>Are you sure you want to pay invoice <b>@SelectedInvoice.Id</b>?</p>
+
+            <div class="modal-details">
+                <p><b>Service:</b> @SelectedInvoice.Service</p>
+                <p><b>Amount:</b> $@SelectedInvoice.PatientPay</p>
+                <p><b>Provider:</b> @SelectedInvoice.Provider</p>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" @onclick="CloseModal">Cancel</button>
+                <button class="btn-primary" @onclick="ConfirmPay">Confirm Pay</button>
+            </div>
+
+        </div>
+    </div>
+}
 
 @code {
 
-    // 🔹 MODEL
     class InvoiceModel
     {
         public string Id { get; set; }
@@ -133,89 +157,150 @@
         public bool ShowEOB { get; set; }
     }
 
-    // 🔹 DATA (REALISTIC US BILLING)
     List<InvoiceModel> Invoices = new()
-    {
-        new() {
-            Id="INV1001", Date=DateTime.Today.AddDays(-1),
-            Provider="Dr. Emily Brown", Service="Tele Consultation",
-            Total=150, Allowed=120, Insurance=90, Copay=20, Deductible=10,
-            PatientPay=30, Adjustment=30,
-            Status="Pending",
-            Payer="Aetna", ClaimId="CLM001",
-            Reason="Allowed amount adjustment",
-            ProcessedDate=DateTime.Today
-        },
+{
+    new() {
+        Id="INV1001", Date=DateTime.Today.AddDays(-1),
+        Provider="Dr. Emily Brown", Service="Tele Consultation",
+        Total=150, Allowed=120, Insurance=90, Copay=20, Deductible=10,
+        PatientPay=30, Adjustment=30,
+        Status="Pending",
+        Payer="Aetna", ClaimId="CLM001",
+        Reason="Allowed amount adjustment",
+        ProcessedDate=DateTime.Today
+    },
 
-        new() {
-            Id="INV1002", Date=DateTime.Today.AddDays(-3),
-            Provider="Dr. John Smith", Service="Cardiology Visit",
-            Total=300, Allowed=250, Insurance=200, Copay=30, Deductible=20,
-            PatientPay=50, Adjustment=50,
-            Status="Paid",
-            Payer="Blue Cross", ClaimId="CLM002",
-            Reason="Deductible applied",
-            ProcessedDate=DateTime.Today.AddDays(-2)
-        },
+    new() {
+        Id="INV1002", Date=DateTime.Today.AddDays(-3),
+        Provider="Dr. John Smith", Service="Cardiology Visit",
+        Total=300, Allowed=250, Insurance=200, Copay=30, Deductible=20,
+        PatientPay=50, Adjustment=50,
+        Status="Paid",
+        Payer="Blue Cross", ClaimId="CLM002",
+        Reason="Deductible applied",
+        ProcessedDate=DateTime.Today.AddDays(-2)
+    },
 
-        new() {
-            Id="INV1003", Date=DateTime.Today.AddDays(-5),
-            Provider="LabCorp", Service="Blood Test",
-            Total=200, Allowed=160, Insurance=120, Copay=15, Deductible=25,
-            PatientPay=40, Adjustment=40,
-            Status="Pending",
-            Payer="United Healthcare", ClaimId="CLM003",
-            Reason="Partial coverage",
-            ProcessedDate=DateTime.Today.AddDays(-4)
-        },
+    new() {
+        Id="INV1003", Date=DateTime.Today.AddDays(-5),
+        Provider="LabCorp", Service="Blood Test",
+        Total=200, Allowed=160, Insurance=120, Copay=15, Deductible=25,
+        PatientPay=40, Adjustment=40,
+        Status="Pending",
+        Payer="United Healthcare", ClaimId="CLM003",
+        Reason="Partial coverage",
+        ProcessedDate=DateTime.Today.AddDays(-4)
+    },
 
-        new() {
-            Id="INV1004", Date=DateTime.Today.AddDays(-7),
-            Provider="Dr. Lisa Wong", Service="Diabetes Follow-up",
-            Total=180, Allowed=150, Insurance=100, Copay=25, Deductible=25,
-            PatientPay=50, Adjustment=30,
-            Status="Overdue",
-            Payer="Cigna", ClaimId="CLM004",
-            Reason="Out-of-network adjustment",
-            ProcessedDate=DateTime.Today.AddDays(-6)
-        },
+    new() {
+        Id="INV1004", Date=DateTime.Today.AddDays(-7),
+        Provider="Dr. Lisa Wong", Service="Diabetes Follow-up",
+        Total=180, Allowed=150, Insurance=100, Copay=25, Deductible=25,
+        PatientPay=50, Adjustment=30,
+        Status="Overdue",
+        Payer="Cigna", ClaimId="CLM004",
+        Reason="Out-of-network adjustment",
+        ProcessedDate=DateTime.Today.AddDays(-6)
+    },
 
-        new() {
-            Id="INV1005", Date=DateTime.Today.AddDays(-10),
-            Provider="Pharmacy", Service="Medication",
-            Total=90, Allowed=80, Insurance=40, Copay=20, Deductible=10,
-            PatientPay=40, Adjustment=10,
-            Status="Paid",
-            Payer="Aetna", ClaimId="CLM005",
-            Reason="Pharmacy benefit",
-            ProcessedDate=DateTime.Today.AddDays(-9)
-        },
+    new() {
+        Id="INV1005", Date=DateTime.Today.AddDays(-10),
+        Provider="Pharmacy", Service="Medication",
+        Total=90, Allowed=80, Insurance=40, Copay=20, Deductible=10,
+        PatientPay=40, Adjustment=10,
+        Status="Paid",
+        Payer="Aetna", ClaimId="CLM005",
+        Reason="Pharmacy benefit",
+        ProcessedDate=DateTime.Today.AddDays(-9)
+    },
 
-        new() {
-            Id="INV1006", Date=DateTime.Today.AddDays(-12),
-            Provider="Radiology Center", Service="X-Ray",
-            Total=250, Allowed=200, Insurance=150, Copay=30, Deductible=20,
-            PatientPay=70, Adjustment=50,
-            Status="Pending",
-            Payer="Blue Cross", ClaimId="CLM006",
-            Reason="Imaging coverage rules",
-            ProcessedDate=DateTime.Today.AddDays(-11)
-        }
-    };
+    new() {
+        Id="INV1006", Date=DateTime.Today.AddDays(-12),
+        Provider="Radiology Center", Service="X-Ray",
+        Total=250, Allowed=200, Insurance=150, Copay=30, Deductible=20,
+        PatientPay=70, Adjustment=50,
+        Status="Pending",
+        Payer="Blue Cross", ClaimId="CLM006",
+        Reason="Imaging coverage rules",
+        ProcessedDate=DateTime.Today.AddDays(-11)
+    },
 
-    // 🔹 SUMMARY
+
+    new() {
+        Id="INV1007", Date=DateTime.Today.AddDays(-14),
+        Provider="Dr. Kevin Patel", Service="Orthopedic Consultation",
+        Total=220, Allowed=180, Insurance=130, Copay=25, Deductible=25,
+        PatientPay=50, Adjustment=40,
+        Status="Pending",
+        Payer="United Healthcare", ClaimId="CLM007",
+        Reason="Specialist visit adjustment",
+        ProcessedDate=DateTime.Today.AddDays(-13)
+    },
+
+    new() {
+        Id="INV1008", Date=DateTime.Today.AddDays(-16),
+        Provider="City Diagnostics", Service="Full Body Checkup",
+        Total=400, Allowed=320, Insurance=250, Copay=30, Deductible=40,
+        PatientPay=70, Adjustment=80,
+        Status="Paid",
+        Payer="Cigna", ClaimId="CLM008",
+        Reason="Preventive package coverage",
+        ProcessedDate=DateTime.Today.AddDays(-15)
+    },
+
+    new() {
+        Id="INV1009", Date=DateTime.Today.AddDays(-18),
+        Provider="Dr. Anita Sharma", Service="Gynecology Visit",
+        Total=160, Allowed=130, Insurance=90, Copay=20, Deductible=20,
+        PatientPay=40, Adjustment=30,
+        Status="Overdue",
+        Payer="Aetna", ClaimId="CLM009",
+        Reason="Out-of-network billing",
+        ProcessedDate=DateTime.Today.AddDays(-17)
+    },
+
+    new() {
+        Id="INV1010", Date=DateTime.Today.AddDays(-20),
+        Provider="Metro Hospital Lab", Service="Pathology Tests",
+        Total=280, Allowed=220, Insurance=170, Copay=25, Deductible=25,
+        PatientPay=60, Adjustment=60,
+        Status="Pending",
+        Payer="Blue Cross", ClaimId="CLM010",
+        Reason="Lab bundle adjustment",
+        ProcessedDate=DateTime.Today.AddDays(-19)
+    }
+};
+
     int TotalDue => Invoices.Where(i => i.Status != "Paid").Sum(i => i.PatientPay);
     int TotalPaid => Invoices.Where(i => i.Status == "Paid").Sum(i => i.PatientPay);
     int InsuranceCovered => Invoices.Sum(i => i.Insurance);
 
-    // 🔹 ACTIONS
-    void PayInvoice(InvoiceModel inv)
-    {
-        inv.Status = "Paid";
-    }
+    bool ShowPayModal = false;
+    InvoiceModel? SelectedInvoice;
 
     void ToggleEOB(InvoiceModel inv)
     {
         inv.ShowEOB = !inv.ShowEOB;
+    }
+
+    void OpenPayModal(InvoiceModel inv)
+    {
+        SelectedInvoice = inv;
+        ShowPayModal = true;
+    }
+
+    void CloseModal()
+    {
+        ShowPayModal = false;
+        SelectedInvoice = null;
+    }
+
+    void ConfirmPay()
+    {
+        if (SelectedInvoice != null)
+        {
+            SelectedInvoice.Status = "Paid";
+        }
+        CloseModal();
     }
 }

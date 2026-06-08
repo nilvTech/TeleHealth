@@ -1,4 +1,5 @@
 @page "/patient/caremanagement"
+@using TeleHealthApp.Pages.admin
 @layout PatientLayout
 
 <div class="patient-container">
@@ -7,14 +8,13 @@
     <div class="header">
         <div>
             <h2>Care Management</h2>
-            <div class="sub-text">Monitor care plan, tasks, vitals & alerts</div>
         </div>
     </div>
 
     <!-- SUMMARY -->
     <div class="card summary-card">
 
-        <h3>Sarah Johnson</h3>
+        <div class="header"> <h2>Sarah Johnson</h2></div>
 
         <p class="sub-text">
             Age: 34 • Chronic Conditions: Diabetes, Hypertension, Obesity
@@ -38,7 +38,6 @@
     {
         <div class="card">
 
-            <h4 class="section-title">Active Care Plan</h4>
 
             <table class="patient-table">
                 <thead>
@@ -73,7 +72,6 @@
     {
         <div class="card">
 
-            <h4 class="section-title">Daily Care Tasks</h4>
 
             <table class="patient-table">
                 <thead>
@@ -112,7 +110,6 @@
     {
         <div class="card">
 
-            <h4 class="section-title">Vitals Monitoring (RPM)</h4>
 
             <table class="patient-table">
                 <thead>
@@ -149,7 +146,6 @@
     {
         <div class="card">
 
-            <h4 class="section-title">Care Team</h4>
 
             <table class="patient-table">
                 <thead>
@@ -182,7 +178,6 @@
     {
         <div class="card">
 
-            <h4 class="section-title">Health Alerts</h4>
 
             <ul class="alerts-list">
                 @foreach (var a in Alerts)
