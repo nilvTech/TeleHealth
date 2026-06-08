@@ -1,29 +1,26 @@
 @page "/patient/messages"
 @layout PatientLayout
 
-<h2 class="page-title">Messages</h2>
-
 <div class="message-container">
 
     <!-- HEADER -->
     <div class="message-header">
-
         <div>
-            <h3>Patient Inbox</h3>
+            <h2 class="page-title">Messages</h2>
+            <p class="page-subtitle">Secure communication with care team</p>
         </div>
 
-        <button class="btn-compose" @onclick="OpenCompose">
+        <button class="btn-primary" @onclick="OpenCompose">
             + New Message
         </button>
-
     </div>
 
     <!-- STATS -->
     <div class="stats-row">
 
         <div class="stat-card">
-            <h5>Total Messages</h5>
-            <h3>@FilteredMessages.Count()</h3>
+            <h5>Total</h5>
+            <h3>@Messages.Count</h3>
         </div>
 
         <div class="stat-card">
@@ -43,83 +40,64 @@
 
     </div>
 
-    <!-- MAIN GRID -->
+    <!-- MAIN -->
     <div class="message-grid">
 
         <!-- SIDEBAR -->
-        <div class="sidebar-card">
+        <div class="sidebar">
 
-            <div class="@GetSidebarClass("Inbox")"
-                 @onclick='() => ChangeFolder("Inbox")'>
-                Inbox
-                <span>@Messages.Count(x => x.Type=="Inbox")</span>
+            <div class="@GetSidebarClass("Inbox")" @onclick='() => ChangeFolder("Inbox")'>
+                Inbox <span>@Messages.Count(x => x.Type=="Inbox")</span>
             </div>
 
-            <div class="@GetSidebarClass("Sent")"
-                 @onclick='() => ChangeFolder("Sent")'>
-                Sent
-                <span>@Messages.Count(x => x.Type=="Sent")</span>
+            <div class="@GetSidebarClass("Sent")" @onclick='() => ChangeFolder("Sent")'>
+                Sent <span>@Messages.Count(x => x.Type=="Sent")</span>
             </div>
 
-            <div class="@GetSidebarClass("Draft")"
-                 @onclick='() => ChangeFolder("Draft")'>
-                Drafts
-                <span>@Messages.Count(x => x.Type=="Draft")</span>
+            <div class="@GetSidebarClass("Draft")" @onclick='() => ChangeFolder("Draft")'>
+                Drafts <span>@Messages.Count(x => x.Type=="Draft")</span>
             </div>
 
-            <div class="@GetSidebarClass("Archived")"
-                 @onclick='() => ChangeFolder("Archived")'>
-                Archived
-                <span>@Messages.Count(x => x.Type=="Archived")</span>
+            <div class="@GetSidebarClass("Archived")" @onclick='() => ChangeFolder("Archived")'>
+                Archived <span>@Messages.Count(x => x.Type=="Archived")</span>
             </div>
 
         </div>
 
         <!-- LIST -->
-        <div class="messages-card">
+        <div class="message-list-card">
 
             <div class="toolbar">
+                <input class="search-box" placeholder="Search messages..." @bind="SearchText" />
 
-                <input class="search-box"
-                       placeholder="Search messages..."
-                       @bind="SearchText" />
-
-                <select class="filter-select"
-                        @bind="SelectedFilter">
-
-                    <option value="All">All Messages</option>
+                <select class="filter-select" @bind="SelectedFilter">
+                    <option value="All">All</option>
                     <option value="Unread">Unread</option>
                     <option value="Read">Read</option>
-
                 </select>
-
             </div>
 
             <div class="message-list">
 
                 @foreach (var msg in FilteredMessages)
                 {
-                    <div class="message-item @(SelectedMessage == msg ? "selected" : "")"
+                    <div class="message-item @(SelectedMessage == msg ? "active" : "")"
                          @onclick="() => OpenMessage(msg)">
 
                         <div class="message-top">
-
                             <div>
                                 <h4>@msg.Provider</h4>
                                 <p>@msg.Subject</p>
                             </div>
 
-                            <div class="message-right">
-
+                            <div class="msg-meta">
                                 <span class="time">@msg.Time</span>
 
                                 @if (!msg.IsRead)
                                 {
                                     <span class="unread-dot"></span>
                                 }
-
                             </div>
-
                         </div>
 
                         <div class="message-preview">
@@ -138,105 +116,54 @@
 
             @if (IsCompose)
             {
-                <div>
+                <div class="compose-box">
+                    <h3>Compose</h3>
 
-                    <h3 class="compose-title">Compose Message</h3>
+                    <input class="input" placeholder="Provider" @bind="ComposeProvider" />
+                    <input class="input" placeholder="Subject" @bind="ComposeSubject" />
 
-                    <div class="compose-form">
+                    <textarea class="textarea" placeholder="Message..." @bind="ComposeBody"></textarea>
 
-                        <input class="compose-input"
-                               placeholder="Provider"
-                               @bind="ComposeProvider" />
-
-                        <input class="compose-input"
-                               placeholder="Subject"
-                               @bind="ComposeSubject" />
-
-                        <textarea class="reply-box"
-                                  placeholder="Type your message..."
-                                  @bind="ComposeBody"></textarea>
-
-                        <div class="reply-actions">
-
-                            <button class="btn-secondary"
-                                    @onclick="CancelCompose">
-                                Cancel
-                            </button>
-
-                            <button class="btn-primary"
-                                    @onclick="SendNewMessage">
-                                Send Message
-                            </button>
-
-                        </div>
-
+                    <div class="actions">
+                        <button class="btn-secondary" @onclick="CancelCompose">Cancel</button>
+                        <button class="btn-primary" @onclick="SendNewMessage">Send</button>
                     </div>
-
                 </div>
             }
             else if (SelectedMessage != null)
             {
                 <div class="details-header">
-
                     <div>
                         <h3>@SelectedMessage.Subject</h3>
                         <p>@SelectedMessage.Provider</p>
                     </div>
 
-                    <span class="message-date">
-                        @SelectedMessage.Date
-                    </span>
-
+                    <span class="date">@SelectedMessage.Date</span>
                 </div>
 
                 <div class="message-body">
                     @SelectedMessage.Content
                 </div>
 
-                <!-- ACTIONS -->
-                <div class="message-actions">
-
-                    <button class="btn-secondary"
-                            @onclick="ToggleRead">
-
+                <div class="actions">
+                    <button class="btn-secondary" @onclick="ToggleRead">
                         @(SelectedMessage.IsRead ? "Mark Unread" : "Mark Read")
-
                     </button>
 
-                    <button class="btn-secondary"
-                            @onclick="ArchiveMessage">
-                        Archive
-                    </button>
-
-                    <button class="btn-secondary"
-                            @onclick="DeleteMessage">
-                        Delete
-                    </button>
-
+                    <button class="btn-secondary" @onclick="ArchiveMessage">Archive</button>
+                    <button class="btn-danger" @onclick="DeleteMessage">Delete</button>
                 </div>
 
-                <!-- REPLY -->
-                <div class="reply-section">
+                <textarea class="textarea" placeholder="Reply..." @bind="ReplyText"></textarea>
 
-                    <textarea class="reply-box"
-                              placeholder="Type reply..."
-                              @bind="ReplyText"></textarea>
-
-                    <div class="reply-actions">
-
-                        <button class="btn-primary"
-                                @onclick="SendReply">
-                            Send Reply
-                        </button>
-
-                    </div>
-
+                <div class="actions">
+                    <button class="btn-primary" @onclick="SendReply">Send Reply</button>
                 </div>
             }
             else
             {
-                <div class="empty-state">
-                    No Message Selected
+                <div class="empty">
+                    Select a message
                 </div>
             }
 
@@ -247,11 +174,8 @@
 </div>
 
 @code {
-
     string CurrentFolder = "Inbox";
-
     string SearchText = "";
-
     string SelectedFilter = "All";
 
     bool IsCompose = false;
@@ -259,7 +183,6 @@
     string ComposeProvider = "";
     string ComposeSubject = "";
     string ComposeBody = "";
-
     string ReplyText = "";
 
     MessageModel? SelectedMessage;
@@ -278,102 +201,31 @@
 
     List<MessageModel> Messages = new()
     {
-        new()
-        {
-            Provider="Dr. Emily Brown",
-            Subject="Follow-up Consultation",
-            Preview="Continue medication for 2 weeks...",
-            Content="Please continue your medication for 2 weeks and upload reports before your next visit.",
-            Time="10:30 AM",
-            Date="Today",
-            IsRead=false,
-            Type="Inbox"
-        },
-
-        new()
-        {
-            Provider="Billing Department",
-            Subject="Invoice Generated",
-            Preview="Invoice INV1002 is available...",
-            Content="Your latest invoice has been generated successfully.",
-            Time="Yesterday",
-            Date="May 5",
-            IsRead=true,
-            Type="Inbox"
-        },
-
-        new()
-        {
-            Provider="Care Coordinator",
-            Subject="Care Plan Updated",
-            Preview="Your care plan goals updated...",
-            Content="Your care management plan has been updated.",
-            Time="May 4",
-            Date="May 4",
-            IsRead=true,
-            Type="Archived"
-        },
-
-        new()
-        {
-            Provider="Sarah Johnson",
-            Subject="Prescription Question",
-            Preview="Can I continue medication...",
-            Content="Can I continue the prescribed medication?",
-            Time="May 3",
-            Date="May 3",
-            IsRead=true,
-            Type="Sent"
-        }
+        new() { Provider="Dr. Brown", Subject="Follow-up", Preview="Continue meds...", Content="Continue meds for 2 weeks", Time="10:30", Date="Today", IsRead=false, Type="Inbox" },
+        new() { Provider="Billing", Subject="Invoice", Preview="Invoice ready...", Content="Invoice generated", Time="Yesterday", Date="May 5", IsRead=true, Type="Inbox" }
     };
 
     IEnumerable<MessageModel> FilteredMessages =>
-        Messages
-        .Where(x => x.Type == CurrentFolder)
-        .Where(x =>
-            string.IsNullOrWhiteSpace(SearchText) ||
-            x.Subject.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-            x.Provider.Contains(SearchText, StringComparison.OrdinalIgnoreCase))
-        .Where(x =>
-            SelectedFilter == "All" ||
-            (SelectedFilter == "Unread" && !x.IsRead) ||
-            (SelectedFilter == "Read" && x.IsRead));
-
-    protected override void OnInitialized()
-    {
-        SelectedMessage = Messages.FirstOrDefault();
-    }
+        Messages.Where(x => x.Type == CurrentFolder);
 
     void OpenMessage(MessageModel msg)
     {
-        IsCompose = false;
         SelectedMessage = msg;
         msg.IsRead = true;
+        IsCompose = false;
     }
 
     void ChangeFolder(string folder)
     {
         CurrentFolder = folder;
-        SelectedMessage = FilteredMessages.FirstOrDefault();
-    }
-
-    string GetSidebarClass(string folder)
-    {
-        return CurrentFolder == folder
-            ? "sidebar-menu active"
-            : "sidebar-menu";
-    }
-
-    void OpenCompose()
-    {
-        IsCompose = true;
         SelectedMessage = null;
     }
 
-    void CancelCompose()
-    {
-        IsCompose = false;
-    }
+    string GetSidebarClass(string folder)
+        => CurrentFolder == folder ? "sidebar-item active" : "sidebar-item";
+
+    void OpenCompose() => IsCompose = true;
+    void CancelCompose() => IsCompose = false;
 
     void SendNewMessage()
     {
@@ -381,9 +233,7 @@
         {
             Provider = ComposeProvider,
             Subject = ComposeSubject,
-            Preview = ComposeBody.Length > 40
-                ? ComposeBody.Substring(0, 40) + "..."
-                : ComposeBody,
+            Preview = ComposeBody,
             Content = ComposeBody,
             Time = DateTime.Now.ToShortTimeString(),
             Date = DateTime.Today.ToShortDateString(),
@@ -391,46 +241,26 @@
             Type = "Sent"
         });
 
-        ComposeProvider = "";
-        ComposeSubject = "";
-        ComposeBody = "";
-
         IsCompose = false;
-
-        CurrentFolder = "Sent";
     }
 
-    void SendReply()
-    {
-        if (!string.IsNullOrWhiteSpace(ReplyText))
-        {
-            ReplyText = "";
-        }
-    }
+    void SendReply() => ReplyText = "";
 
     void ToggleRead()
     {
         if (SelectedMessage != null)
-        {
             SelectedMessage.IsRead = !SelectedMessage.IsRead;
-        }
     }
 
     void ArchiveMessage()
     {
         if (SelectedMessage != null)
-        {
             SelectedMessage.Type = "Archived";
-            SelectedMessage = null;
-        }
     }
 
     void DeleteMessage()
     {
         if (SelectedMessage != null)
-        {
             Messages.Remove(SelectedMessage);
-            SelectedMessage = null;
-        }
     }
 }
